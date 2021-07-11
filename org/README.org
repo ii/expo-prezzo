@@ -1,0 +1,9 @@
+#+TITLE: Readme
+
+* our org files
+This directory holds work diaries, in-progress documentation, and other "rough"
+work. It is a mixture of scratch pads and notes that /could/ be used as the
+source for later documentation, but should not be read as canonical docs.
+
+* Contents
+- [[https://github.com/ii/expo-prezzo/blob/main/org/project-plan.org#L1][Project Plan]] :: determine the scope and expected end results of our project, and the stages of iteration.
