@@ -1,0 +1,37 @@
+#+TITLE: Project Plan
+
+* Goal
+We would like to have interactive presentations at the Expo(happening in 3
+weeks) that give a nice wow moment to visitors of the booth, showing them an
+awesome feature of the cloud and the technology we work with. This document sets
+the scope and iteration steps for these presentations.
+
+* Project Description
+At our booth, multiple screens will be displaying org-reveal presentations on
+some aspect of open source/CNCF. A visitor to the booth can scan one of these
+screens and be able to control it, specifically, for a set period of time.
+Multiple visitors can be interacting with our presentations at the same time,
+each vistior in control of their own screen and their own presentation. This may
+be the same presentation some one else is looking at, or a different one.
+
+This means we will need to have a QR code that is dynamically set with the admin
+key for that particular presentation.
+
+It would be cool for the visitor controls to include the presentation they are
+wanting to look at, and not just the one they scanned, and perhaps some sort of
+input they can add that is also displayed on a screen(e.g. a whiteboard that has
+their doodle and tag).
+
+
+* TODO First Iteration
+- A screen displays a presentation with a qr code in some corner of the screen.
+- When a visitor scans the QR code with their phone, they are taken to the admin
+interface for that presentation.
+- They can reset the presentation to the beginning, or move forward and backward.
+* TODO Second Iteration
+- a screen displays a presentation with a qr code holding the unique admin key for that prezzy.
+- the presentation has a reset that can be triggered which creates a new admin
+  key, kicking off anyone previously in control.
+* TODO Third Iteration
+- When someone scans the qr code, they can choose which presentation to look through.
+- At any time, they can choose a different presentation.
