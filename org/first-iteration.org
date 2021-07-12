@@ -1,0 +1,91 @@
+#+TITLE: First Iteration
+
+* Introduction
+show that we know how to use reveal.js!
+* Project setup
+** ensure org-reveal installed
+if you are using ii configs for humacs/doom, it is already installed.
+** Test export
+you can export this org to a prezzy with:
+: ,evb
+** Setup multiplex
+Multiplex is what allows us to control the presentation from multiple computers,
+and we will use it to assign 'host' to the person who scanned the QR code
+(called master in the docs, but not good choice of words in this context).
+
+The server will create tokens that two pages can use to sync.  This means, for the expo, we only need to set up one multiplex server that all our presentations point to, each one generating new tokens and secrets as needed.
+
+To start it, run:
+#+begin_src tmate :window multiplex :exports neverexport
+docker run -it --rm -p 1948:1948 registry.gitlab.com/ii/nz/reveal-multiplex
+#+end_src
+
+** Setup metadata and custom code
+I am setting this up in the ~REVEAL_* settings~ heading at the bottom of the document.  Refer to that and then carry on!
+
+* Test host/client
+first, export this document with ~,eevv~
+
+This will make two files ~first-iteration.html~ and ~first-iteration_client.html~.  We want to serve them up locally, a simple way to do this is, in our project repo, run ~npx http-server~
+
+This will give you a local address like ~127.0.0.1:8080~, and then visit ~127.0.0.1:8080/first-iteration.html~ and ~127.0.0.1:8080/first-iteration_client.html~ in separate windows.
+
+NOTE: you want to use the numeric address and not localhost, cos localhost can cause unexpected behaviour due to [[https://mdn.io/CORS][CORS]].
+
+When you navigate forward and backward through first-iteration.html, the client window should move forward and backward too.
+
+For me, it worked! So I'ma move on!
+* Setup QR Code
+the first test we wanna do is just a page with a qr code and, when scanned, it
+brings you to the host of a presentation. we could include this then as an SVG
+or canvas element in the presentation...or use it in some other means.
+[[https://npmjs.com/qrcode][npmjs.com/qrcode]] seems like a simple enough option for this.
+* REVEAL_* settings :noexport:
+** Set Reveal path
+#+REVEAL_ROOT: http://localhost:1948
+If this isn't set, will use a CDN with the reveal code. Since we started our multiplex server, we can use that as our reveal root.
+** Show controls on page
+#+REVEAL_EXTRA_OPTIONS: controls: true
+** Add additional plugins
+#+REVEAL_PLUGINS: (notes highlight multiplex)
+We are using a set of [[https://revealjs.com/plugins/#built-in-plugins][built in plugins]]:
+- notes :: show notes for the speaker in separate window
+- highlight :: add syntax highlighting to code blocks
+- multiplex :: sets up a presentation server for viewing/controlling the presentation. This requires [[https://github.com/reveal/multiplex][reveal/multiplex] to be installed in our revealjs code folder.
+
+In the future, we wanna use chalkboard too.
+# TODO: Figure out chalkboard and other plugins
+#+NOREVEAL_ADD_PLUGIN: chalkboard RevealChalkboard https://cdn.jsdelivr.net/gh/rajgoel/reveal.js-plugins/chalkboard/plugin.js
+** Useful presentation settings
+# #+REVEAL_INIT_SCRIPT: showSlideNumber: "speaker", overview: true, touch: true, autoPlayMedia: true, autoSlide: 0, previewLinks: true, preloadIframes: true
+
+In order, these configurations ensure:
+- showSlideNumber: speaker :: only show slide number in speaker view
+- overview: true  :: enable slide [[https://revealjs.com/overview/][overview mode]]
+- touch: true :: allow for touch screen navigation for qualified devices (like our phones)
+- autoPlayMedia true :: if we include youtube links, autoplay for that slide
+- autoSlide: false :: automatic progression to next slide. we don't want that.
+- previewLinks: true :: open links in an iframe preview overlay
+- preloadIframes: true :: All iframes with data-src will be loaded when within the viewDistance
+
+** Multiplexer
+Now the heart of the code, without this set the presentation will not work correctly.
+For each presentation we will generate a unique id and secret and place them here.
+
+Withou our server running, we can generate new tokens by curling...
+#+begin_src shell :results output :exports neverexport
+curl http://localhost:1948/token | jq .
+#+end_src
+
+#+RESULTS:
+: {
+:   "secret": "16260577905048685295",
+:   "socketId": "01314e83ea20ee4e"
+: }
+
+both of the url settings are required, and point to our running multiplex server.
+
+#+REVEAL_MULTIPLEX_URL: http://localhost:1948
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: http://localhost:1948/socket.io/socket.io.js
+#+REVEAL_MULTIPLEX_ID: 01314e83ea20ee4e
+#+REVEAL_MULTIPLEX_SECRET: 16260577905048685295
