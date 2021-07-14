@@ -5,7 +5,6 @@ const fetch = require('node-fetch');
 const crypto = require("crypto");
 const { InMemorySessionStore } = require('./session-store');
 
-
 const LIMIT = 300;
 
 const app = express();
@@ -28,6 +27,10 @@ const randomID = () =>
 const randomInLimit = () =>
       Math.floor(Math.random() * (LIMIT - 1));
 
+const createHash = secret => {
+	let cipher = crypto.createCipher('blowfish', secret);
+	return cipher.final('hex');
+};
 
 function getDirectories(path) {
   return fs
@@ -47,16 +50,20 @@ function saveSesh (sessionID, vals) {
   }
 }
 
+function getPresentations() {
+  return getDirectories(opts.baseDir + "/presentations/");
+}
+
 app.use(express.static(opts.baseDir));
 
-// what are the presentations
-app.get("/presentations/", (req, res) => {
-  var dirs = getDirectories(opts.baseDir + "/presentations/");
-  res.json(dirs);
-  res.end();
+app.get("/token", (req, res) => {
+	const ts = new Date().getTime();
+	const rand = Math.floor(Math.random()*9999999);
+	const secret = ts.toString() + rand.toString();
+  const socketID = createHash(secret)
+  console.log(`New token generated ${socketID}`)
+	res.send({ socketId: socketID, secret: secret });
 });
-
-
 
 io.use((socket, next) => {
   const sessionID = socket.handshake.auth.sessionID;
@@ -103,6 +110,26 @@ io.on("connection", (socket) => {
     saveSesh(socket.sessionID, {isMonitor: true, monitorName: pokemon.name});
     io.emit("monitor go!", {monitorName: pokemon.name});
   });
+
+  socket.on("get presentations", () => {
+    console.log("Get presentations")
+    io.emit("presentation list", { presentationsNames: getPresentations() })
+  })
+
+  socket.on("get token", (sessionID) => {
+    console.log("Get token")
+    if (typeof sessionID === "undefined" || !sessionID) {
+      console.log("No session ID found when obtaining token")
+      return
+    }
+  	const ts = new Date().getTime();
+  	const rand = Math.floor(Math.random()*9999999);
+  	const secret = ts.toString() + rand.toString();
+    const socketID = createHash(secret)
+    console.log(`New token generated ${socketID}`)
+    saveSesh(sessionID, { socketID, secret })
+  	io.emit("new token", { sessionID, socketID, secret });
+  })
 
   io.emit("hello", { name: "Zach", adjective: "cool" });
 });
