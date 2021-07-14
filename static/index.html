@@ -9,26 +9,74 @@
   </head>
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="/qrcode.min.js"></script>
   <body>
     <h1>Hello!</h1>
-    <div id="presentations"></div>
+    <button id='set-monitor'>Set as Monitor</button>
+    <canvas></canvas>
   </body>
   <script>
    const params = new URLSearchParams(window.location.search)
-   var monitor = params.get("monitor")
+   const URL = "https://node.bobymcbobs.pair.sharing.io/";
+   const socket = io(URL, {autoConnect: false});
 
-   document.querySelector("h1").textContent = `Hello ${monitor}!`
+   const title = document.querySelector("h1");
+   const monitorToggle = document.querySelector("button#set-monitor");
+   const canvas = document.querySelector("canvas");
 
-   var socket = io()
 
-   fetch('/presentations/')
-     .then(resp => resp.json())
-     .then(resp => {
-       resp.forEach(prezzo => {
-         var item = document.createElement('li');
-         item.textContent = prezzo; 
-         document.querySelector("#presentations").appendChild(item);
-       })
-     })
+   // Places QR code in canvas element with val as its value
+   function renderQRCode (val) {
+     QRCode.toCanvas(canvas, val, (error) => {
+       if (error) {
+         console.log('error rendering qr code', {error, value: val});
+       } else {
+         console.log('qr code success!', {value: val});
+       }
+     });
+   };
+
+   socket.on('hello', data => {
+     let { name, adjective } = data;
+     console.log({data});
+   });
+
+
+   socket.on("session", ({ sessionID, monitorName, isMonitor }) => {
+     // attach the session ID to the next reconnection attempts
+     socket.auth = { sessionID };
+     // store it in the localStorage
+     localStorage.setItem("sessionID", sessionID);
+     // save the ID of the user
+     socket.monitorName = monitorName;
+     socket.isMonitor = socket.isMonitor;
+     if (isMonitor) {
+       title.textContent = `Monitor: ${monitorName}`;
+       monitorToggle.remove();
+       renderQRCode("https://ii.nz");
+     } else {
+       title.textContent = `session ${sessionID}`;
+     }
+   });
+
+   socket.on("monitor go!", ({ monitorName }) => {
+     title.textContent = `Monitor: ${monitorName}`;
+     monitorToggle.remove();
+     renderQRCode("https://ii.nz");
+   });
+
+   document.addEventListener("DOMContentLoaded", () => {
+     console.log("LOADED!");
+     sessionID = localStorage.getItem("sessionID");
+     if (sessionID) {
+       socket.auth = { sessionID };
+       socket.connect();
+     } else {
+       document.querySelector("h1").textContent = "hi, stranger";
+       socket.connect();
+     }
+   })
+
+   monitorToggle.addEventListener("click", () => socket.emit("monitor set"));
   </script>
 </html>
