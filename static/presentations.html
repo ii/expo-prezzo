@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Select a presentation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <script src="/app.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <body>
+    <h1>Select a presentation to display</h1>
+    <p><p>
+    <div id='presentation-selector'></div>
+  </body>
+  <script>
+   const params = new URLSearchParams(window.location.search)
+   const URL = window.location.origin
+   const socket = io(URL, {autoConnect: true});
+   const title = document.querySelector("h1");
+
+   const monitorSessionID = params.get("m")
+   document.addEventListener("DOMContentLoaded", () => {
+     console.log("LOADED!");
+     if (typeof monitorSessionID === "undefined" || !monitorSessionID) {
+       console.log("No monitorSessionID declared")
+       document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
+       document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
+     } else {
+       console.log("Fetching presentations")
+       socket.on("presentation list", ({presentationsNames}) => {
+         console.log(presentationsNames)
+           presentationsNames.forEach(name => {
+             var presentationButton = document.createElement('a')
+             presentationButton.innerHTML = name
+             presentationButton.href = `${window.location.origin}/presentations/${name}`
+             document.querySelector("#presentation-selector").appendChild(presentationButton)
+           })
+           document.querySelector("p").textContent = "What interests you?";
+       })
+       socket.emit("get presentations")
+       socket.emit("get token", monitorSessionID)
+       socket.on("new token", (token) => {
+         console.log("Token set", token)
+         localStorage.setItem("token", token)
+       })
+     }
+   })
+  </script>
+</html>
