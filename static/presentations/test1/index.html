@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Sample Slides</title>
+<meta name="author" content="Zach Mandeville"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.bobymcbobs.pair.sharing.io/dist/reveal.css"/>
+<link rel="stylesheet" href="https://multiplex.bobymcbobs.pair.sharing.io/dist/theme/black.css" id="theme"/>
+<link rel="stylesheet" href="https://multiplex.bobymcbobs.pair.sharing.io/plugin/highlight/zenburn.css"/>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Sample Slides A</h1><h2 class="author">Zach Mandeville</h2><p class="date">Created: 2021-07-14 Wed 10:53</p>
+</section>
+<section id="table-of-contents-section">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-1">1. Introduction</a></li>
+<li><a href="#/slide-2">2. slide 1</a></li>
+<li><a href="#/slide-3">3. slide 2</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-1">
+<h2 id="1"><span class="section-number-2">1</span> Introduction</h2>
+<p>
+Hello!
+</p>
+</section>
+</section>
+<section>
+<section id="slide-2">
+<h2 id="2"><span class="section-number-2">2</span> slide 1</h2>
+<p>
+you made it to 1
+</p>
+</section>
+</section>
+<section>
+<section id="slide-3">
+<h2 id="3"><span class="section-number-2">3</span> slide 2</h2>
+<p>
+you finished the presentation.
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.bobymcbobs.pair.sharing.io/dist/reveal.js"></script>
+<script src="https://multiplex.bobymcbobs.pair.sharing.io/plugin/notes/notes.js"></script>
+<script src="https://multiplex.bobymcbobs.pair.sharing.io/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+
+transition: 'convex',
+transitionSpeed: 'default',
+controls: true,
+multiplex: {
+    secret: '16260577905048685295', // null if client
+    id: '01314e83ea20ee4e', // id, obtained from socket.io server
+    url: 'https://multiplex.bobymcbobs.pair.sharing.io' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.bobymcbobs.pair.sharing.io/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.bobymcbobs.pair.sharing.io/plugin/multiplex/master.js', async: true }]
+
+});
+</script>
+</body>
+</html>

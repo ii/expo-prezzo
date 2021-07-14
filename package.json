@@ -1,0 +1,24 @@
+{
+  "name": "expo-prezzo",
+  "version": "1.0.0",
+  "description": "presentations and pizzazz for the Tauranga Career Expo ## Project Management We are tracking our progress on our [internal kanban](https://kanban.ii.coop/board/6) ## Project Structure - [org/](https://github.com/ii/expo-prezzo/tree/main/org) :: work diaries and in-progress documentation.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ii/expo-prezzo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ii/expo-prezzo/issues"
+  },
+  "homepage": "https://github.com/ii/expo-prezzo#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.1.3"
+  }
+}

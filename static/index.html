@@ -1,0 +1,34 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Hello!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <script src="/app.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <body>
+    <h1>Hello!</h1>
+    <div id="presentations"></div>
+  </body>
+  <script>
+   const params = new URLSearchParams(window.location.search)
+   var monitor = params.get("monitor")
+
+   document.querySelector("h1").textContent = `Hello ${monitor}!`
+
+   var socket = io()
+
+   fetch('/presentations/')
+     .then(resp => resp.json())
+     .then(resp => {
+       resp.forEach(prezzo => {
+         var item = document.createElement('li');
+         item.textContent = prezzo; 
+         document.querySelector("#presentations").appendChild(item);
+       })
+     })
+  </script>
+</html>
