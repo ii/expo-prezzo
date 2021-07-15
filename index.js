@@ -16,6 +16,8 @@ const io = require("socket.io")(server,{
   }
 });
 
+var connected = 0
+
 const opts = {
   port: process.env.PORT || 8101,
   baseDir: process.env.BASEDIR || process.cwd() + "/static",
@@ -56,15 +58,6 @@ function getPresentations() {
 
 app.use(express.static(opts.baseDir));
 
-app.get("/token", (req, res) => {
-	const ts = new Date().getTime();
-	const rand = Math.floor(Math.random()*9999999);
-	const secret = ts.toString() + rand.toString();
-  const socketID = createHash(secret)
-  console.log(`New token generated ${socketID}`)
-	res.send({ socketId: socketID, secret: secret });
-});
-
 io.use((socket, next) => {
   const sessionID = socket.handshake.auth.sessionID;
   if (sessionID) {
@@ -80,11 +73,13 @@ io.use((socket, next) => {
   }
   socket.sessionID = randomID();
   socket.isMonitor = false;
+  console.log("new session:", socket.sessionID)
   next();
 });
 
 io.on("connection", (socket) => {
-  console.log(`session ${socket.sessionID} connected`);
+  connected += 1
+  console.log(`[${connected}] session ${socket.sessionID} connected`);
   sessionStore.saveSession(socket.sessionID, {
     userID: socket.sessionID,
     isMonitor: socket.isMonitor || false,
@@ -99,7 +94,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    connected -= 1
+    console.log(`[${connected}] user disconnected`);
   });
 
   socket.on("monitor set", async () => {
