@@ -3,109 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Hello!</title>
+    <title>Expo prezzo</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <script src="/app.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/qrcode.min.js"></script>
   <body>
-    <h1>Hello!</h1>
-    <button id='set-monitor'>Set as Monitor</button>
-    <canvas></canvas>
+    <h1>Hmmm, you're not suppose to be here</h1>
+    <p>
+      Check out
+      <a href="https://ii.nz">ii.nz</a>
+    </p>
   </body>
-  <script>
-   const URL = window.location.href
-   const socket = io(URL, {autoConnect: false});
-
-   const title = document.querySelector("h1");
-   const monitorToggle = document.querySelector("button#set-monitor");
-   const canvas = document.querySelector("canvas");
-
-   // Places QR code in canvas element with val as its value
-   function renderQRCode (val) {
-     QRCode.toCanvas(canvas, val, (error) => {
-       if (error) {
-         console.log('error rendering qr code', {error, value: val});
-       } else {
-         console.log('qr code success!', {value: val});
-       }
-     });
-   };
-
-   socket.on('hello', data => {
-     let { name, adjective } = data;
-     console.log({data});
-   });
-
-   socket.on("new token", ({ sessionID, socketID, secret }) => {
-     const monitor = socket.auth.sessionID
-     if (sessionID !== monitor) {
-       console.log("no match", {monitor, sessionID})
-       return
-     } else {
-       console.log("match!", {monitor, sessionID})
-       const monitorName = localStorage.getItem("monitorName")
-       title.textContent = `Monitor: ${monitorName} has synced up to ${socketID}`
-       localStorage.setItem("token", JSON.stringify({ socketID }))
-     }
-
-     console.log("what happening", socket.auth)
-   })
-
-   socket.on("session", ({ sessionID, monitorName, isMonitor }) => {
-     // attach the session ID to the next reconnection attempts
-     socket.auth = { sessionID };
-     // store it in the localStorage
-     localStorage.setItem("sessionID", sessionID);
-     // save the ID of the user
-     socket.monitorName = monitorName;
-     socket.isMonitor = socket.isMonitor;
-     if (isMonitor) {
-       title.textContent = `Monitor: ${monitorName}`;
-       monitorToggle.remove();
-       renderQRCode(`${window.location.origin}/presentations.html?m=${sessionID}`);
-     } else {
-       title.textContent = `session ${sessionID}`;
-     }
-   });
-
-   socket.on("monitor go!", ({ monitorName, sessionID }) => {
-     if (typeof localStorage.getItem("sessionID") !== "undefined"
-         && typeof localStorage.getItem("monitorName") !== "undefined") {
-       console.log("This monitor is initialised")
-       return
-     }
-     console.log("moniktor go", {sessionID})
-     localStorage.setItem("monitorName", monitorName)
-     title.textContent = `Monitor: ${monitorName}`;
-     monitorToggle.remove();
-     renderQRCode(`${window.location.origin}/presentations.html?m=${sessionID}`);
-   });
-
-   socket.on("set presentation", ({ presentation, sessionID }) => {
-     const monitor = socket.auth.sessionID
-     if (sessionID !== monitor) {
-       return
-     } else {
-       prezzyLink = `${window.location.origin}/presentations/${presentation}/presentation_client.html`
-       window.location.href = prezzyLink;
-     }
-   });
-
-   document.addEventListener("DOMContentLoaded", () => {
-     console.log("LOADED!");
-     sessionID = localStorage.getItem("sessionID");
-     if (sessionID) {
-       socket.auth = { sessionID };
-       socket.connect();
-     } else {
-       document.querySelector("h1").textContent = "hi, stranger";
-       socket.connect();
-     }
-   })
-   socket.emit("monitor set")
-   //monitorToggle.addEventListener("click", () => socket.emit("monitor set"));
-  </script>
 </html>
