@@ -16,7 +16,6 @@
     <canvas></canvas>
   </body>
   <script>
-   const params = new URLSearchParams(window.location.search)
    const URL = window.location.href
    const socket = io(URL, {autoConnect: false});
 
@@ -73,6 +72,11 @@
    });
 
    socket.on("monitor go!", ({ monitorName, sessionID }) => {
+     if (typeof localStorage.getItem("sessionID") !== "undefined"
+         && typeof localStorage.getItem("monitorName") !== "undefined") {
+       console.log("This monitor is initialised")
+       return
+     }
      console.log("moniktor go", {sessionID})
      localStorage.setItem("monitorName", monitorName)
      title.textContent = `Monitor: ${monitorName}`;
@@ -101,7 +105,7 @@
        socket.connect();
      }
    })
-
-   monitorToggle.addEventListener("click", () => socket.emit("monitor set"));
+   socket.emit("monitor set")
+   //monitorToggle.addEventListener("click", () => socket.emit("monitor set"));
   </script>
 </html>
