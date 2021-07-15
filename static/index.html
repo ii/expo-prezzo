@@ -47,8 +47,9 @@
        return
      } else {
        console.log("match!", {monitor, sessionID})
-       title.textContent = title.textContent + `synced up to ${socketID}`
-       localStorage.set("token", {socketID, secret})
+       const monitorName = localStorage.getItem("monitorName")
+       title.textContent = `Monitor: ${monitorName} has synced up to ${socketID}`
+       localStorage.setItem("token", JSON.stringify({ socketID }))
      }
 
      console.log("what happening", socket.auth)
@@ -72,11 +73,22 @@
    });
 
    socket.on("monitor go!", ({ monitorName, sessionID }) => {
+     console.log("moniktor go", {sessionID})
+     localStorage.setItem("monitorName", monitorName)
      title.textContent = `Monitor: ${monitorName}`;
      monitorToggle.remove();
      renderQRCode(`${window.location.origin}/presentations.html?m=${sessionID}`);
    });
 
+   socket.on("set presentation", ({ presentation, sessionID }) => {
+     const monitor = socket.auth.sessionID
+     if (sessionID !== monitor) {
+       return
+     } else {
+       prezzyLink = `${window.location.origin}/presentations/${presentation}/presentation_client.html`
+       window.location.href = prezzyLink;
+     }
+   });
 
    document.addEventListener("DOMContentLoaded", () => {
      console.log("LOADED!");

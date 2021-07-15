@@ -21,6 +21,10 @@
    const title = document.querySelector("h1");
 
    const monitorSessionID = params.get("m")
+
+   function requestPresentation (presentation, sessionID) {
+     socket.emit("presentation request", {presentation, sessionID});
+   }
    document.addEventListener("DOMContentLoaded", () => {
      console.log("LOADED!");
      if (typeof monitorSessionID === "undefined" || !monitorSessionID) {
@@ -34,16 +38,18 @@
            presentationsNames.forEach(name => {
              var presentationButton = document.createElement('a')
              presentationButton.innerHTML = name
-             presentationButton.href = `${window.location.origin}/presentations/${name}`
+             presentationButton.href = `${window.location.origin}/presentations/${name}/presentation.html`
+             presentationButton.onclick = () => requestPresentation(name, monitorSessionID);
              document.querySelector("#presentation-selector").appendChild(presentationButton)
            })
            document.querySelector("p").textContent = "What interests you?";
        })
+
        socket.emit("get presentations")
        socket.emit("get token", monitorSessionID)
-       socket.on("new token", (token) => {
-         console.log("Token set", token)
-         localStorage.setItem("token", token)
+       socket.on("token for you", ({socketID, secret}) => {
+         console.log("Token set", {socketID, secret});
+         localStorage.setItem("token", JSON.stringify({socketID, secret }));
        })
      }
    })
