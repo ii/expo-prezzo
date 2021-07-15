@@ -12,15 +12,13 @@
   <script src="/qrcode.min.js"></script>
   <body>
     <h1>Hello!</h1>
-    <button id='set-monitor'>Set as Monitor</button>
     <canvas></canvas>
   </body>
   <script>
-   const URL = window.location.href
+   const URL = window.location.origin
    const socket = io(URL, {autoConnect: false});
 
    const title = document.querySelector("h1");
-   const monitorToggle = document.querySelector("button#set-monitor");
    const canvas = document.querySelector("canvas");
 
    // Places QR code in canvas element with val as its value
@@ -64,7 +62,6 @@
      socket.isMonitor = socket.isMonitor;
      if (isMonitor) {
        title.textContent = `Monitor: ${monitorName}`;
-       monitorToggle.remove();
        renderQRCode(`${window.location.origin}/presentations.html?m=${sessionID}`);
      } else {
        title.textContent = `session ${sessionID}`;
@@ -80,7 +77,6 @@
      console.log("moniktor go", {sessionID})
      localStorage.setItem("monitorName", monitorName)
      title.textContent = `Monitor: ${monitorName}`;
-     monitorToggle.remove();
      renderQRCode(`${window.location.origin}/presentations.html?m=${sessionID}`);
    });
 
@@ -104,8 +100,7 @@
        document.querySelector("h1").textContent = "hi, stranger";
        socket.connect();
      }
+     socket.emit("monitor set")
    })
-   socket.emit("monitor set")
-   //monitorToggle.addEventListener("click", () => socket.emit("monitor set"));
   </script>
 </html>

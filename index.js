@@ -99,6 +99,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("monitor set", async () => {
+    console.log("monitor set")
     socket.isMonitor = true;
     const pokemons =  await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${randomInLimit()}`);
     const pokemonData = await pokemons.json();
