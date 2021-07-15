@@ -99,8 +99,8 @@
      } else {
        document.querySelector("h1").textContent = "hi, stranger";
        socket.connect();
+       socket.emit("monitor set")
      }
-     socket.emit("monitor set")
    })
   </script>
 </html>
