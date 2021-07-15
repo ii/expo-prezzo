@@ -1,6 +1,6 @@
-const monitor = localStorage.getItem("sessionID")
+const monitor = sessionStorage.getItem("sessionID")
 const qrcodeURL= `${window.location.origin}/presentations.html?m=${monitor}`
-const {socketID, secret} = JSON.parse(localStorage.getItem("token") || '{}')
+const {socketID, secret} = JSON.parse(sessionStorage.getItem("token") || '{}')
 window.socketID = socketID
 window.secret = secret
 console.log("INIT ITNIT", {socketID, secret})
@@ -9,18 +9,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const URL = window.location.origin
     const socket = io(URL, {autoConnect: true});
 
-    console.log("QRCODE RENDER")
-    const slideBody = document.querySelector("div.reveal")
-    var qrcode = document.createElement("canvas")
-    qrcode.id = 'qrcode-canvas'
-    QRCode.toCanvas(qrcode, qrcodeURL, {width: 135, height: 135}, (error) => {
-        if (error) {
-            console.log('error rendering qr code', {error, value: qrcodeURL});
-        } else {
-            console.log('qr code success!', {value: qrcodeURL});
-        }
-    })
-    slideBody.appendChild(qrcode)
+    if (secret == null) {
+      console.log("QRCODE RENDER")
+      const slideBody = document.querySelector("div.reveal")
+      var qrcode = document.createElement("canvas")
+      qrcode.id = 'qrcode-canvas'
+      QRCode.toCanvas(qrcode, qrcodeURL, {width: 135, height: 135}, (error) => {
+          if (error) {
+              console.log('error rendering qr code', {error, value: qrcodeURL});
+          } else {
+              console.log('qr code success!', {value: qrcodeURL});
+          }
+      })
+      slideBody.appendChild(qrcode)
+    } else {
+        const slideBody = document.querySelector('div.reveal');
+        const button = document.createElement("button");
+        button.style.position = "absolute";
+        button.style.top = "0";
+        button.style.left = "0";
+        button.textContent = "Go Back";
+        button.addEventListener('click', () => window.location.href = qrcodeURL);
+        slideBody.appendChild(button);
+        const controls = document.querySelector('.controls');
+        const slides = document.querySelector('.slides');
+        slides.style.filter = "blur(13px)";
+        controls.style.fontSize = "calc(100vh / 16)";
+        console.log({controls, controlslayout: controls.dataset});
+        controls.dataset.controlsLayout = "edges";
+    }
 
     socket.on("set presentation", ({ presentation, sessionID }) => {
         console.log("setting presentation to", {presentation, sessionID})
@@ -39,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return
         } else {
             console.log("match!", {monitor, sessionID})
-            localStorage.setItem("token", JSON.stringify({ socketID }))
+            sessionStorage.setItem("token", JSON.stringify({ socketID }))
             window.socketID = socketID
         }
 
