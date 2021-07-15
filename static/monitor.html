@@ -69,8 +69,8 @@
    });
 
    socket.on("monitor go!", ({ monitorName, sessionID }) => {
-     if (typeof localStorage.getItem("sessionID") !== "undefined"
-         && typeof localStorage.getItem("monitorName") !== "undefined") {
+     if (localStorage.getItem("sessionID") !== null
+         && localStorage.getItem("monitorName") !== null) {
        console.log("This monitor is initialised")
        return
      }
