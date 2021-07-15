@@ -44,9 +44,9 @@
        return
      } else {
        console.log("match!", {monitor, sessionID})
-       const monitorName = localStorage.getItem("monitorName")
+       const monitorName = sessionStorage.getItem("monitorName")
        title.textContent = `Monitor: ${monitorName} has synced up to ${socketID}`
-       localStorage.setItem("token", JSON.stringify({ socketID }))
+       sessionStorage.setItem("token", JSON.stringify({ socketID }))
      }
 
      console.log("what happening", socket.auth)
@@ -55,8 +55,8 @@
    socket.on("session", ({ sessionID, monitorName, isMonitor }) => {
      // attach the session ID to the next reconnection attempts
      socket.auth = { sessionID };
-     // store it in the localStorage
-     localStorage.setItem("sessionID", sessionID);
+     // store it in the sessionStorage
+     sessionStorage.setItem("sessionID", sessionID);
      // save the ID of the user
      socket.monitorName = monitorName;
      socket.isMonitor = socket.isMonitor;
@@ -69,13 +69,13 @@
    });
 
    socket.on("monitor go!", ({ monitorName, sessionID }) => {
-     if (localStorage.getItem("sessionID") !== null
-         && localStorage.getItem("monitorName") !== null) {
+     if (sessionStorage.getItem("sessionID") !== null
+         && sessionStorage.getItem("monitorName") !== null) {
        console.log("This monitor is initialised")
        return
      }
      console.log("moniktor go", {sessionID})
-     localStorage.setItem("monitorName", monitorName)
+     sessionStorage.setItem("monitorName", monitorName)
      title.textContent = `Monitor: ${monitorName}`;
      renderQRCode(`${window.location.origin}/presentations.html?m=${sessionID}`);
    });
@@ -92,7 +92,7 @@
 
    document.addEventListener("DOMContentLoaded", () => {
      console.log("LOADED!");
-     sessionID = localStorage.getItem("sessionID");
+     sessionID = sessionStorage.getItem("sessionID");
      if (sessionID) {
        socket.auth = { sessionID };
        socket.connect();
