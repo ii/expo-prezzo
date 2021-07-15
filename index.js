@@ -108,13 +108,18 @@ io.on("connection", (socket) => {
     const pokemonData = await pokemons.json();
     const pokemon = pokemonData.results[randomInLimit()];
     saveSesh(socket.sessionID, {isMonitor: true, monitorName: pokemon.name});
-    io.emit("monitor go!", {monitorName: pokemon.name});
+    io.emit("monitor go!", { monitorName: pokemon.name, sessionID: socket.sessionID });
   });
 
   socket.on("get presentations", () => {
     console.log("Get presentations")
-    io.emit("presentation list", { presentationsNames: getPresentations() })
+    socket.emit("presentation list", { presentationsNames: getPresentations() })
   })
+
+  socket.on("presentation request", ({ presentation , sessionID }) => {
+    console.log("oooooh, presentation", {presentation, sessionID });
+    io.emit("set presentation", {presentation, sessionID });
+  });
 
   socket.on("get token", (sessionID) => {
     console.log("Get token")
@@ -128,9 +133,9 @@ io.on("connection", (socket) => {
     const socketID = createHash(secret)
     console.log(`New token generated ${socketID}`)
     saveSesh(sessionID, { socketID, secret })
+  	socket.emit("token for you", { sessionID, socketID, secret });
   	io.emit("new token", { sessionID, socketID, secret });
   })
-
   io.emit("hello", { name: "Zach", adjective: "cool" });
 });
 
