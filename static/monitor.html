@@ -32,10 +32,14 @@
      });
    };
 
-   socket.on("connection initialized", ({ monitorName }) => {
-     title.textContent = `Monitor, code name ${monitorName}`;
-     renderQRCode(`${window.location.origin}/presentations.html?m=${monitorName}`);
-   })
+   socket.on("connection initialized", (monitor) => {
+     if (monitor) {
+       title.textContent = `Monitor, code name ${monitor.monitorName}`;
+       renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
+     } else {
+       title.textContent = 'nope';
+     }
+   });
 
    socket.on("monitor added", (monitor) => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));

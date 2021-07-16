@@ -20,21 +20,21 @@
    const socket = io(URL, {autoConnect: true});
    const title = document.querySelector("h1");
 
-   const monitorSessionID = params.get("m")
+   const monitorName = params.get("m")
 
    function requestPresentation (presentation, sessionID) {
      socket.emit("presentation request", {presentation, sessionID});
    }
    document.addEventListener("DOMContentLoaded", () => {
-     console.log("LOADED!");
-     if (typeof monitorSessionID === "undefined" || !monitorSessionID) {
-       console.log("No monitorSessionID declared")
+     if (typeof monitorName === "undefined" || !monitorName) {
+       console.log("No monitorName declared")
        document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
-       console.log("Fetching presentations")
+       console.log('monitor match');
+       socket.emit("get token", monitorName)
+       socket.emit("get presentations")
        socket.on("presentation list", ({presentationsNames}) => {
-         console.log(presentationsNames)
            presentationsNames.forEach(name => {
              var presentationButton = document.createElement('a')
              presentationButton.innerHTML = name
@@ -51,12 +51,13 @@
          // display: block;
        })
 
-       socket.emit("get presentations")
-       socket.emit("get token", monitorSessionID)
-       socket.on("token for you", ({socketID, secret}) => {
-         console.log("Token set", {socketID, secret});
-         sessionStorage.setItem("sessionID", monitorSessionID);
-         sessionStorage.setItem("token", JSON.stringify({socketID, secret , sessionID: monitorSessionID }));
+       socket.on("new token", (monitor) => {
+         console.log('new token', {monitor});
+         if (monitorName != monitor.monitorName) {
+           return
+         } else {
+          sessionStorage.setItem("monitor", JSON.stringify({monitorName, token: monitor.token, secret: monitor.secret}));
+         }
        })
      }
    })

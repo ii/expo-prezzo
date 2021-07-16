@@ -48,7 +48,18 @@ async function newMonitor () {
   }
 }
 
+// MonitorState => MonitorState
+// return monitor with token and secret added
+function updateToken (monitor) {
+  const ts = new Date().getTime();
+  // we are using reveal's encryption logic to make sure our tokens work with it.
+  const rand = Math.floor(Math.random()*9999999);
+  const secret = ts.toString() + rand.toString();
+  const token = createHash(secret)
+  return {...monitor, token, secret};
+}
 
+// monitorID, MonitorState => SOTW
 function updateMonitor (id, newState) {
   return sotw.map(m => {
     return m.monitorID === id
@@ -58,8 +69,6 @@ function updateMonitor (id, newState) {
 }
 
 // sotw = updateMonitor(id, newState)
-
-var connected = 0
 
 const opts = {
   port: process.env.PORT || 8101,
@@ -126,11 +135,10 @@ app.use(express.static(opts.baseDir));
 // });
 
 io.on("connection", (socket) => {
-  connected += 1
   if (socket.handshake.auth.monitor) {
-    console.log(`[${connected}] session ${socket.handshake.auth.monitor.monitorID} connected`);
+    console.log(`[${sotw.length+1}] session ${socket.handshake.auth.monitor.monitorID} connected`);
   } else {
-    console.log(`[${connected}] client session ${socket.id} connected`);
+    console.log(`[${sotw.length+1}] client session ${socket.id} connected`);
   }
   newState = updateMonitor(socket.handshake.auth.monitor);
   sotw = newState
@@ -138,27 +146,36 @@ io.on("connection", (socket) => {
   socket.emit("connection initialized", socket.handshake.auth.monitor);
 
   socket.on("disconnect", () => {
-    connected -= 1
-    console.log(`[${connected}] user disconnected`);
+    let monitor = socket.handshake.auth.monitor;
+    if (monitor) {
+      sotw = sotw.filter(m => m.monitorID != monitor.monitorID);
+      console.log(`[${sotw.length}] Monitor ${monitor.monitorName} disconnected`)
+      console.log({sotw})
+    } else {
+      console.log(`[${sotw.length-1}] user disconnected`);
+    }
   });
 
   socket.on("new monitor", async () => {
     let monitor = await newMonitor();
-    console.log({monitor});
     sotw = [...sotw, monitor];
     socket.emit('monitor added', monitor);
   })
 
-  socket.on("monitor set", async () => {
-    console.log("monitor set")
-    socket.isMonitor = true;
-    const pokemons =  await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${randomInLimit()}`);
-    const pokemonData = await pokemons.json();
-    const pokemon = pokemonData.results[randomInLimit()];
-    saveSesh(socket.sessionID, {isMonitor: true, monitorName: pokemon.name});
+  socket.on("get token", (monitorName) => {
+    console.log('get token request')
+    let monitor = sotw.find(m => m.monitorName === monitorName);
+    console.log({monitor, sotw, monitorName});
+    if (typeof monitor === "undefined" || !monitor) {
+      console.log("client trying to sync without a monitor")
+      return
+    }
+    monitor = updateToken(monitor);
+    sotw = updateMonitor(monitor.monitorID, monitor);
+    io.emit('new token', monitor);
+  })
 
-    io.emit("monitor go!", { monitorName: pokemon.name, sessionID: socket.sessionID });
-  });
+  io.emit("hello", { name: "Zach", adjective: "cool" });
 
   socket.on("get presentations", () => {
     console.log("Get presentations")
@@ -169,24 +186,8 @@ io.on("connection", (socket) => {
     console.log("oooooh, presentation", {presentation, sessionID });
     io.emit("set presentation", {presentation, sessionID });
   });
-
-  socket.on("get token", (sessionID) => {
-    console.log("Get token")
-    if (typeof sessionID === "undefined" || !sessionID) {
-      console.log("No session ID found when obtaining token")
-      return
-    }
-    const ts = new Date().getTime();
-    const rand = Math.floor(Math.random()*9999999);
-    const secret = ts.toString() + rand.toString();
-    const socketID = createHash(secret)
-    console.log(`New token generated ${socketID}`)
-    saveSesh(sessionID, { socketID, secret })
-    socket.emit("token for you", { sessionID, socketID, secret });
-    io.emit("new token", { sessionID, socketID, secret });
-  })
-  io.emit("hello", { name: "Zach", adjective: "cool" });
 });
+
 
 server.listen(opts.port || null);
 console.log(`Listening on ${opts.port} and serving ${opts.baseDir}`);

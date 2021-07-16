@@ -43,7 +43,11 @@ their doodle and tag).
   #+end_src
 - Message :: the content of an Event.
 - Event Handler :: the action taken on a Message from an Event given the type of Client.
-* implementation
+* Implementation
+TODOs:
+- [ ] fix count for state of the world
+- [ ] implement prezzie choosing and navigation for all clients involved
+- [ ] admin page
 
 * scratch
 #+begin_src yaml
