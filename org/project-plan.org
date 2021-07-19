@@ -22,16 +22,77 @@ wanting to look at, and not just the one they scanned, and perhaps some sort of
 input they can add that is also displayed on a screen(e.g. a whiteboard that has
 their doodle and tag).
 
+* How it works
+** Terms
+- Server  :: our express server that bootstraps socket.io to handle events passed among clients.
+- Client :: a browser that visits the web server.  It can then be turned into a Monitor or a Controller, depending.
+- Monitor :: a client responsible for showing a presentation. Most likely will be our large-ass monitors.
+- Controller :: a client responsible for controlling the slides of the presentation.  In reveal.js terms, the Monitor is the 'client' and the Controller is the 'master'.
+- Event :: a change in state or Message sent from the Server to a Client.
+- SotW :: is a list of MonitorStates, or an empty list
+- MonitorState :: is an object representing a monitor, who its conected to, and what it's showing, as:
+  #+begin_src yaml
+  monitorId: ''
+  monitorName: ''
+  presentation: '' or nil
+  socketID: '' or nil
+  controllerID: '' or nil
+  secret: '' or nil
+  dateOfBirth: timestamp
+  lastUpdated: timestamp
+  #+end_src
+- Message :: the content of an Event.
+- Event Handler :: the action taken on a Message from an Event given the type of Client.
+* Implementation
+TODOs:
+- [ ] fix count for state of the world
+- [ ] implement prezzie choosing and navigation for all clients involved
+- [ ] admin page
 
-* TODO First Iteration
-- A screen displays a presentation with a qr code in some corner of the screen.
-- When a visitor scans the QR code with their phone, they are taken to the admin
-interface for that presentation.
-- They can reset the presentation to the beginning, or move forward and backward.
-* TODO Second Iteration
-- a screen displays a presentation with a qr code holding the unique admin key for that prezzy.
-- the presentation has a reset that can be triggered which creates a new admin
-  key, kicking off anyone previously in control.
-* TODO Third Iteration
-- When someone scans the qr code, they can choose which presentation to look through.
-- At any time, they can choose a different presentation.
+* scratch
+#+begin_src yaml
+# admin is sho  wing presentation on all monitors.
+- monitor: 132343234
+  name: charlie
+  presentation: prezzy1
+  socketid: 1332
+  secret: 13323
+- monitor: 234343234j
+  name: charlie
+  socketid: 1332
+  secret: 13323
+  presentation: prezzy1
+- monitor: 338383828j
+  name: charlie
+  socketid: 1332
+  secret: 13323
+  presentation: prezzy1
+- monitor: djsa;3833828
+  name: charlie
+  presentation: prezzy1
+  socketid: 1332
+  secret: 13323
+#+end_src
+#+begin_src yaml
+# cycled through the monitors
+- monitor: 132343234
+  name: dharlie
+  presentation: nil
+  socketid: nil
+  secret: nil
+- monitor: 234343234j
+  name: ben
+  presentation: nil
+  socketid: nil
+  secret: nil
+- monitor: 338383828j
+  name: ewtwo
+  presentation: nil
+  socketid: nil
+  secret: nil
+#+end_src
+
+#+begin_src yaml
+# client syncs with monitor and requests presentation
+io.emit("set presentation"{name: dharlie, presentation: prezzy1})
+#+end_src

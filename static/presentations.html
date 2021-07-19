@@ -10,9 +10,14 @@
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <body>
-    <h1>Select a presentation to display</h1>
-    <p><p>
-    <div id='presentation-selector'></div>
+    <h1>What interests you?</h1>
+    <ul id='presentations'>
+    </ul>
+    <template id='presentation-item'>
+      <li class='presentation'>
+        <a href='presentation'>presentation</a>
+      </li>
+    </template>
   </body>
   <script>
    const params = new URLSearchParams(window.location.search)
@@ -20,38 +25,52 @@
    const socket = io(URL, {autoConnect: true});
    const title = document.querySelector("h1");
 
-   const monitorSessionID = params.get("m")
+   const monitorName = params.get("m")
 
-   function requestPresentation (presentation, sessionID) {
-     socket.emit("presentation request", {presentation, sessionID});
+   function selectPresentation (presentation, monitorName) {
+     socket.emit("presentation selected", {presentation, monitorName});
    }
+
+   function renderPresentationList (presentations) {
+     const prezzyList = document.querySelector("#presentations")
+     const template = document.querySelector("#presentation-item");
+     presentations.forEach(prezzy => {
+       let clone = template.content.cloneNode(true);
+       let link = clone.querySelector("a");
+       link.href = `${window.location.origin}/presentations/${prezzy}/presentation.html`;
+       // link.href ='#';
+       link.onclick = () => selectPresentation(prezzy, monitorName);
+       link.textContent = prezzy;
+       prezzyList.appendChild(clone);
+     })
+   }
+
    document.addEventListener("DOMContentLoaded", () => {
-     console.log("LOADED!");
-     if (typeof monitorSessionID === "undefined" || !monitorSessionID) {
-       console.log("No monitorSessionID declared")
+     if (typeof monitorName === "undefined" || !monitorName) {
+       console.log("No monitorName declared")
        document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
-       console.log("Fetching presentations")
-       socket.on("presentation list", ({presentationsNames}) => {
-         console.log(presentationsNames)
-           presentationsNames.forEach(name => {
-             var presentationButton = document.createElement('a')
-             presentationButton.innerHTML = name
-             presentationButton.href = `${window.location.origin}/presentations/${name}/presentation.html`
-             presentationButton.onclick = () => requestPresentation(name, monitorSessionID);
-             document.querySelector("#presentation-selector").appendChild(presentationButton)
-           })
-           document.querySelector("p").textContent = "What interests you?";
-       })
+       socket.emit("new token requested", monitorName)
+       socket.emit("presentations requested")
 
-       socket.emit("get presentations")
-       socket.emit("get token", monitorSessionID)
-       socket.on("token for you", ({socketID, secret}) => {
-         console.log("Token set", {socketID, secret});
-         sessionStorage.setItem("sessionID", monitorSessionID);
-         sessionStorage.setItem("token", JSON.stringify({socketID, secret , sessionID: monitorSessionID }));
-       })
+       socket.on("new token supplied", (sotw) => {
+         const monitor = sotw.find(m => m.monitorName === monitorName);
+         if (!monitor) {
+           console.error("trying to connect without a monitor")
+         } else {
+           sessionStorage.setItem(
+             "monitor",
+             JSON.stringify({
+               monitorName,
+               token: monitor.token,
+               secret: monitor.secret
+           }))
+         };
+       });
+       socket.on("presentations supplied", ({presentations}) => {
+         renderPresentationList(presentations);
+       });
      }
    })
   </script>
