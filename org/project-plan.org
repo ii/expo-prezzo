@@ -96,3 +96,10 @@ TODOs:
 # client syncs with monitor and requests presentation
 io.emit("set presentation"{name: dharlie, presentation: prezzy1})
 #+end_src
+
+* Logicistics
+** Providing monitors new names on prezzie selection
+Monitor says to Server, I am ={ monitor }= and would like a new name.
+Server finds the current MonitorID in the ={ monitor }= object and rewrites the monitor name.
+Server omits a updated Monitor object.
+Client Monitor hears omittion, checks the MonitorID for a match and updates it's local monitor object.

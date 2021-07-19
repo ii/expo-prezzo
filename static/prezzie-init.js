@@ -5,6 +5,9 @@ window.socketID = token
 window.secret = isMonitor ? null : secret
 console.log("INIT ITNIT", {monitorName, token, secret, window: window.location});
 
+const localMonitor = () =>
+      JSON.parse(sessionStorage.getItem('monitor'));
+
 document.addEventListener("DOMContentLoaded", () => {
   const URL = window.location.origin
   const socket = io(URL, {autoConnect: false});
@@ -25,6 +28,30 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
     slideBody.appendChild(qrcode)
+
+   socket.on("new token supplied", (sotw) => {
+     thisMonitor = localMonitor();
+     monitorState = sotw.find(m=>m.monitorID === thisMonitor.monitorID);
+     if (monitorState) {
+       sessionStorage.setItem('monitor', JSON.stringify(monitorState))
+     } else {
+       console.error("local monitor doesn't exist in sotw.", {thisMonitor, sotw});
+     }
+   });
+
+   socket.on("new monitor name assigned", (sotw) => {
+     let monitorState = sotw.find(m=> m.token === localMonitor().token)
+     console.log({monitorState});
+     sessionStorage.setItem(
+       "monitor",
+       JSON.stringify(monitorState))
+   });
+
+    socket.on("monitor presentation updated", (sotw) => {
+      const monitorState = sotw.find(m=> m.monitorName === localMonitor().monitorName);
+      sessionStorage.setItem('monitor', JSON.stringify(monitorState));
+      window.location.href = `${window.location.origin}/presentations/${monitorState.presentation}/presentation_client.html`
+    });
   } else {
     socket.connect();
     const slideBody = document.querySelector('div.reveal');
@@ -41,16 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
     controls.style.fontSize = "calc(100vh / 16)";
     console.log({controls, controlslayout: controls.dataset});
     controls.dataset.controlsLayout = "edges";
+
+    socket.on("new token supplied", (sotw) => {
+      sessionStorage.deleteItem("monitor");
+      window.location.href = 'https://ii.nz'
+    });
   }
-
-  socket.on("new token supplied", (sotw) => {
-    const monitorState = sotw.find(m=> m.monitorName === monitorName);
-    sessionStorage.setItem('monitor', JSON.stringify(monitorState));
-  });
-
-  socket.on("monitor presentation updated", (sotw) => {
-    const monitorState = sotw.find(m=> m.monitorName === monitorName);
-    sessionStorage.setItem('monitor', JSON.stringify(monitorState));
-    window.location.href = `${window.location.origin}/presentations/${monitorState.presentation}/presentation_client.html`
-  });
 })

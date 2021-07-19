@@ -25,10 +25,11 @@
    const socket = io(URL, {autoConnect: true});
    const title = document.querySelector("h1");
 
-   const monitorName = params.get("m")
+   const monitorName = () =>
+     params.get("m");
 
-   function selectPresentation (presentation, monitorName) {
-     socket.emit("presentation selected", {presentation, monitorName});
+   function selectPresentation (presentation) {
+     socket.emit("presentation selected", {presentation, monitorName: monitorName()});
    }
 
    function renderPresentationList (presentations) {
@@ -39,34 +40,52 @@
        let link = clone.querySelector("a");
        link.href = `${window.location.origin}/presentations/${prezzy}/presentation.html`;
        // link.href ='#';
-       link.onclick = () => selectPresentation(prezzy, monitorName);
+       link.onclick = () => selectPresentation(prezzy);
        link.textContent = prezzy;
        prezzyList.appendChild(clone);
      })
    }
 
+   function localMonitor () {
+     return JSON.parse(sessionStorage.getItem("monitor"))
+   }
+
    document.addEventListener("DOMContentLoaded", () => {
-     if (typeof monitorName === "undefined" || !monitorName) {
+     if (typeof monitorName() === "undefined" || !monitorName()) {
        console.log("No monitorName declared")
        document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
-       socket.emit("new token requested", monitorName)
+       socket.emit("new token requested", monitorName())
        socket.emit("presentations requested")
 
        socket.on("new token supplied", (sotw) => {
-         const monitor = sotw.find(m => m.monitorName === monitorName);
+         const monitor = sotw.find(m => m.monitorName === monitorName());
          if (!monitor) {
            console.error("trying to connect without a monitor")
          } else {
            sessionStorage.setItem(
              "monitor",
              JSON.stringify({
-               monitorName,
+               monitorName: monitorName(),
                token: monitor.token,
                secret: monitor.secret
            }))
+           socket.emit('new monitor name requested', localMonitor())
          };
+       });
+       socket.on("new monitor name assigned", (sotw) => {
+         let monitor = sotw.find(m=> m.token === localMonitor().token)
+         sessionStorage.setItem(
+           "monitor",
+           JSON.stringify({
+             monitorName: monitor.monitorName,
+             token: monitor.token,
+             secret: monitor.secret
+         }))
+         params.set("m", monitor.monitorName);
+         const newPath = window.location.pathname + '?' + params.toString()
+         history.pushState(null, '', newPath)
        });
        socket.on("presentations supplied", ({presentations}) => {
          renderPresentationList(presentations);

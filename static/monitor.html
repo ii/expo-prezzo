@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Hello!</title>
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='/stylesheets/main.css' />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -11,7 +16,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/qrcode.min.js"></script>
   <body>
-    <h1>Hello!</h1>
+    <h1 class='nes-test is-primary'>Hello!</h1>
     <canvas></canvas>
   </body>
   <script>
@@ -47,6 +52,7 @@
    socket.on("monitor added", (monitor) => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
      title.textContent = `Monitor, code name ${monitor.monitorName}`;
+     renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
    })
 
    socket.on("new token supplied", (sotw) => {
@@ -67,6 +73,15 @@
      } else {
        console.error("monitor updated to an empty presentation.");
      }
+   });
+
+   socket.on("new monitor name assigned", (sotw) => {
+     let monitorState = sotw.find(m=> m.token === localMonitor().token)
+     sessionStorage.setItem(
+       "monitor",
+       JSON.stringify(monitorState))
+     title.textContent = `Monitor, code name ${localMonitor().monitorName}`;
+     renderQRCode(`${window.location.origin}/presentations.html?m=${localMonitor().monitorName}`);
    });
 
    document.addEventListener("DOMContentLoaded", () => {

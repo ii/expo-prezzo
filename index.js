@@ -49,17 +49,22 @@ const getDirectories = (path) => (
   fs.readdirSync(path)
     .filter((file) => fs.statSync(`${path}/${file}`).isDirectory()));
 
-async function newMonitor() {
-  const date = new Date();
+async function newMonitorName() {
   const pokemons = await fetch(
     `https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${randomInLimit()}`
   );
   const pokemonData = await pokemons.json();
   const pokemon = pokemonData.results[randomInLimit()];
+  return pokemon.name
+}
+
+async function newMonitor() {
+  const date = new Date();
+  const name = await newMonitorName();
   return {
     ...monitorState,
     monitorID: randomID(),
-    monitorName: pokemon.name,
+    monitorName: name,
     dateOfBirth: date,
     lastUpdated: date,
   };
@@ -143,6 +148,19 @@ io.on("connection", (socket) => {
       io.emit("new token supplied", sotw);
     }
   });
+  socket.on("new monitor name requested", async (monitor) => {
+    const monitorState = sotw.find((m) => m.token === monitor.token);
+    // generate new monitor name
+    const monitorName = await newMonitorName();
+    // update monitor state with that name
+    sotw = updateMonitorInSOTW(
+      'monitorID', monitorState.monitorID,
+      {...monitorState,
+       monitorName,
+      }
+    );
+    io.emit("new monitor name assigned", sotw)
+  })
 
   socket.on("presentations requested", () => {
     socket.emit("presentations supplied", {
