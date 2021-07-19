@@ -1,0 +1,16 @@
+/*
+ main.css: the place for globbal styling
+*/
+
+*,* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Press Start 2p', monospace;
+}
