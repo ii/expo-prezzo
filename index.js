@@ -7,20 +7,23 @@ const crypto = require("crypto");
 const opts = {
   port: process.env.PORT || 8101,
   baseDir: process.env.BASEDIR || process.cwd() + "/static",
-  url: process.env.URL || "https://node.bobymcbobs.pair.sharing.io/"
+  url: process.env.URL || "https://node.bobymcbobs.pair.sharing.io/",
 };
 
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: opts.url
+    origin: opts.url,
   },
 });
+
+const rainbow = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
 
 const monitorState = {
   monitorID: "",
   monitorName: "",
+  colour: "",
   presentation: "",
   controllerID: "",
   token: "",
@@ -66,8 +69,9 @@ async function newMonitor() {
     ...monitorState,
     monitorID: randomID(),
     monitorName: name,
+    colour: rainbow[randomInRange(7)],
     dateOfBirth: date,
-    lastUpdated: date,
+    lastUpdated: date
   };
 }
 
