@@ -36,21 +36,22 @@ let sotw = []; // the state of the app, will hold a list of MonitorStates;
 
 const LIMIT = 300;
 
-const randomID = () =>
-      crypto.randomBytes(8).toString("hex");
+const randomID = () => crypto.randomBytes(8).toString("hex");
 
-const randomInLimit = () =>
-      Math.floor(Math.random() * (LIMIT - 1));
+const randomInLimit = () => Math.floor(Math.random() * (LIMIT - 1));
+
+const randomInRange = (max) =>
+      Math.floor(Math.random() * (max + 1));
 
 // String => Hex
 // encodes secret, s, into cryptographic hash
 // we are using a deprecated, less secure method, but our threat model is v. low.
-const createHash = (s) =>
-  crypto.createCipher("blowfish", s).final("hex");
+const createHash = (s) => crypto.createCipher("blowfish", s).final("hex");
 
-const getDirectories = (path) => (
-  fs.readdirSync(path)
-    .filter((file) => fs.statSync(`${path}/${file}`).isDirectory()));
+const getDirectories = (path) =>
+  fs
+    .readdirSync(path)
+    .filter((file) => fs.statSync(`${path}/${file}`).isDirectory());
 
 async function newMonitorName() {
   const pokemons = await fetch(
@@ -84,8 +85,8 @@ function updateToken() {
   const secret = ts.toString() + rand.toString();
   return {
     secret,
-    token: createHash(secret)
-  }
+    token: createHash(secret),
+  };
 }
 
 // string, monitorID, MonitorState => SOTW
@@ -93,10 +94,17 @@ function updateToken() {
 // update  matching monitor in SOTW with new MonitorState
 function updateMonitorInSOTW(match, value, newState) {
   return sotw.map((m) => {
-    return m[match] === value
-      ? { ...m, ...newState }
-      : m;
+    return m[match] === value ? { ...m, ...newState } : m;
   });
+}
+
+function getPresentations() {
+  return getDirectories(opts.baseDir + "/presentations/").map(prezzie => {
+    const rawData = fs.readFileSync(`${opts.baseDir}/presentations/${prezzie}/presentation.json`)
+    const presentationJSON = JSON.parse(rawData)
+    presentationJSON.folderName = prezzie
+    return presentationJSON
+  })
 }
 
 app.use(express.static(opts.baseDir));
@@ -178,7 +186,7 @@ io.on("connection", (socket) => {
 
   socket.on("presentations requested", () => {
     socket.emit("presentations supplied", {
-      presentations: getDirectories(opts.baseDir + "/presentations/"),
+      presentations: getPresentations(),
     });
   });
 
