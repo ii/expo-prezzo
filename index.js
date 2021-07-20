@@ -55,7 +55,8 @@ async function newMonitorName() {
   );
   const pokemonData = await pokemons.json();
   const pokemon = pokemonData.results[randomInLimit()];
-  return pokemon.name
+  const randomNumber = Math.floor(Math.random() * 9);
+  return `${pokemon.name}${randomNumber}`;
 }
 
 async function newMonitor() {
