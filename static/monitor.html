@@ -42,6 +42,8 @@
 
    socket.on("connection initialized", (monitor) => {
      if (monitor) {
+       let thisMonitor = localMonitor();
+       sessionStorage.setItem("monitor", JSON.stringify(monitor))
        title.textContent = `Monitor, code name ${monitor.monitorName}`;
        renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
      } else {
@@ -69,24 +71,32 @@
      const thisMonitor = localMonitor();
      const monitor = sotw.find(m => m.monitorID === thisMonitor.monitorID);
      if (monitor && monitor.presentation !== '') {
-       window.location.href = `${window.location.origin}/presentations/${monitor.presentation}/presentation_client.html`;
+       let presentationPath = `/presentations/${monitor.presentation}/presentation_client.html`
+       if (window.location.pathname !== presentationPath) {
+         window.location.href = `${window.location.origin}${presentationPath}`;
+       }
      } else {
        console.error("monitor updated to an empty presentation.");
      }
    });
 
    socket.on("new monitor name assigned", (sotw) => {
-     let monitorState = sotw.find(m=> m.token === localMonitor().token)
-     sessionStorage.setItem(
-       "monitor",
-       JSON.stringify(monitorState))
-     title.textContent = `Monitor, code name ${localMonitor().monitorName}`;
-     renderQRCode(`${window.location.origin}/presentations.html?m=${localMonitor().monitorName}`);
+     if (!localMonitor().token) {
+       console.log("New monitor name is not for me. I don't have a token yet!")
+     } else {
+       let monitorState = sotw.find(m=> m.token === localMonitor().token)
+       sessionStorage.setItem(
+         "monitor",
+         JSON.stringify(monitorState))
+       title.textContent = `Monitor, code name ${localMonitor().monitorName}`;
+       renderQRCode(`${window.location.origin}/presentations.html?m=${localMonitor().monitorName}`);
+     }
    });
 
    document.addEventListener("DOMContentLoaded", () => {
      let monitor = JSON.parse(sessionStorage.getItem("monitor"));
      if (monitor) {
+       monitor.presentation = '';
        socket.auth = { monitor };
        socket.connect();
      } else {
