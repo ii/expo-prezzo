@@ -15,15 +15,28 @@
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/qrcode.min.js"></script>
-  <body>
-    <h1 class='nes-test is-primary'>Hello!</h1>
-    <canvas></canvas>
+  <body class='shifting-sands'>
+    <main>
+      <h1>Careers in open source!</h1>
+      <div class='nes-container is-rounded with-title is-centered scan-tag'>
+        <p class='title'>Scan with phone to watch presentation</p>
+        <canvas></canvas>
+      </div>
+      <div class='content'>
+        <p>come to ii.nz to find out more about dcool things you can do and all that great stuff!</p>
+      </div>
+    </main>
+    <div id='monitor-box' class='nes-container with-title'>
+      <p class='title'>Screen</p>
+      <span id='monitor-state'>no screen set</span>
+    </div>
   </body>
   <script>
    const URL = window.location.origin
    const socket = io(URL, {autoConnect: false});
 
-   const title = document.querySelector("h1");
+   const body = document.querySelector("body");
+   const title = document.querySelector("#monitor-state");
    const canvas = document.querySelector("canvas");
 
    const localMonitor = () =>
@@ -31,7 +44,7 @@
 
    // Places QR code in canvas element with val as its value
    function renderQRCode (val) {
-     QRCode.toCanvas(canvas, val, (error) => {
+     QRCode.toCanvas(canvas, val, { scale: 10 }, (error) => {
        if (error) {
          console.log('error rendering qr code', {error, value: val});
        } else {
@@ -42,18 +55,19 @@
 
    socket.on("connection initialized", (monitor) => {
      if (monitor) {
-       let thisMonitor = localMonitor();
        sessionStorage.setItem("monitor", JSON.stringify(monitor))
-       title.textContent = `Monitor, code name ${monitor.monitorName}`;
+       const colour = monitor.colour || 'green';
+       body.classList.add(`${colour}-gradient`);
+       title.textContent = `${monitor.monitorName}`;
        renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
-     } else {
-       return
      }
    });
 
    socket.on("monitor added", (monitor) => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
-     title.textContent = `Monitor, code name ${monitor.monitorName}`;
+     const colour = monitor.colour || 'green';
+     body.classList.add(`${colour}-gradient`);
+     title.textContent = `${monitor.monitorName}`;
      renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
    })
 
@@ -88,7 +102,7 @@
        sessionStorage.setItem(
          "monitor",
          JSON.stringify(monitorState))
-       title.textContent = `Monitor, code name ${localMonitor().monitorName}`;
+       title.textContent = `${localMonitor().monitorName}`;
        renderQRCode(`${window.location.origin}/presentations.html?m=${localMonitor().monitorName}`);
      }
    });
@@ -100,7 +114,6 @@
        socket.auth = { monitor };
        socket.connect();
      } else {
-       document.querySelector("h1").textContent = "Initializing Monitor...";
        socket.connect();
        socket.emit("new monitor");
      }

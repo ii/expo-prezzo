@@ -3,20 +3,32 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='/stylesheets/main.css' />
     <title>Select a presentation</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <body>
-    <h1>What interests you?</h1>
-    <ul id='presentations'>
-    </ul>
+  <body class='presentation-page'>
+    <main>
+      <h1>What interests you?</h1>
+      <div id='presentations'>
+      </div>
+    </main>
+    <div id='monitor-box' class='nes-container with-title'>
+      <p class='title'>Check us out</p>
+      <a href="https://ii.nz">ii.nz</a>
+    </div>
     <template id='presentation-item'>
-      <li class='presentation'>
-        <a href='presentation'>presentation</a>
-      </li>
+      <a class="presentation-card">
+        <b>presentation</b>
+        <p>description</p>
+      </a>
     </template>
   </body>
   <script>
@@ -24,6 +36,7 @@
    const URL = window.location.origin
    const socket = io(URL, {autoConnect: true});
    const title = document.querySelector("h1");
+   const body = document.querySelector("body");
 
    const monitorName = () =>
      params.get("m");
@@ -36,12 +49,13 @@
      const prezzyList = document.querySelector("#presentations")
      const template = document.querySelector("#presentation-item");
      presentations.forEach(prezzy => {
-       let clone = template.content.cloneNode(true);
-       let link = clone.querySelector("a");
-       link.href = `${window.location.origin}/presentations/${prezzy}/presentation.html`;
-       // link.href ='#';
-       link.onclick = () => selectPresentation(prezzy);
-       link.textContent = prezzy;
+       let clone = template.content.firstElementChild.cloneNode(true);
+       let name = clone.querySelector("b")
+       let desc = clone.querySelector("p")
+       clone.onclick = () => selectPresentation(prezzy.folderName);
+       clone.href = `${window.location.origin}/presentations/${prezzy.folderName}/presentation.html`;
+       name.textContent = prezzy.name
+       desc.textContent = prezzy.description
        prezzyList.appendChild(clone);
      })
    }
@@ -68,6 +82,7 @@
              "monitor",
              JSON.stringify({
                monitorName: monitorName(),
+               colour: monitor.colour,
                token: monitor.token,
                secret: monitor.secret
            }))
@@ -80,12 +95,15 @@
            "monitor",
            JSON.stringify({
              monitorName: monitor.monitorName,
+             colour: monitor.colour,
              token: monitor.token,
              secret: monitor.secret
          }))
          params.set("m", monitor.monitorName);
          const newPath = window.location.pathname + '?' + params.toString()
          history.pushState(null, '', newPath)
+         const colour = monitor.colour || 'green';
+         body.classList.add(`${colour}-gradient`);
        });
        socket.on("presentations supplied", ({presentations}) => {
          renderPresentationList(presentations);
