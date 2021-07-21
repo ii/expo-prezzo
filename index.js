@@ -142,6 +142,7 @@ io.on("connection", (socket) => {
     } else {
       sotw = updateMonitorInSOTW(socket.handshake.auth.monitor)
     }
+    io.emit("SOTW updated", sotw);
   } else {
     console.log(`[${sotw.length + 1}] client session ${socket.id} connected`);
   }
@@ -150,20 +151,22 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     let monitor = socket.handshake.auth.monitor;
-    if (monitor) {
-      sotw = sotw.filter((m) => m.monitorID != monitor.monitorID);
-      console.log(
-        `[${sotw.length}] Monitor ${monitor.monitorName} disconnected`
-      );
-    } else {
+    if (!monitor) {
       console.log(`[${sotw.length - 1}] user disconnected`);
+      return
     }
+    sotw = sotw.filter((m) => m.monitorID !== monitor.monitorID);
+    console.log(
+      `[${sotw.length}] Monitor ${monitor.monitorName} disconnected`
+    );
+    io.emit("SOTW updated", sotw)
   });
 
   socket.on("new monitor", async () => {
     let monitor = await newMonitor();
     sotw = [...sotw, monitor];
     socket.emit("monitor added", monitor);
+    io.emit("SOTW updated", sotw)
   });
 
   socket.on("new token requested", (monitorName) => {
@@ -198,6 +201,7 @@ io.on("connection", (socket) => {
     io.emit("new monitor name assigned", sotw);
   });
 
+  //io.emit("SOTW updated", {match 'token', sotw: sotw})
   socket.on("presentations requested", () => {
     socket.emit("presentations supplied", {
       presentations: getPresentations(),
@@ -208,6 +212,14 @@ io.on("connection", (socket) => {
     sotw = updateMonitorInSOTW("monitorName", monitorName, { presentation });
     io.emit("monitor presentation updated", sotw);
   });
+
+  socket.on("state of the world requested", () => {
+    if (!socket.handshake.headers.authorization) {
+      console.log("no auth for", socket.handshake)
+      return
+    }
+    socket.emit("SOTW updated", sotw)
+  })
 });
 
 server.listen(opts.port || null);
