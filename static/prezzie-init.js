@@ -12,6 +12,12 @@ console.log("INIT ITNIT", {
   window: window.location,
 });
 
+let prezzoStyle = document.createElement('link')
+prezzoStyle.rel = 'stylesheet'
+prezzoStyle.type = 'text/css'
+prezzoStyle.href = '/stylesheets/main.css'
+document.head.appendChild(prezzoStyle)
+
 const localMonitor = () => JSON.parse(sessionStorage.getItem("monitor"));
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -73,12 +79,15 @@ document.addEventListener("DOMContentLoaded", () => {
     socket.connect();
     const slideBody = document.querySelector("div.reveal");
     const button = document.createElement("button");
-    button.style.position = "absolute";
-    button.style.top = "0";
-    button.style.left = "0";
-    button.textContent = "Go Back";
+    let iiLink = document.createElement('button')
+    button.classList.add("presentation-return-button")
+    button.textContent = "🔙 Return to ii.nz career options";
     button.addEventListener("click", () => (window.location.href = qrcodeURL));
     slideBody.appendChild(button);
+    iiLink.addEventListener('click', () => (window.location.href = 'https://ii.nz'))
+    iiLink.textContent = 'Find out more about ii.nz ⏩'
+    iiLink.classList.add("presentation-ii-link-button")
+    document.body.appendChild(iiLink)
     const controls = document.querySelector(".controls");
     const slides = document.querySelector(".slides");
     slides.style.filter = "blur(13px)";

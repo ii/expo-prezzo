@@ -214,3 +214,35 @@ body.presentation-page .nes-container.with-title,
 body.presentation-page .nes-container.with-title > .title {
   background-color: var(--colour_accent);
 }
+
+button.presentation-return-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: calc(var(--base-font) * 2);
+  width: 100%;
+  padding: 1vh;
+  background: var(--colour_accent);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+button.presentation-return-button:hover {
+  filter: hue-rotate(180deg);
+}
+
+button.presentation-ii-link-button {
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  background: var(--colour_accent);
+  padding: 1vh;
+  position: absolute;
+  font-size: calc(var(--base-font) *2 );
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+button.presentation-ii-link-button:hover {
+  filter: hue-rotate(180deg);
+}
