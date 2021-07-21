@@ -44,6 +44,12 @@ const randomInLimit = () => Math.floor(Math.random() * (LIMIT - 1));
 const randomInRange = (max) =>
       Math.floor(Math.random() * (max + 1));
 
+const inRainbow = () =>
+      rainbow[(sotw.length) % rainbow.length]
+
+// const adminUsernames = process.env.APP_ADMIN_USERNAME.split(',') || ['ii']
+const adminPassword = process.env.APP_ADMIN_PASSWORD || 'iiiscool'
+
 // String => Hex
 // encodes secret, s, into cryptographic hash
 // we are using a deprecated, less secure method, but our threat model is v. low.
@@ -71,7 +77,7 @@ async function newMonitor() {
     ...monitorState,
     monitorID: randomID(),
     monitorName: name,
-    colour: rainbow[randomInRange(7)],
+    colour: inRainbow(),
     dateOfBirth: date,
     lastUpdated: date
   };
