@@ -1,0 +1,100 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin</title>
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='/stylesheets/main.css' />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <script src="/app.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Place favicon.ico in the root directory -->
+    <style>
+     section#screens {
+       display: flex;
+       justify-content: center;
+       align-items: center  ;
+     }
+     div.screen-grid {
+       display: grid;
+       width: 100%;
+       grid-template-columns: repeat(3, 1fr);
+       gap: 1.5rem;
+       margin: auto;
+     }
+
+     div.screen-card {
+       border: 1px solid gray;
+       background: var(--colour_bg);
+     }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Admin Page</h1>
+      <div id='monitors'>
+      </div>
+      <section id='screens'>
+      </section>
+    </main>
+    <template id="screen-card-template">
+      <div class='screen-card'>
+        <b>name</b>
+        <p>
+          info here
+        </p>
+      </div>
+    </template>
+    <template id='screens-grid-template'>
+      <div class='screen-grid'>
+      </div>
+    </template>
+    <script>
+     const URL = window.location.origin
+     const socket = io(URL, {autoConnect: true});
+     const monitors = document.querySelector("body div#monitors");
+     const template = document.querySelector("body template#monitor-card")
+
+     function populateCard(card, screen) {
+       let title = card.querySelector("b")
+       let colour = card.querySelector("p");
+       title.textContent = screen.monitorName;
+       colour.textContent = screen.colour;
+       card.classList.add(`${screen.colour}-gradient`)
+       return card;
+     }
+
+     function renderScreens (name, sotw) {
+       console.log({name, sotw});
+       const grid = document.querySelector('#screens-grid-template').content.firstElementChild.cloneNode(true);
+       let cardTemplate = document.querySelector('#screen-card-template')
+       const screenSection = document.querySelector('#screens');
+       sotw.forEach(screen => {
+         let card = cardTemplate.content.firstElementChild.cloneNode(true);
+         card = populateCard(card,screen);
+         grid.appendChild(card);
+       });
+       screenSection.replaceChildren(grid);
+     }
+
+     ["new token supplied",
+      "new monitor name assigned",
+      "monitor presentation updated",
+      "SOTW updated"].forEach(name => {
+        console.log(name)
+        socket.on(name, (sotw) => renderScreens(name, sotw))
+      })
+
+
+     document.addEventListener("DOMContentLoaded", () => {
+       socket.emit('state of the world requested')
+     });
+    </script>
+  </body>
+</html>
