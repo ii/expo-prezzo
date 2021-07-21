@@ -45,10 +45,52 @@ their doodle and tag).
 - Event Handler :: the action taken on a Message from an Event given the type of Client.
 * Implementation
 TODOs:
-- [ ] fix count for state of the world
-- [ ] implement prezzie choosing and navigation for all clients involved
+- [X] fix count for state of the world
+- [X] implement prezzie choosing and navigation for all clients involved
 - [ ] admin page
+* TODO Admin Page
+- [ ] accessible at /admin
+- [ ] have some basic authentication
+- [ ] can see all the monitors and their presentation
+- [ ] can set monitor to specific presentation
+- [ ] can randomize presentations across all monitors.
+- [ ] can trigger monitor to get new name.
+- [ ] can set page for all monitors
+** Authentication
+#+begin_src js
+// express server
 
+function authenicationMiddleware (req, res, next) {
+    // authentication logic
+    const { username, password} = req.body;
+    if (users.includes(username) && password === ourPassword) {
+        res.sendStatus(200)
+        next()
+    } else {
+        res.sendStatus(403);
+        res.json({body: "you don't belong here"});
+    }
+}
+
+app.get("/admin", authenticationMiddleware, (req, res) => {
+    if (res.status === 200)  {
+        res.send(ourAdminPage)
+    }})
+app.get("/", staticPages)
+
+socket.on("refresh all", (payload) => {
+    if (payload.auth === ourPassword) {
+        //refresh the things
+        socket.emit('refreshed!')
+    }
+})
+
+socket.on("grab all monitors", (payload) => {
+    if (payload.auth === ourPassword) {
+        socket.emit('refreshed!')
+    }
+})
+#+end_src
 * scratch
 #+begin_src yaml
 # admin is sho  wing presentation on all monitors.
