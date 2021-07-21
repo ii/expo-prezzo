@@ -3,6 +3,7 @@ const express = require("express");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const crypto = require("crypto");
+const basicAuth = require('express-basic-auth');
 
 const opts = {
   port: process.env.PORT || 8101,
@@ -106,6 +107,13 @@ function getPresentations() {
     return presentationJSON
   })
 }
+
+app.get('/admin.html', basicAuth({
+  users: { 'ii': adminPassword },
+  challenge: true
+}), (req, res) => {
+  res.sendFile(`${opts.baseDir}/admin.html`)
+})
 
 app.use(express.static(opts.baseDir));
 
