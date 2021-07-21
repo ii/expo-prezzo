@@ -25,11 +25,11 @@
       <div class='content'>
         <p>come to ii.nz to find out more about dcool things you can do and all that great stuff!</p>
       </div>
-    </main>
     <div id='monitor-box' class='nes-container with-title'>
       <p class='title'>Screen</p>
       <span id='monitor-state'>no screen set</span>
     </div>
+    </main>
   </body>
   <script>
    const URL = window.location.origin
@@ -65,11 +65,8 @@
 
    socket.on("monitor added", (monitor) => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
-     const colour = monitor.colour || 'green';
-     body.classList.add(`${colour}-gradient`);
-     title.textContent = `${monitor.monitorName}`;
-     renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
-   })
+     window.location.reload();
+   });
 
    socket.on("new token supplied", (sotw) => {
      thisMonitor = localMonitor();
