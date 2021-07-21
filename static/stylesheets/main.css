@@ -2,159 +2,215 @@
  main.css: the place for globbal styling
 */
 :root {
-    --neutral: ghostwhite;
-    --red: hsl(346, 84%, 61%);
-        --orange: hsl(44, 98%, 50%);
-    --yellow: hsl(64, 98%, 50%);
-    --green: hsl(116, 55%, 89%);
-    --blue: hsl(202, 78%, 84%);
-    --indigo: hsl(247, 89%, 90%);
-    --violet: hsl(247, 59%, 80%);
-    --colour_bg: var(--neutral);
-    --colour_body: black;
-    --colour_accent: pink;
-    --base-font: 20px;
-    --main-width: 55rem;
-    --inner-space: 1.5rem;
-    --outer-space: calc(var(--inner-space) * 3);
+  --neutral: ghostwhite;
+  --red: hsl(346, 84%, 61%);
+  --orange: hsl(44, 98%, 50%);
+  --yellow: hsl(64, 98%, 50%);
+  --green: hsl(116, 55%, 89%);
+  --blue: hsl(202, 78%, 84%);
+  --indigo: hsl(247, 89%, 90%);
+  --violet: hsl(247, 59%, 80%);
+  --colour_bg: var(--neutral);
+  --colour_body: black;
+  --colour_accent: pink;
+  --base-font: 20px;
+  --main-width: 55rem;
+  --inner-space: 1.5rem;
+  --outer-space: calc(var(--inner-space) * 3);
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.red{--colour_bg: var(--red);}
-.orange{--colour_bg: var(--orange);}
-.yellow{--colour_bg: var(--yellow);}
-.green{--colour_bg: var(--green);}
-.blue{--colour_bg: var(--blue);}
-.indigo{--colour_bg: var(--indigo);}
-.violet{--colour_bg: var(--violet);}
+.red {
+  --colour_bg: var(--red);
+}
+.orange {
+  --colour_bg: var(--orange);
+}
+.yellow {
+  --colour_bg: var(--yellow);
+}
+.green {
+  --colour_bg: var(--green);
+}
+.blue {
+  --colour_bg: var(--blue);
+}
+.indigo {
+  --colour_bg: var(--indigo);
+}
+.violet {
+  --colour_bg: var(--violet);
+}
 
-.red-gradient {--colour_bg:  linear-gradient(var(--red), var(--neutral));}
-.orange-gradient {--colour_bg:  linear-gradient(var(--orange), var(--neutral));}
-.yellow-gradient {--colour_bg:  linear-gradient(var(--yellow), var(--neutral));}
-.green-gradient {--colour_bg:  linear-gradient(var(--green), var(--neutral));}
-.blue-gradient {--colour_bg:  linear-gradient(var(--blue), var(--neutral));}
-.indigo-gradient {--colour_bg:  linear-gradient(var(--indigo), var(--neutral));}
-.violet-gradient {--colour_bg:  linear-gradient(var(--violet), var(--neutral));}
+.red-gradient {
+  --colour_bg: linear-gradient(var(--red), var(--neutral));
+}
+.orange-gradient {
+  --colour_bg: linear-gradient(var(--orange), var(--neutral));
+}
+.yellow-gradient {
+  --colour_bg: linear-gradient(var(--yellow), var(--neutral));
+}
+.green-gradient {
+  --colour_bg: linear-gradient(var(--green), var(--neutral));
+}
+.blue-gradient {
+  --colour_bg: linear-gradient(var(--blue), var(--neutral));
+}
+.indigo-gradient {
+  --colour_bg: linear-gradient(var(--indigo), var(--neutral));
+}
+.violet-gradient {
+  --colour_bg: linear-gradient(var(--violet), var(--neutral));
+}
 
-html, body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'Press Start 2p', monospace;
-    background: var(--colour_bg);
-    color: var(--colour_body);
-    font-size: var(--base-font);
-    background-repeat: no-repeat;
-    background-size: contain;
+  font-family: "Press Start 2p", monospace;
+  background: var(--colour_bg);
+  color: var(--colour_body);
+  font-size: var(--base-font);
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 main {
-    max-width: var(--main-width);
-    margin: auto;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-flow: column;
-    height: 100vh;
-    padding-top: calc(var(--inner-space) * 1.25);
-    padding-bottom: calc(var(--outer-space) * 1.5);
+  max-width: var(--main-width);
+  margin: auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column;
+  padding-top: calc(var(--inner-space) * 1.25);
+  padding-bottom: calc(var(--outer-space) * 1.5);
 }
 
 div.nes-container.scan-tag {
-    padding: var(--inner-space);
-    margin-top: var(--outer-space);
+  padding: var(--inner-space);
+  margin-top: var(--outer-space);
 }
 
-.nes-container.with-title>.title {
-    background-color: var(--colour_bg);
+.nes-container.with-title > .title {
+  background-color: var(--colour_bg);
 }
 
 div#monitor-box {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-size: 0.8rem;
-    background: var(--colour_accent);
-    padding: calc(var(--inner-space) / 2);
-    width: 100vw;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 0.8rem;
+  background: var(--colour_accent);
+  padding: calc(var(--inner-space) / 2);
+  width: 100vw;
 }
 
-
-div#monitor-box.nes-container.with-title>.title {
-    background-color: var(--colour_accent);
-    border: 2px solid black;
+div#monitor-box.nes-container.with-title > .title {
+  background-color: var(--colour_accent);
+  border: 2px solid black;
 }
-
 
 .shifting-sands {
-    /* background: linear-gradient(127deg, #4cb89c, #bbd7cf); */
-    background-size: 400% 400%;
-    -webkit-animation: PleasantScroll 30s ease infinite;
-    -moz-animation: PleasantScroll 30s ease infinite;
-    -o-animation: PleasantScroll 30s ease infinite;
-    animation: PleasantScroll 30s ease infinite;
+  /* background: linear-gradient(127deg, #4cb89c, #bbd7cf); */
+  background-size: 400% 400%;
+  -webkit-animation: PleasantScroll 30s ease infinite;
+  -moz-animation: PleasantScroll 30s ease infinite;
+  -o-animation: PleasantScroll 30s ease infinite;
+  animation: PleasantScroll 30s ease infinite;
 }
 
 @-webkit-keyframes PleasantScroll {
-    0%{background-position:0% 5%}
-    50%{background-position:100% 96%}
-    100%{background-position:0% 5%}
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
 }
 @-moz-keyframes PleasantScroll {
-    0%{background-position:0% 5%}
-    50%{background-position:100% 96%}
-    100%{background-position:0% 5%}
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
 }
 @-o-keyframes PleasantScroll {
-    0%{background-position:0% 5%}
-    50%{background-position:100% 96%}
-    100%{background-position:0% 5%}
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
 }
 @keyframes PleasantScroll {
-    0%{background-position:0% 5%}
-    50%{background-position:100% 96%}
-    100%{background-position:0% 5%}
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
 }
 
 body.presentation-page {
-    --base-font: 14px;
-    padding-left: var(--inner-space);
-    padding-right: var(--inner-space);
+  --base-font: 14px;
 }
 
 body.presentation-page main {
-    padding-top: calc(var(--inner-space) * 1.15);
-    padding-bottom: calc(var(--inner-space) * 1.15);
-    justify-content: flex-start;
+  justify-content: flex-start;
+  padding-left: var(--inner-space);
+  padding-right: var(--inner-space);
 }
 
-
 div#presentations {
-    margin-top: var(--inner-space);
+  margin-top: var(--inner-space);
 }
 
 a.presentation-card {
-    color: var(--colour_body);
-    background-color: var(--neutral);
-    border: 2px solid black;
-    display: block;
-    text-decoration: none;
-    margin-bottom: var(--inner-space);
+  color: var(--colour_body);
+  background-color: var(--neutral);
+  border: 2px solid black;
+  display: block;
+  text-decoration: none;
+  margin-bottom: var(--inner-space);
 }
 
 a.presentation-card:hover {
-    filter: hue-rotate(180deg);
+  filter: hue-rotate(180deg);
 }
 
 a.presentation-card b {
-    font-size: 1.33rem;
+  font-size: 1.33rem;
 }
 
 a.presentation-card p {
+}
+
+div#check-out {
+  width: 100vw;
+}
+
+body.presentation-page .nes-container.with-title,
+body.presentation-page .nes-container.with-title > .title {
+  background-color: var(--colour_accent);
 }
