@@ -58,19 +58,15 @@
      })
    }
 
-   function localMonitor () {
-     return JSON.parse(sessionStorage.getItem("monitor"))
-   }
-
    document.addEventListener("DOMContentLoaded", () => {
      if (typeof monitorName === "undefined" || !monitorName) {
        console.log("No monitorName declared")
        document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
-       const device = JSON.parse(sessionStorage.getItem("device"));
-       if (device) {
-         socket.auth = { device };
+       const deviceID = localStorage.getItem("device");
+       if (deviceID) {
+         socket.auth = { deviceID };
        }
        socket.connect();
      }
@@ -78,11 +74,12 @@
 
    socket.on("connection initialized", ({device}) => {
      localStorage.setItem("device", device);
-     emit("sync requested", monitorName);
+     socket.emit("sync requested", monitorName);
    });
 
-   socket.on("synced with monitor", ({token, secret, presentations}) => {
+   socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
      sessionStorage.setItem("monitor", JSON.stringify({token, secret}));
+     body.classList.add(`${colour}-gradient`);
      renderPresentationList(presentations);
    });
 

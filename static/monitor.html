@@ -69,42 +69,6 @@
      window.location.reload();
    });
 
-   // socket.on("new token supplied", (sotw) => {
-   //   thisMonitor = localMonitor();
-   //   monitorState = sotw.find(m=>m.monitorID === thisMonitor.monitorID);
-   //   if (monitorState) {
-   //     sessionStorage.setItem('monitor', JSON.stringify(monitorState))
-   //   } else {
-   //     console.error("local monitor doesn't exist in sotw.", {thisMonitor, sotw});
-   //   }
-   // });
-   //
-   // socket.on("monitor presentation updated", (sotw) => {
-   //   const thisMonitor = localMonitor();
-   //   const monitor = sotw.find(m => m.monitorID === thisMonitor.monitorID);
-   //   if (monitor && monitor.presentation !== '') {
-   //     let presentationPath = `/presentations/${monitor.presentation}/presentation_client.html`
-   //     if (window.location.pathname !== presentationPath) {
-   //       window.location.href = `${window.location.origin}${presentationPath}`;
-   //     }
-   //   } else {
-   //     console.error("monitor updated to an empty presentation.");
-   //   }
-   // });
-   //
-   // socket.on("new monitor name assigned", (sotw) => {
-   //   if (!localMonitor().token) {
-   //     console.log("New monitor name is not for me. I don't have a token yet!")
-   //   } else {
-   //     let monitorState = sotw.find(m=> m.token === localMonitor().token)
-   //     sessionStorage.setItem(
-   //       "monitor",
-   //       JSON.stringify(monitorState))
-   //     title.textContent = `${localMonitor().monitorName}`;
-   //     renderQRCode(`${window.location.origin}/presentations.html?m=${localMonitor().monitorName}`);
-   //   }
-   // });
-
    socket.on("new connection", monitor => console.table(monitor));
 
    socket.on("new presentation requested", monitor => {

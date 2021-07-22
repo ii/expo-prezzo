@@ -1,16 +1,9 @@
-const { monitorName, token, secret } = JSON.parse(
+const { token, secret } = JSON.parse(
   sessionStorage.getItem("monitor")
 );
-const qrcodeURL = `${window.location.origin}/presentations.html?m=${monitorName}`;
 const isMonitor = window.location.pathname.includes("presentation_client.html");
 window.socketID = token;
 window.secret = isMonitor ? null : secret;
-console.log("INIT ITNIT", {
-  monitorName,
-  token,
-  secret,
-  window: window.location,
-});
 
 let prezzoStyle = document.createElement('link')
 prezzoStyle.rel = 'stylesheet'
@@ -18,86 +11,74 @@ prezzoStyle.type = 'text/css'
 prezzoStyle.href = '/stylesheets/main.css'
 document.head.appendChild(prezzoStyle)
 
-const localMonitor = () => JSON.parse(sessionStorage.getItem("monitor"));
+function addQRCodeToDOM (monitorName) {
+  const slideBody = document.querySelector("div.reveal");
+  const qrcodeURL = `${window.location.origin}/presentations.html?m=${monitorName}`;
+  let qrcode = document.createElement("canvas");
+  qrcode.id = "qrcode-canvas";
+  QRCode.toCanvas(qrcode, qrcodeURL, { width: 135, height: 135 }, (error) => {
+    if (error) {
+      console.log("error rendering qr code", { error, value: qrcodeURL });
+    } else {
+      console.log("qr code success!", { value: qrcodeURL });
+    }
+  });
+  slideBody.appendChild(qrcode);
+}
+
+function addButtonsToDOM (monitorName) {
+  const slideBody = document.querySelector("div.reveal");
+  const button = document.createElement("button");
+  const qrcodeURL = `${window.location.origin}/presentations.html?m=${monitorName}`;
+  console.log({qrcodeURL})
+  button.classList.add("presentation-return-button")
+  button.textContent = "🔙 Return to ii.nz career options";
+  button.addEventListener("click", () => (window.location.href = qrcodeURL));
+  document.body.appendChild(button);
+
+  let iiLink = document.createElement('button')
+  iiLink.addEventListener('click', () => (window.location.href = 'https://ii.nz'))
+  iiLink.textContent = 'Find out more about ii.nz ⏩'
+  iiLink.classList.add("presentation-ii-link-button")
+  document.body.appendChild(iiLink)
+
+  const controls = document.querySelector(".controls");
+  const slides = document.querySelector(".slides");
+
+  slides.style.filter = "blur(13px)";
+  controls.style.fontSize = "calc(100vh / 16)";
+  controls.dataset.controlsLayout = "edges";
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const URL = window.location.origin;
   const socket = io(URL, { autoConnect: false });
+  const deviceID = localStorage.getItem("device");
 
   if (isMonitor) {
     let monitor = JSON.parse(sessionStorage.getItem("monitor"));
-    if (!monitor)
-      console.error(
-        "on monitor presentation without monitor set, you want to resync"
-      );
-    socket.auth = { monitor };
+    if (!monitor) {
+      console.error("on monitor presentation without monitor set, you want to resync");
+    }
+    socket.auth = { monitor , deviceID };
     socket.connect();
-    const slideBody = document.querySelector("div.reveal");
-    var qrcode = document.createElement("canvas");
-    qrcode.id = "qrcode-canvas";
-    QRCode.toCanvas(qrcode, qrcodeURL, { width: 135, height: 135 }, (error) => {
-      if (error) {
-        console.log("error rendering qr code", { error, value: qrcodeURL });
-      } else {
-        console.log("qr code success!", { value: qrcodeURL });
-      }
-    });
-    slideBody.appendChild(qrcode);
 
-    socket.on("new token supplied", (sotw) => {
-      thisMonitor = localMonitor();
-      monitorState = sotw.find((m) => m.monitorID === thisMonitor.monitorID);
-      if (monitorState) {
-        sessionStorage.setItem("monitor", JSON.stringify(monitorState));
-      } else {
-        console.error("local monitor doesn't exist in sotw.", {
-          thisMonitor,
-          sotw,
-        });
-      }
+    socket.emit("new name requested", monitor);
+    socket.on("new monitor name", (monitor) => {
+      sessionStorage.setItem("monitor", JSON.stringify(monitor));
+      addQRCodeToDOM(monitor.monitorName);
     });
 
-    socket.on("new monitor name assigned", (sotw) => {
-      let monitorState = sotw.find((m) => m.token === localMonitor().token);
-      console.log({ monitorState });
-      if (monitorState) {
-        sessionStorage.setItem("monitor", JSON.stringify(monitorState));
-      }
-    });
-
-    socket.on("monitor presentation updated", (sotw) => {
-      const monitorState = sotw.find(
-        (m) => m.monitorName === localMonitor().monitorName
-      );
-      sessionStorage.setItem("monitor", JSON.stringify(monitorState));
-      let presentationPath = `/presentations/${monitorState.presentation}/presentation_client.html`;
-      if (window.location.pathname !== presentationPath) {
-        window.location.href = `${window.location.origin}${presentationPath}`;
-      }
+    socket.on("new presentation requested", monitor => {
+      sessionStorage.setItem("monitor", JSON.stringify(monitor));
+      window.location.href = `${URL}/presentations/${monitor.presentation}/presentation_client.html`;
     });
   } else {
+    socket.auth = { deviceID };
     socket.connect();
-    const slideBody = document.querySelector("div.reveal");
-    const button = document.createElement("button");
-    let iiLink = document.createElement('button')
-    button.classList.add("presentation-return-button")
-    button.textContent = "🔙 Return to ii.nz career options";
-    button.addEventListener("click", () => (window.location.href = qrcodeURL));
-    slideBody.appendChild(button);
-    iiLink.addEventListener('click', () => (window.location.href = 'https://ii.nz'))
-    iiLink.textContent = 'Find out more about ii.nz ⏩'
-    iiLink.classList.add("presentation-ii-link-button")
-    document.body.appendChild(iiLink)
-    const controls = document.querySelector(".controls");
-    const slides = document.querySelector(".slides");
-    slides.style.filter = "blur(13px)";
-    controls.style.fontSize = "calc(100vh / 16)";
-    console.log({ controls, controlslayout: controls.dataset });
-    controls.dataset.controlsLayout = "edges";
-
-    socket.on("new token supplied", (sotw) => {
-      sessionStorage.deleteItem("monitor");
-      window.location.href = "https://ii.nz";
+    socket.on("new monitor name", (monitorName) => {
+      console.log('time to head back', monitorName)
+      addButtonsToDOM(monitorName)
     });
   }
 });

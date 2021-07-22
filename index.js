@@ -137,9 +137,10 @@ app.get('/admin.html', basicAuth({
 app.use(express.static(opts.baseDir));
 
 io.use((socket, next) => {
-  console.log({socket: socket.handshake})
+  console.log({socket: socket.handshake.auth})
   const deviceID = socket.handshake.auth.deviceID;
   if (deviceID) {
+    console.log("our device id", {deviceID, devices})
     // find existing session
     const device = devices.find(d => d.deviceID === deviceID);
     if (device) {
@@ -148,7 +149,7 @@ io.use((socket, next) => {
     }
   }
   // create new session
-  socket.deviceID = randomId();
+  socket.deviceID = randomID();
   next();
 });
 
@@ -176,6 +177,7 @@ io.on("connection", (socket) => {
     io.emit("SOTW updated", sotw);
   } else {
     console.log(`[${sotw.length + 1}] client device ${socket.deviceID} connected`);
+    console.log('device', {deviceId: socket.deviceID});
     socket.join(socket.deviceID);
   }
 
@@ -186,14 +188,16 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", async () => {
     let monitor = socket.handshake.auth.monitor;
+    console.log('disconnecting', {deviceID: socket.deviceID, socket: socket.handshake.auth})
     const matchingSockets = await  io.in(socket.deviceID).allSockets();
     const isDisconnected = matchingSockets.size === 0;
     if (isDisconnected) {
+      console.log("device disconnected", socket.deviceID)
       const device = {deviceID: socket.deviceID, connected: false};
       updateDevices(device)
     }
     if (!monitor) {
-      console.log(`[${sotw.length - 1}] ${device.deviceID} disconnected`);
+      console.log(`[${sotw.length - 1}] ${socket.deviceID} disconnected`);
       return
     }
     sotw = sotw.filter((m) => m.monitorID !== monitor.monitorID);
@@ -228,6 +232,7 @@ io.on("connection", (socket) => {
       socket.emit('synced with monitor', {
         token,
         secret,
+        colour: monitor.colour,
         presentations: getPresentations()
       });
       //to the room defined by the monitor id, holding only the monitor
@@ -244,6 +249,21 @@ io.on("connection", (socket) => {
     monitor = {...monitor, presentation}
     sotw = updateMonitorInSOTW('monitorID', monitor.monitorID, monitor);
     socket.to(monitor.monitorID).emit("new presentation requested", monitor);
+  });
+
+  socket.on("new name requested", async(monitor) => {
+    console.log("new name requested");
+    const controller = monitor.controllerID;
+    monitor = {
+      ...monitor,
+      monitorName: await newMonitorName(),
+      lastUpdated: new Date()
+    }
+    sotw = updateMonitorInSOTW("monitorID", monitor.monitorID, monitor)
+    socket.to(controller).emit("controller did it", monitor.monitorName);
+    socket.emit("new monitor name", monitor)
+    console.log({controller: controller, rooms: io.of('/').adapter.rooms});
+    socket.to(controller).emit("new monitor name", monitor.monitorName);
   });
 
   socket.on("state of the world requested", () => {
