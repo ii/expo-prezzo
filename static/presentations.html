@@ -34,15 +34,13 @@
   <script>
    const params = new URLSearchParams(window.location.search)
    const URL = window.location.origin
-   const socket = io(URL, {autoConnect: true});
+   const socket = io(URL, {autoConnect: false});
    const title = document.querySelector("h1");
    const body = document.querySelector("body");
-
-   const monitorName = () =>
-     params.get("m");
+   const monitorName = params.get("m");
 
    function selectPresentation (presentation) {
-     socket.emit("presentation selected", {presentation, monitorName: monitorName()});
+     socket.emit("presentation selected", {presentation, monitorName: monitorName});
    }
 
    function renderPresentationList (presentations) {
@@ -65,50 +63,29 @@
    }
 
    document.addEventListener("DOMContentLoaded", () => {
-     if (typeof monitorName() === "undefined" || !monitorName()) {
+     if (typeof monitorName === "undefined" || !monitorName) {
        console.log("No monitorName declared")
        document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
-       socket.emit("new token requested", monitorName())
-       socket.emit("presentations requested")
-
-       socket.on("new token supplied", (sotw) => {
-         const monitor = sotw.find(m => m.monitorName === monitorName());
-         if (!monitor) {
-           console.error("trying to connect without a monitor")
-         } else {
-           sessionStorage.setItem(
-             "monitor",
-             JSON.stringify({
-               monitorName: monitorName(),
-               colour: monitor.colour,
-               token: monitor.token,
-               secret: monitor.secret
-           }))
-           socket.emit('new monitor name requested', localMonitor())
-         };
-       });
-       socket.on("new monitor name assigned", (sotw) => {
-         let monitor = sotw.find(m=> m.token === localMonitor().token)
-         sessionStorage.setItem(
-           "monitor",
-           JSON.stringify({
-             monitorName: monitor.monitorName,
-             colour: monitor.colour,
-             token: monitor.token,
-             secret: monitor.secret
-         }))
-         params.set("m", monitor.monitorName);
-         const newPath = window.location.pathname + '?' + params.toString()
-         history.pushState(null, '', newPath)
-         const colour = monitor.colour || 'green';
-         body.classList.add(`${colour}-gradient`);
-       });
-       socket.on("presentations supplied", ({presentations}) => {
-         renderPresentationList(presentations);
-       });
+       const device = JSON.parse(sessionStorage.getItem("device"));
+       if (device) {
+         socket.auth = { device };
+       }
+       socket.connect();
      }
-   })
+   });
+
+   socket.on("connection initialized", ({device}) => {
+     localStorage.setItem("device", device);
+     emit("sync requested", monitorName);
+   });
+
+   socket.on("synced with monitor", ({token, secret, presentations}) => {
+     sessionStorage.setItem("monitor", JSON.stringify({token, secret}));
+     renderPresentationList(presentations);
+   });
+
+   socket.on('expired token', () => console.error("expired token"));
   </script>
 </html>

@@ -34,7 +34,7 @@ const monitorState = {
 };
 
 let sotw = []; // the state of the app, will hold a list of MonitorStates;
-
+let devices = [];
 const LIMIT = 300;
 
 const randomID = () => crypto.randomBytes(8).toString("hex");
@@ -96,6 +96,19 @@ function updateToken() {
   };
 }
 
+function updateDevices (device) {
+  const existingDevice = devices.find(d => d.deviceID === device.deviceID)
+  if (!existingDevice) {
+    devices = [...devices, device]
+  } else {
+    devices = devices.map(d => (
+      d.deviceId === device.deviceID
+        ? {...d, device}
+      : d
+    ));
+  }
+}
+
 // string, monitorID, MonitorState => SOTW
 // given a match type and matching value,
 // update  matching monitor in SOTW with new MonitorState
@@ -123,6 +136,22 @@ app.get('/admin.html', basicAuth({
 
 app.use(express.static(opts.baseDir));
 
+io.use((socket, next) => {
+  console.log({socket: socket.handshake})
+  const deviceID = socket.handshake.auth.deviceID;
+  if (deviceID) {
+    // find existing session
+    const device = devices.find(d => d.deviceID === deviceID);
+    if (device) {
+      socket.deviceID = deviceID;
+      return next();
+    }
+  }
+  // create new session
+  socket.deviceID = randomId();
+  next();
+});
+
 io.on("connection", (socket) => {
   if (socket.handshake.auth.monitor) {
     console.log(
@@ -142,17 +171,29 @@ io.on("connection", (socket) => {
     } else {
       sotw = updateMonitorInSOTW(socket.handshake.auth.monitor)
     }
+    socket.join(socket.handshake.auth.monitor.monitorID)
+    socket.join(socket.deviceID);
     io.emit("SOTW updated", sotw);
   } else {
-    console.log(`[${sotw.length + 1}] client session ${socket.id} connected`);
+    console.log(`[${sotw.length + 1}] client device ${socket.deviceID} connected`);
+    socket.join(socket.deviceID);
   }
 
-  socket.emit("connection initialized", socket.handshake.auth.monitor);
+  socket.emit("connection initialized", {
+    monitor: socket.handshake.auth.monitor,
+    device: socket.deviceID
+  });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     let monitor = socket.handshake.auth.monitor;
+    const matchingSockets = await  io.in(socket.deviceID).allSockets();
+    const isDisconnected = matchingSockets.size === 0;
+    if (isDisconnected) {
+      const device = {deviceID: socket.deviceID, connected: false};
+      updateDevices(device)
+    }
     if (!monitor) {
-      console.log(`[${sotw.length - 1}] user disconnected`);
+      console.log(`[${sotw.length - 1}] ${device.deviceID} disconnected`);
       return
     }
     sotw = sotw.filter((m) => m.monitorID !== monitor.monitorID);
@@ -169,48 +210,40 @@ io.on("connection", (socket) => {
     io.emit("SOTW updated", sotw)
   });
 
-  socket.on("new token requested", (monitorName) => {
-    const monitor = sotw.find((m) => m.monitorName === monitorName);
-    const { token, secret } = updateToken(monitor);
-    if (typeof monitor === "undefined" || !monitor) {
-      console.log("client trying to sync without a monitor", {
-        monitorName,
-        sotw,
-      });
-      return;
+  socket.on("sync requested", (monitorName) => {
+    let monitor = sotw.find(m=>m.monitorName === monitorName)
+    if (!monitor) {
+      console.log(`${monitorName} not found`, {sotw});
+      socket.emit('expired token');
     } else {
-      console.log("new token requested");
-      sotw = updateMonitorInSOTW("monitorID", monitor.monitorID, {
+      const { token, secret } = updateToken();
+      monitor = {
         ...monitor,
         token,
         secret,
+        controllerID: socket.deviceID
+      }
+      sotw = updateMonitorInSOTW('monitorID', monitor.monitorID, monitor);
+      //to controller socket, since it sent the message
+      socket.emit('synced with monitor', {
+        token,
+        secret,
+        presentations: getPresentations()
       });
-      io.emit("new token supplied", sotw);
+      //to the room defined by the monitor id, holding only the monitor
+      socket.to(monitor.monitorID).emit('new connection', monitor)
     }
-  });
-  socket.on("new monitor name requested", async (monitor) => {
-    console.log({ sotw });
-    const monitorState = sotw.find((m) => m.token === monitor.token);
-    // generate new monitor name
-    const monitorName = await newMonitorName();
-    // update monitor state with that name
-    sotw = updateMonitorInSOTW("monitorID", monitorState.monitorID, {
-      ...monitorState,
-      monitorName,
-    });
-    io.emit("new monitor name assigned", sotw);
-  });
-
-  //io.emit("SOTW updated", {match 'token', sotw: sotw})
-  socket.on("presentations requested", () => {
-    socket.emit("presentations supplied", {
-      presentations: getPresentations(),
-    });
   });
 
   socket.on("presentation selected", ({ presentation, monitorName }) => {
-    sotw = updateMonitorInSOTW("monitorName", monitorName, { presentation });
-    io.emit("monitor presentation updated", sotw);
+    let monitor = sotw.find(m => m.monitorName === monitorName);
+    if (!monitor) {
+      socket.emit("error with presentation", {text: "monitor name not found", monitorName})
+      return
+    }
+    monitor = {...monitor, presentation}
+    sotw = updateMonitorInSOTW('monitorID', monitor.monitorID, monitor);
+    socket.to(monitor.monitorID).emit("new presentation requested", monitor);
   });
 
   socket.on("state of the world requested", () => {
