@@ -137,10 +137,8 @@ app.get('/admin.html', basicAuth({
 app.use(express.static(opts.baseDir));
 
 io.use((socket, next) => {
-  console.log({socket: socket.handshake.auth})
   const deviceID = socket.handshake.auth.deviceID;
   if (deviceID) {
-    console.log("our device id", {deviceID, devices})
     // find existing session
     const device = devices.find(d => d.deviceID === deviceID);
     if (device) {
@@ -154,6 +152,7 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
+  console.log('connection!', {auth: socket.handshake.auth, deviceID: socket.deviceID})
   if (socket.handshake.auth.monitor) {
     console.log(
       `[${sotw.length + 1}] monitor ${
@@ -177,7 +176,6 @@ io.on("connection", (socket) => {
     io.emit("SOTW updated", sotw);
   } else {
     console.log(`[${sotw.length + 1}] client device ${socket.deviceID} connected`);
-    console.log('device', {deviceId: socket.deviceID});
     socket.join(socket.deviceID);
   }
 
@@ -188,7 +186,6 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", async () => {
     let monitor = socket.handshake.auth.monitor;
-    console.log('disconnecting', {deviceID: socket.deviceID, socket: socket.handshake.auth})
     const matchingSockets = await  io.in(socket.deviceID).allSockets();
     const isDisconnected = matchingSockets.size === 0;
     if (isDisconnected) {
@@ -201,6 +198,7 @@ io.on("connection", (socket) => {
       return
     }
     sotw = sotw.filter((m) => m.monitorID !== monitor.monitorID);
+
     console.log(
       `[${sotw.length}] Monitor ${monitor.monitorName} disconnected`
     );
@@ -252,7 +250,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("new name requested", async(monitor) => {
-    console.log("new name requested");
     const controller = monitor.controllerID;
     monitor = {
       ...monitor,
@@ -260,11 +257,20 @@ io.on("connection", (socket) => {
       lastUpdated: new Date()
     }
     sotw = updateMonitorInSOTW("monitorID", monitor.monitorID, monitor)
-    socket.to(controller).emit("controller did it", monitor.monitorName);
     socket.emit("new monitor name", monitor)
-    console.log({controller: controller, rooms: io.of('/').adapter.rooms});
     socket.to(controller).emit("new monitor name", monitor.monitorName);
   });
+
+  socket.on("get monitor name for controller", () => {
+    console.log("monitor name requested for controller", {controller: socket.deviceID});
+    const controllerID = socket.deviceID
+    monitor = sotw.find(m => m.controllerID === controllerID);
+    if (!monitor) {
+      console.log("controller has no monitor, shouldn't happen", {controllerID, sotw})
+      return
+    }
+    socket.emit("monitor name supplied", monitor.monitorName);
+  })
 
   socket.on("state of the world requested", () => {
     if (!socket.handshake.headers.authorization) {
@@ -272,6 +278,24 @@ io.on("connection", (socket) => {
       return
     }
     socket.emit("SOTW updated", sotw)
+  })
+
+  socket.on("reset all monitors", () => {
+    const monitorIDs = sotw.map(m => m.monitorID)
+    console.log(`Resetting monitors`, monitorIDs)
+    io.to(monitorIDs).emit("reset all monitors requested")
+  })
+
+  socket.on("update all monitors", ({ presentation, token, secret }) => {
+    sotw = sotw.map(m => {
+      m = {
+        ...m,
+        presentation,
+        token,
+        secret
+      }
+    })
+    socket.to(sotw.map(m => m.monitorID)).emit("", sotw)
   })
 });
 

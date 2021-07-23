@@ -16,14 +16,20 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/qrcode.min.js"></script>
   <body class='shifting-sands'>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
     <main>
       <h1>Careers in open source!</h1>
       <div class='nes-container is-rounded with-title is-centered scan-tag'>
-        <p class='title'>Scan with phone to watch presentation</p>
+        <p class='title'>Scan to interactively find out more</p>
         <canvas></canvas>
       </div>
       <div class='content'>
-        <p>come to ii.nz to find out more about dcool things you can do and all that great stuff!</p>
+        <p>check out ii.nz/careers for open source careers in <b>Cloud</b>, <b>Agstack (agriculture)</b>, <b>Automotive Grade Linux</b></p>
       </div>
     <div id='monitor-box' class='nes-container with-title'>
       <p class='title'>Screen</p>
@@ -75,6 +81,12 @@
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
      window.location.href = `${window.location.origin}/presentations/${monitor.presentation}/presentation_client.html`;
    });
+
+   socket.on("reset all monitors requested", () => {
+     console.log("resetting monitor")
+     sessionStorage.clear()
+     window.location.href = `${window.location.origin}/monitor.html`
+   })
 
    document.addEventListener("DOMContentLoaded", () => {
      let monitor = JSON.parse(sessionStorage.getItem("monitor"));

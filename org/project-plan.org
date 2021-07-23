@@ -49,13 +49,13 @@ TODOs:
 - [X] implement prezzie choosing and navigation for all clients involved
 - [ ] admin page
 * TODO Admin Page
-- [ ] accessible at /admin
-- [ ] have some basic authentication
-- [ ] can see all the monitors and their presentation
+- [x] accessible at /admin
+- [x] have some basic authentication
+- [x] can see all the monitors and their presentation
+- [ ] reset all monitors
 - [ ] can set monitor to specific presentation
-- [ ] can randomize presentations across all monitors.
-- [ ] can trigger monitor to get new name.
 - [ ] can set page for all monitors
+- [ ] can randomize presentations across all monitors.
 ** Authentication
 #+begin_src js
 // express server

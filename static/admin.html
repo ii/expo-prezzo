@@ -42,6 +42,7 @@
       </div>
       <section id='screens'>
       </section>
+      <button id='reset-all-monitors'>Reset all monitors</button>
     </main>
     <template id="screen-card-template">
       <div class='screen-card'>
@@ -60,6 +61,8 @@
      const socket = io(URL, {autoConnect: true});
      const monitors = document.querySelector("body div#monitors");
      const template = document.querySelector("body template#monitor-card")
+     const resetAllMonitorsButton = document.querySelector("button#reset-all-monitors")
+     console.log(resetAllMonitorsButton)
 
      function populateCard(card, screen) {
        let title = card.querySelector("b")
@@ -83,6 +86,11 @@
        screenSection.replaceChildren(grid);
      }
 
+     function resetAllMonitors () {
+       console.log("resetting all monitors")
+       socket.emit("reset all monitors")
+     }
+
      ["new token supplied",
       "new monitor name assigned",
       "monitor presentation updated",
@@ -91,9 +99,9 @@
         socket.on(name, (sotw) => renderScreens(name, sotw))
       })
 
-
      document.addEventListener("DOMContentLoaded", () => {
        socket.emit('state of the world requested')
+       resetAllMonitorsButton.addEventListener("click", () => resetAllMonitors())
      });
     </script>
   </body>

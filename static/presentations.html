@@ -10,11 +10,25 @@
     <link rel="stylesheet" type="text/css" href='/stylesheets/main.css' />
     <title>Select a presentation</title>
     <meta name="description" content="">
+    <style>
+     header {
+       position: absolute;
+       background: peachpuff;
+       color: indigo;
+       width: 100vw;
+       top: 0;
+       left: 0;
+     }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <body class='presentation-page'>
+    <header id='debug'>
+      <p class='device'></p>
+      <p class='monitor'></p>
+    </header>
     <main>
       <h1>What interests you?</h1>
       <div id='presentations'>
@@ -37,6 +51,9 @@
    const socket = io(URL, {autoConnect: false});
    const title = document.querySelector("h1");
    const body = document.querySelector("body");
+   const header = document.querySelector("header");
+   const monitor = header.querySelector("p.monitor");
+   const deviceDebug = header.querySelector("p.device");
    const monitorName = params.get("m");
 
    function selectPresentation (presentation) {
@@ -46,6 +63,7 @@
    function renderPresentationList (presentations) {
      const prezzyList = document.querySelector("#presentations")
      const template = document.querySelector("#presentation-item");
+     // TODO reset before append
      presentations.forEach(prezzy => {
        let clone = template.content.firstElementChild.cloneNode(true);
        let name = clone.querySelector("b")
@@ -65,6 +83,8 @@
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
        const deviceID = localStorage.getItem("device");
+       deviceDebug.textContent = deviceID
+       monitor.textContent = monitorName
        if (deviceID) {
          socket.auth = { deviceID };
        }
@@ -73,8 +93,11 @@
    });
 
    socket.on("connection initialized", ({device}) => {
+     console.log({device});
      localStorage.setItem("device", device);
      socket.emit("sync requested", monitorName);
+       deviceDebug.textContent = device;
+       monitor.textContent = monitorName;
    });
 
    socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
