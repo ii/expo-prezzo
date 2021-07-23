@@ -43,7 +43,17 @@
       <section id='screens'>
       </section>
       <button id='reset-all-monitors'>Reset all monitors</button>
+      <form id='prezzy-all'>
+      </form>
     </main>
+    <template id='presentation-for-all-template'>
+      <form id='prezzy-all' >
+        <label for='presentation-for-all'>
+          <select name='presentation-for-all'>
+          </select>
+          <button type='submit'>Set for All!</button>
+      </form>
+    </template>
     <template id="screen-card-template">
       <div class='screen-card'>
         <b>name</b>
@@ -54,7 +64,7 @@
     </template>
     <template id='screens-grid-template'>
       <div class='screen-grid'>
-      </div>
+      </div >
     </template>
     <script>
      const URL = window.location.origin
@@ -91,6 +101,29 @@
        socket.emit("reset all monitors")
      }
 
+     function renderPresentations (presentations) {
+       console.log("got presentations", { presentations });
+       const existingForm = document.querySelector("#prezzy-all");
+       const newForm = document.querySelector("#presentation-for-all-template").content.firstElementChild.cloneNode(true);
+       let select = newForm.querySelector('select');
+       presentations.forEach(p => {
+         let option = document.createElement("option")
+         option.value = p.folderName;
+         option.textContent = p.name;
+         select.appendChild(option);
+       });
+       existingForm.replaceWith(newForm);
+       let form = document.querySelector("#prezzy-all");
+       form.addEventListener('submit', (e) => switchAllPresentations(e), false);
+     }
+
+     function switchAllPresentations (e) {
+       e.preventDefault();
+       let form = document.querySelector("#prezzy-all");
+       let presentation = form.elements["presentation-for-all"].value;
+       socket.emit("switch presentation for all monitors", presentation);
+     }
+
      ["new token supplied",
       "new monitor name assigned",
       "monitor presentation updated",
@@ -99,9 +132,17 @@
         socket.on(name, (sotw) => renderScreens(name, sotw))
       })
 
+     socket.on("presentations supplied", (presentations) => renderPresentations(presentations));
+     socket.on("presentation switched for all monitors", ({presentation, token, secret}) => {
+       sessionStorage.setItem("monitor", JSON.stringify({token, secret}));
+       let presentationPath = `${window.location.origin}/presentations/${presentation}/presentation.html`
+       window.location.href = presentationPath;
+     });
+
      document.addEventListener("DOMContentLoaded", () => {
        socket.emit('state of the world requested')
        resetAllMonitorsButton.addEventListener("click", () => resetAllMonitors())
+       socket.emit('presentations requested');
      });
     </script>
   </body>

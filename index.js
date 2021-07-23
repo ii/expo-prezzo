@@ -286,6 +286,24 @@ io.on("connection", (socket) => {
     io.to(monitorIDs).emit("reset all monitors requested")
   })
 
+  socket.on("presentations requested", () => socket.emit("presentations supplied", getPresentations()));
+
+  socket.on("switch presentation for all monitors", (presentation) => {
+    console.log("swtiching presentations to: ", presentation);
+    const { token, secret } = updateToken();
+    sotw = sotw.map(m => {
+      return {
+        ...m,
+        controllerID: '',
+        token,
+        secret,
+        presentation
+      }
+    })
+    sotw.forEach(m => socket.to(m.monitorID).emit("new presentation requested", m));
+    socket.emit("presentation switched for all monitors", {presentation, token, secret});
+  })
+
   socket.on("update all monitors", ({ presentation, token, secret }) => {
     sotw = sotw.map(m => {
       m = {
