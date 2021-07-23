@@ -66,9 +66,9 @@
 
      function populateCard(card, screen) {
        let title = card.querySelector("b")
-       let colour = card.querySelector("p");
+       let prezzo = card.querySelector("p");
        title.textContent = screen.monitorName;
-       colour.textContent = screen.colour;
+       prezzo.textContent = screen.presentation || '-';
        card.classList.add(`${screen.colour}-gradient`)
        return card;
      }
