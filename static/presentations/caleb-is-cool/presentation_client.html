@@ -17,6 +17,14 @@
 <link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/zenburn.css"/>
 <link rel="stylesheet" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css"/>
 <style>
+     header {
+       position: absolute;
+       background: peachpuff;
+       color: indigo;
+       width: 100vw;
+       top: 0;
+       left: 0;
+     }
 /* Position computations of klipse get confused by reveal.js's scaling.
    Hence, scaling should be disabled with this code.  Fix height of code area
    with scrollbar (use overflow instead of overflow-y to restore CodeMirror
@@ -42,6 +50,10 @@
 </script>
 </head>
 <body>
+  <!-- <header id='debug'>
+       <p class='device'></p>
+       <p class='monitor'></p>
+       </header> -->
 <script src="/socket.io/socket.io.js"></script> <script src="/qrcode.min.js"></script> <script src="/prezzie-init.js"></script>
 <div class="reveal">
 <div class="slides">
