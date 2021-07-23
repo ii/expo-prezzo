@@ -14,7 +14,7 @@
   --colour_body: black;
   --colour_accent: pink;
   --base-font: 20px;
-  --main-width: 55rem;
+  --main-width: 70rem;
   --inner-space: 1.5rem;
   --outer-space: calc(var(--inner-space) * 3);
 }
@@ -245,4 +245,40 @@ button.presentation-ii-link-button {
 
 button.presentation-ii-link-button:hover {
   filter: hue-rotate(180deg);
+}
+
+div.monitor-qrcode {
+  bottom: 0;
+  left: 0;
+  display: block;
+  position: absolute;
+  background: var(--colour_bg);
+  padding: 1vh;
+  text-align: center;
+  border-top-right-radius: 10px;
+  width: 15vh;
+  word-break: break-word;
+}
+
+div.monitor-qrcode p {
+  font-size: 1.3rem;
+}
+
+.stars {
+  z-index: -100;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
 }
