@@ -52,7 +52,7 @@
    const title = document.querySelector("h1");
    const body = document.querySelector("body");
    const header = document.querySelector("header");
-   const monitor = header.querySelector("p.monitor");
+   // const monitor = header.querySelector("p.monitor");
    // const deviceDebug = header.querySelector("p.device");
    const monitorName = params.get("m");
 
@@ -84,7 +84,7 @@
      } else {
        const deviceID = localStorage.getItem("device");
        // deviceDebug.textContent = deviceID
-       monitor.textContent = monitorName
+       // monitor.textContent = monitorName
        if (deviceID) {
          socket.auth = { deviceID };
        }
@@ -97,7 +97,7 @@
      localStorage.setItem("device", device);
      socket.emit("sync requested", monitorName);
      // deviceDebug.textContent = device;
-       monitor.textContent = monitorName;
+     // monitor.textContent = monitorName;
    });
 
    socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
