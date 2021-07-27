@@ -10,13 +10,13 @@ kubectl create ns careers-expo-ii-nz
 
 Apply the manifests which are not managed by the CI:
 #+BEGIN_SRC shell :results silent
-cd manifests
+cd ../manifests
 kubectl -n careers-expo-ii-nz apply -f role.yaml -f rolebinding.yaml -f certs.yaml -f clusterissuer.yaml
 #+END_SRC
 
 Download the script =kubernetes_add_service_account_kubeconfig.sh= to get a kubeconfig for a new ServiceAccount:
 #+BEGIN_SRC shell :results silent
-TMPDIR=/tmp/hugo-k8s-or-gitlab-pages-template
+TMPDIR=/tmp/expo-prezzo
 mkdir -p $TMPDIR
 cd $TMPDIR
 curl -O -L https://gist.github.com/poweroftrue/2aca2bd4f31d307e7dea1797fb089bf3/raw/267ab63183b9cbd376998d969b9a88b1e20731cc/kubernetes_add_service_account_kubeconfig.sh
@@ -41,14 +41,42 @@ echo $TMPDIR
 
 Ensure that the current context for your local kubeconfig is set to the target deploy cluster. Create the ServiceAccount and get the kubeconfig:
 #+BEGIN_SRC shell :prologue "(\n" :epilogue ") 2>&1\n:"
-TMPDIR=/tmp/hugo-k8s-or-gitlab-pages-template
+TMPDIR=/tmp/expo-prezzo
 cd $TMPDIR
-bash kubernetes_add_service_account_kubeconfig.sh careers-expo-ii-nz-ci examplesite-com
+bash kubernetes_add_service_account_kubeconfig.sh careers-expo-ii-nz-ci careers-expo-ii-nz
 #+END_SRC
+
+#+RESULTS:
+#+begin_example
+Creating target directory to hold files in /tmp/kube...done
+Creating a service account in careers-expo-ii-nz namespace: careers-expo-ii-nz-ci
+serviceaccount/careers-expo-ii-nz-ci created
+
+Getting secret of service account careers-expo-ii-nz-ci on careers-expo-ii-nz
+Secret name: careers-expo-ii-nz-ci-token-rhs7m
+
+Extracting ca.crt from secret...done
+Getting user token from secret...done
+Setting current context to: ii-nz-kubernetes-admin@ii-nz
+Cluster name: ii-nz-p70
+ Endpoint: https://apiserver-thats-in-the-cluster.ii.nz:6443
+
+Preparing k8s-careers-expo-ii-nz-ci-careers-expo-ii-nz-conf
+Setting a cluster entry in kubeconfig...Cluster "ii-nz-p70" set.
+Setting token credentials entry in kubeconfig...User "careers-expo-ii-nz-ci-careers-expo-ii-nz-ii-nz-p70" set.
+Setting a context entry in kubeconfig...Context "careers-expo-ii-nz-ci-careers-expo-ii-nz-ii-nz-p70" created.
+Setting the current-context in the kubeconfig file...Switched to context "careers-expo-ii-nz-ci-careers-expo-ii-nz-ii-nz-p70".
+
+Applying RBAC permissions...rolebinding.rbac.authorization.k8s.io/careers-expo-ii-nz-ci-clusterrolebinding created
+done
+All done! Test with:
+ KUBECONFIG=/tmp/kube/k8s-careers-expo-ii-nz-ci-careers-expo-ii-nz-conf  kubectl get pods
+Error from server (Forbidden): pods is forbidden: User "system:serviceaccount:careers-expo-ii-nz:careers-expo-ii-nz-ci" cannot list resource "pods" in API group "" in the namespace "careers-expo-ii-nz"
+#+end_example
 
 Get the base64 encoded kubeconfig:
 #+BEGIN_SRC shell
-cat /tmp/kube/k8s-careers-expo-ii-nz-ci-examplesite-com-conf | base64 | tr -d '\n'; echo
+cat /tmp/kube/k8s-careers-expo-ii-nz-ci-careers-expo-ii-nz-conf | base64 | tr -d '\n'; echo
 #+END_SRC
 
 With a kubeconfig as base64 copyable, navigate to the GitLab project -> Settings -> CI/CD -> Variables -> Add variable.
