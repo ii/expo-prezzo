@@ -4,21 +4,45 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Hello!</title>
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='/stylesheets/main.css' />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/qrcode.min.js"></script>
-  <body>
-    <h1>Hello!</h1>
-    <canvas></canvas>
+  <body class='shifting-sands'>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <main>
+      <h1>Careers in open source!</h1>
+      <div class='nes-container is-rounded with-title is-centered scan-tag'>
+        <p class='title'>Scan to interactively find out more</p>
+        <canvas></canvas>
+      </div>
+      <div class='content'>
+        <p>check out ii.nz/careers for open source careers in <b>Cloud</b>, <b>Agstack (agriculture)</b>, <b>Automotive Grade Linux</b></p>
+      </div>
+    <div id='monitor-box' class='nes-container with-title'>
+      <p class='title'>Screen</p>
+      <span id='monitor-state'>no screen set</span>
+    </div>
+    </main>
   </body>
   <script>
    const URL = window.location.origin
    const socket = io(URL, {autoConnect: false});
 
-   const title = document.querySelector("h1");
+   const body = document.querySelector("body");
+   const title = document.querySelector("#monitor-state");
    const canvas = document.querySelector("canvas");
 
    const localMonitor = () =>
@@ -26,7 +50,7 @@
 
    // Places QR code in canvas element with val as its value
    function renderQRCode (val) {
-     QRCode.toCanvas(canvas, val, (error) => {
+     QRCode.toCanvas(canvas, val, { scale: 10 }, (error) => {
        if (error) {
          console.log('error rendering qr code', {error, value: val});
        } else {
@@ -35,47 +59,47 @@
      });
    };
 
-   socket.on("connection initialized", (monitor) => {
+   socket.on("connection initialized", ({monitor, device}) => {
      if (monitor) {
-       title.textContent = `Monitor, code name ${monitor.monitorName}`;
+       sessionStorage.setItem("monitor", JSON.stringify(monitor))
+       localStorage.setItem("device", device)
+       const colour = monitor.colour || 'green';
+       body.classList.add(`${colour}-gradient`);
+       title.textContent = `${monitor.monitorName}`;
        renderQRCode(`${window.location.origin}/presentations.html?m=${monitor.monitorName}`);
-     } else {
-       return
      }
    });
 
    socket.on("monitor added", (monitor) => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
-     title.textContent = `Monitor, code name ${monitor.monitorName}`;
+     window.location.reload();
+   });
+
+   socket.on("new connection", monitor => {
+     sessionStorage.setItem("monitor", JSON.stringify(monitor));
+     console.table(monitor)
+   });
+
+   socket.on("new presentation requested", monitor => {
+     sessionStorage.setItem("monitor", JSON.stringify(monitor));
+     window.location.href = `${window.location.origin}/presentations/${monitor.presentation}/presentation_client.html`;
+   });
+
+   socket.on("reset all monitors requested", () => {
+     console.log("resetting monitor")
+     sessionStorage.clear()
+     window.location.href = `${window.location.origin}/monitor.html`
    })
-
-   socket.on("new token supplied", (sotw) => {
-     thisMonitor = localMonitor();
-     monitorState = sotw.find(m=>m.monitorID === thisMonitor.monitorID);
-     if (monitorState) {
-       sessionStorage.setItem('monitor', JSON.stringify(monitorState))
-     } else {
-       console.error("local monitor doesn't exist in sotw.", {thisMonitor, sotw});
-     }
-   });
-
-   socket.on("monitor presentation updated", (sotw) => {
-     const thisMonitor = localMonitor();
-     const monitor = sotw.find(m => m.monitorID === thisMonitor.monitorID);
-     if (monitor && monitor.presentation !== '') {
-       window.location.href = `${window.location.origin}/presentations/${monitor.presentation}/presentation_client.html`;
-     } else {
-       console.error("monitor updated to an empty presentation.");
-     }
-   });
 
    document.addEventListener("DOMContentLoaded", () => {
      let monitor = JSON.parse(sessionStorage.getItem("monitor"));
+     let deviceID = localStorage.device;
      if (monitor) {
-       socket.auth = { monitor };
+       monitor.presentation = '';
+       socket.auth = { monitor , deviceID };
        socket.connect();
      } else {
-       document.querySelector("h1").textContent = "Initializing Monitor...";
+       socket.auth = { deviceID };
        socket.connect();
        socket.emit("new monitor");
      }

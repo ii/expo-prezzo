@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ii/expo-prezzo#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
     "node-fetch": "^2.6.1",
     "qrcode": "^1.4.4",
     "socket.io": "^4.1.3"

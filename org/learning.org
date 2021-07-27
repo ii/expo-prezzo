@@ -1,0 +1,6 @@
+#+TITLE: Learning
+
+* Getting the headers from a socket.io connection
+#+begin_src javascript
+socket.handshake.headers
+#+end_src

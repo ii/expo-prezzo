@@ -3,47 +3,94 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='/stylesheets/main.css' />
     <title>Select a presentation</title>
     <meta name="description" content="">
+    <style>
+     header {
+       position: absolute;
+       background: peachpuff;
+       color: indigo;
+       width: 100vw;
+       top: 0;
+       left: 0;
+     }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <script src="/app.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <body>
-    <h1>What interests you?</h1>
-    <ul id='presentations'>
-    </ul>
+  <body class='presentation-page'>
+    <!-- <header id='debug'>
+         <p class='device'></p>
+         <p class='monitor'></p>
+         </header> -->
+    <main>
+      <h1>What interests you?</h1>
+      <div id='presentations'>
+      </div>
+    </main>
+    <div id='check-out' class='nes-container with-title'>
+      <p class='title'>Check us out</p>
+      <a href="https://ii.nz">ii.nz</a>
+    </div>
     <template id='presentation-item'>
-      <li class='presentation'>
-        <a href='presentation'>presentation</a>
-      </li>
+      <a class="presentation-card">
+        <b>presentation</b>
+        <p>description</p>
+      </a>
     </template>
   </body>
   <script>
    const params = new URLSearchParams(window.location.search)
    const URL = window.location.origin
-   const socket = io(URL, {autoConnect: true});
+   const socket = io(URL, {autoConnect: false});
    const title = document.querySelector("h1");
+   const body = document.querySelector("body");
+   const header = document.querySelector("header");
+   // const monitor = header.querySelector("p.monitor");
+   // const deviceDebug = header.querySelector("p.device");
+   const monitorName = params.get("m");
 
-   const monitorName = params.get("m")
-
-   function selectPresentation (presentation, monitorName) {
-     socket.emit("presentation selected", {presentation, monitorName});
+   function selectPresentation (presentation) {
+     socket.emit("presentation selected", {presentation, monitorName: monitorName});
    }
 
    function renderPresentationList (presentations) {
      const prezzyList = document.querySelector("#presentations")
      const template = document.querySelector("#presentation-item");
+     // TODO reset before append
      presentations.forEach(prezzy => {
-       let clone = template.content.cloneNode(true);
-       let link = clone.querySelector("a");
-       link.href = `${window.location.origin}/presentations/${prezzy}/presentation.html`;
-       // link.href ='#';
-       link.onclick = () => selectPresentation(prezzy, monitorName);
-       link.textContent = prezzy;
+       let clone = template.content.firstElementChild.cloneNode(true);
+       let name = clone.querySelector("b")
+       let desc = clone.querySelector("p")
+       clone.onclick = () => selectPresentation(prezzy.folderName);
+       clone.href = `${window.location.origin}/presentations/${prezzy.folderName}/presentation.html`;
+       name.textContent = prezzy.name
+       desc.textContent = prezzy.description
        prezzyList.appendChild(clone);
      })
    }
+
+   socket.on("connection initialized", ({device}) => {
+     console.log({device});
+     localStorage.setItem("device", device);
+     socket.emit("sync requested", monitorName);
+     // deviceDebug.textContent = device;
+     // monitor.textContent = monitorName;
+   });
+
+   socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
+     sessionStorage.setItem("monitor", JSON.stringify({token, secret, colour}));
+     body.classList.add(`${colour}-gradient`);
+     renderPresentationList(presentations);
+   });
+
+   socket.on('expired token', () => console.error("expired token"));
 
    document.addEventListener("DOMContentLoaded", () => {
      if (typeof monitorName === "undefined" || !monitorName) {
@@ -51,27 +98,14 @@
        document.querySelector("h1").textContent = "Please scan a QR code on a monitor.";
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
-       socket.emit("new token requested", monitorName)
-       socket.emit("presentations requested")
-
-       socket.on("new token supplied", (sotw) => {
-         const monitor = sotw.find(m => m.monitorName === monitorName);
-         if (!monitor) {
-           console.error("trying to connect without a monitor")
-         } else {
-           sessionStorage.setItem(
-             "monitor",
-             JSON.stringify({
-               monitorName,
-               token: monitor.token,
-               secret: monitor.secret
-           }))
-         };
-       });
-       socket.on("presentations supplied", ({presentations}) => {
-         renderPresentationList(presentations);
-       });
+       const deviceID = localStorage.getItem("device");
+       // deviceDebug.textContent = deviceID
+       // monitor.textContent = monitorName
+       if (deviceID) {
+         socket.auth = { deviceID };
+       }
+       socket.connect();
      }
-   })
+   });
   </script>
 </html>

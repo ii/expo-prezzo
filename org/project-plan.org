@@ -45,10 +45,52 @@ their doodle and tag).
 - Event Handler :: the action taken on a Message from an Event given the type of Client.
 * Implementation
 TODOs:
-- [ ] fix count for state of the world
-- [ ] implement prezzie choosing and navigation for all clients involved
+- [X] fix count for state of the world
+- [X] implement prezzie choosing and navigation for all clients involved
 - [ ] admin page
+* TODO Admin Page
+- [x] accessible at /admin
+- [x] have some basic authentication
+- [x] can see all the monitors and their presentation
+- [ ] reset all monitors
+- [ ] can set monitor to specific presentation
+- [ ] can set page for all monitors
+- [ ] can randomize presentations across all monitors.
+** Authentication
+#+begin_src js
+// express server
 
+function authenicationMiddleware (req, res, next) {
+    // authentication logic
+    const { username, password} = req.body;
+    if (users.includes(username) && password === ourPassword) {
+        res.sendStatus(200)
+        next()
+    } else {
+        res.sendStatus(403);
+        res.json({body: "you don't belong here"});
+    }
+}
+
+app.get("/admin", authenticationMiddleware, (req, res) => {
+    if (res.status === 200)  {
+        res.send(ourAdminPage)
+    }})
+app.get("/", staticPages)
+
+socket.on("refresh all", (payload) => {
+    if (payload.auth === ourPassword) {
+        //refresh the things
+        socket.emit('refreshed!')
+    }
+})
+
+socket.on("grab all monitors", (payload) => {
+    if (payload.auth === ourPassword) {
+        socket.emit('refreshed!')
+    }
+})
+#+end_src
 * scratch
 #+begin_src yaml
 # admin is sho  wing presentation on all monitors.
@@ -96,3 +138,120 @@ TODOs:
 # client syncs with monitor and requests presentation
 io.emit("set presentation"{name: dharlie, presentation: prezzy1})
 #+end_src
+
+* Logicistics
+** Providing monitors new names on prezzie selection
+Monitor says to Server, I am ={ monitor }= and would like a new name.
+Server finds the current MonitorID in the ={ monitor }= object and rewrites the monitor name.
+Server omits a updated Monitor object.
+Client Monitor hears omittion, checks the MonitorID for a match and updates it's local monitor object.
+* communication for name refresh
+from our scratch
+
+ Monitor name : Alan   Controller: synced to Alan
+
+Controller goes back:
+sends "new token"
+eonctroller recieves token
+monitor receives token
+Controller sends "new name"
+controller receives new name
+controller sends "presentation update"
+monitor receives name
+
+
+in prezzy init:
+on"presentation update", check "does this apply to me?" if not, don't change.
+
+
+server{A} | controller{A} | monitor{A}   'presentations.html?m=A'
+=>
+server{b} | controller{A} | monitor{A} 'server.emits("B")`
+=>
+  - server{b} | controller{b} | monitor{b}
+  - server{b} | controller{b} | monitor{A} 'update presentation for b'
+  - server{b} | controller{A} | monitor{b}
+  ....
+  emit(' we are iall in sync", server{b} | controller{b} | monitor{b}) 'update presenation for b'
+
+//index.js
+let synced = {controller: false, monitor: false}
+socket.on("controller synced", () => {
+  synced.controller = true;
+  if (synced.monitor) {
+    socket.emit("okay to choose presentation")
+  }
+})
+
+socket.on("monitor synced", (monitor) => {
+  synced.monitor = true;
+  if (synced.controller) {
+    io.emit("okay to choose presentation")
+  }
+})
+
+
+
+
+
+
+* Monitor state sharing
+controller + monitorName connects to monitor,
+controller now has monitorID from monitorName,
+monitorName changes,
+controller finds monitor update by monitorID, providing a new monitorName to share,
+
+
+* Change when monitorName changes
+controller connects with monitorName,
+monitorName changes,
+monitor receives new name,
+presentation is selected by controller
+
+
+controller => new token please!
+server => emits "new tokens supplied" STATE
+controller and monitor listen for that message and update.
+controller says "new name please!"
+server => emits "new name supplied" STATE
+controller and monitor listen for that message.
+
+controller => new token please!
+server => new tokens supplied!
+monitor says, "I have new token! new name please!"
+server->monitor says "here is your new name"
+monitor says "i have my new name!"
+server emits "new name for monitor" STATE
+client
+
+client interaction freeze between new token request and receiving new name message.
+
+server sotw =[...a,....b,{name: charlie, token: 123, monitorID: a24}]
+
+controller.sessionStorage = {name: charlie, token: 123}
+monitor.sessionStorage = {name: charlie, token: 123}
+"controller presses go back" => presentations.html?m=charlie
+controller: emit("New Connection", sessionStorage)
+....interactions pause, cannot choose presentation, see "syncing..."
+server recieves "new connection"...which monitor do we update?
+monitor = sotw.find(m=> m.monitorName === controller.payload.monitorName)
+grab new name for monitor
+grab new token and secret for monitor
+io.emit("Name change!", sotw)
+Monitor receives ("Name Change", payload), finds its object using its monitorID
+if localMonitor.monitorName !== payload.monitor.monitorName
+localMonitor updates and emits ("I got a new name!", monitor)
+server listens for "i got a new name!", emits("connection ready")
+
+
+controller says "New Connection", sessionStorage)
+....interactions pause, cannot choose presenation yet...sees "syncing"....
+server receives message, changes the name and token in the sotw for the server matching on the name provided by controller.
+socket.emit("here's your new monitor, waiting for confirmation")
+controller receives message, says "okay"
+....interactions stay pauses...
+server receives okay, sends "monitors, name change!", sotw)
+monitors receive "name change", checks sotw matching on monitor id
+if localname doesn't match sotw name, updates local name then emits("name changed!", monitorName)
+server receives "name changed", does io.emit("connection ready", monitorName)
+controllers receive "connection ready", if payload.monitorName === local.monitorName....unfreeeze interactions, presentations ready to go.
