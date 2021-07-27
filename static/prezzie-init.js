@@ -3,19 +3,19 @@ const isMonitor = window.location.pathname.includes("presentation_client.html");
 window.socketID = token;
 window.secret = isMonitor ? null : secret;
 
-let prezzoStyle = document.createElement('link')
-prezzoStyle.rel = 'stylesheet'
-prezzoStyle.type = 'text/css'
-prezzoStyle.href = '/stylesheets/main.css'
-document.head.appendChild(prezzoStyle)
+let prezzoStyle = document.createElement("link");
+prezzoStyle.rel = "stylesheet";
+prezzoStyle.type = "text/css";
+prezzoStyle.href = "/stylesheets/main.css";
+document.head.appendChild(prezzoStyle);
 
-function addQRCodeToDOM (monitorName) {
+function addQRCodeToDOM(monitorName) {
   const slideBody = document.querySelector("div.reveal");
   const qrcodeURL = `${window.location.origin}/presentations.html?m=${monitorName}`;
   const monitor = JSON.parse(sessionStorage.getItem("monitor"));
-  const colour = monitor.colour || 'green';
+  const colour = monitor.colour || "green";
   let prezzieInfoDiv = document.createElement("div");
-  prezzieInfoDiv.classList.add("monitor-qrcode")
+  prezzieInfoDiv.classList.add("monitor-qrcode");
   prezzieInfoDiv.classList.add(colour);
   let prezzieInfoText = document.createElement("p");
   prezzieInfoText.textContent = `Scan for careers. Find out more at ii.nz! (${monitor.monitorName})`;
@@ -33,21 +33,27 @@ function addQRCodeToDOM (monitorName) {
   slideBody.appendChild(prezzieInfoDiv);
 }
 
-function addButtonsToDOM (monitorName) {
+function addButtonsToDOM(monitorName) {
+  const { colour } = JSON.parse(sessionStorage.getItem("monitor"));
   const slideBody = document.querySelector("div.reveal");
   const button = document.createElement("button");
   const qrcodeURL = `${window.location.origin}/presentations.html?m=${monitorName}`;
-  console.log({qrcodeURL})
-  button.classList.add("presentation-return-button")
+  console.log({ qrcodeURL });
+  button.classList.add("presentation-return-button");
+  button.classList.add(colour);
   button.textContent = "🔙 Return to ii.nz career options";
   button.addEventListener("click", () => (window.location.href = qrcodeURL));
   document.body.appendChild(button);
 
-  let iiLink = document.createElement('button')
-  iiLink.addEventListener('click', () => (window.location.href = 'https://ii.nz'))
-  iiLink.textContent = 'Find out more about ii.nz ⏩'
-  iiLink.classList.add("presentation-ii-link-button")
-  document.body.appendChild(iiLink)
+  let iiLink = document.createElement("button");
+  iiLink.addEventListener(
+    "click",
+    () => (window.location.href = "https://ii.nz")
+  );
+  iiLink.textContent = "Find out more about ii.nz ⏩";
+  iiLink.classList.add("presentation-ii-link-button");
+  iiLink.classList.add(colour);
+  document.body.appendChild(iiLink);
 
   const controls = document.querySelector(".controls");
   const slides = document.querySelector(".slides");
@@ -73,46 +79,66 @@ document.addEventListener("DOMContentLoaded", () => {
     // monitorDebug.textContent = 'is a monitor ' + monitor.monitorName;
     // deviceDebug.textContent = 'and the device ' + monitor.controllerID;
     if (!monitor) {
-      console.error("on monitor presentation without monitor set, you want to resync");
+      console.error(
+        "on monitor presentation without monitor set, you want to resync"
+      );
     }
-    socket.auth = { monitor , deviceID };
+    socket.auth = { monitor, deviceID };
     socket.connect();
 
+    // if (!socket.connected) {
+    //   window.location.reload();
+    // }
+
+    // socket.on("monitor added", (m) => {
+    //   sessionStorage.setItem("monitor", JSON.stringify(m));
+    //   window.location.reload();
+    // });
+
     socket.emit("new name requested", monitor);
-    socket.on("new monitor name", (monitor) => {
-      sessionStorage.setItem("monitor", JSON.stringify(monitor));
-      addQRCodeToDOM(monitor.monitorName);
+    socket.on("new monitor name", (m) => {
+      sessionStorage.setItem("monitor", JSON.stringify(m));
+      addQRCodeToDOM(m.monitorName);
     });
 
     socket.on("reset all monitors requested", () => {
-      console.log("resetting monitor")
-      sessionStorage.clear()
-      window.location.href = `${window.location.origin}/monitor.html`
-    })
+      console.log("resetting monitor");
+      sessionStorage.clear();
+      window.location.href = `${window.location.origin}/monitor.html`;
+    });
 
-    socket.on("new presentation requested", monitor => {
-      sessionStorage.setItem("monitor", JSON.stringify(monitor));
-      window.location.href = `${URL}/presentations/${monitor.presentation}/presentation_client.html`;
+    socket.on("new presentation requested", (m) => {
+      sessionStorage.setItem("monitor", JSON.stringify(m));
+      window.location.href = `${URL}/presentations/${m.presentation}/presentation_client.html`;
     });
   } else {
     // deviceDebug.textContent = "this is the device id " + deviceID;
-    console.log({deviceID })
+    console.log({ deviceID });
     socket.auth = { deviceID };
-    console.log("i am a phone")
+    console.log("i am a phone");
 
+    socket.on(
+      "synced with monitor",
+      ({ token, secret, colour, presentations }) => {
+        sessionStorage.setItem(
+          "monitor",
+          JSON.stringify({ token, secret, colour })
+        );
+      }
+    );
     // deviceDebug.textContent = "here is my socket auth " + socket.auth.deviceID;
     socket.on("new monitor name", (monitorName) => {
       // monitorDebug.textContent = "got a ping from the monitor"
-      console.log('time to head back', monitorName)
+      console.log("time to head back", monitorName);
       // monitorDebug.textContent = "new monitor name "  = monitorName
-      addButtonsToDOM(monitorName)
+      addButtonsToDOM(monitorName);
     });
-    console.log("i am still a phone")
+    console.log("i am still a phone");
     socket.connect();
-    socket.emit("get monitor name for controller")
-    socket.on("monitor name supplied", monitorName => {
+    socket.emit("get monitor name for controller");
+    socket.on("monitor name supplied", (monitorName) => {
       // monitorDebug.textContent = "monitor name suppplied to me"
       addButtonsToDOM(monitorName);
-    })
+    });
   }
 });

@@ -76,6 +76,22 @@
      })
    }
 
+   socket.on("connection initialized", ({device}) => {
+     console.log({device});
+     localStorage.setItem("device", device);
+     socket.emit("sync requested", monitorName);
+     // deviceDebug.textContent = device;
+     // monitor.textContent = monitorName;
+   });
+
+   socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
+     sessionStorage.setItem("monitor", JSON.stringify({token, secret, colour}));
+     body.classList.add(`${colour}-gradient`);
+     renderPresentationList(presentations);
+   });
+
+   socket.on('expired token', () => console.error("expired token"));
+
    document.addEventListener("DOMContentLoaded", () => {
      if (typeof monitorName === "undefined" || !monitorName) {
        console.log("No monitorName declared")
@@ -91,21 +107,5 @@
        socket.connect();
      }
    });
-
-   socket.on("connection initialized", ({device}) => {
-     console.log({device});
-     localStorage.setItem("device", device);
-     socket.emit("sync requested", monitorName);
-     // deviceDebug.textContent = device;
-     // monitor.textContent = monitorName;
-   });
-
-   socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
-     sessionStorage.setItem("monitor", JSON.stringify({token, secret}));
-     body.classList.add(`${colour}-gradient`);
-     renderPresentationList(presentations);
-   });
-
-   socket.on('expired token', () => console.error("expired token"));
   </script>
 </html>
