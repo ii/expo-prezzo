@@ -230,6 +230,7 @@ button.presentation-return-button {
   width: 100%;
   padding: 1vh;
   background: var(--colour_bg);
+  color: var(--colour_body);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
 }
@@ -245,6 +246,7 @@ button.presentation-ii-link-button {
   background: var(--colour_bg);
   padding: 1vh;
   position: absolute;
+  color: var(--colour_body);
   font-size: calc(var(--base-font) * 2);
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
