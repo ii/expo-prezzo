@@ -222,7 +222,7 @@ button.presentation-return-button {
   font-size: calc(var(--base-font) * 2);
   width: 100%;
   padding: 1vh;
-  background: var(--colour_accent);
+  background: var(--colour_bg);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
 }
@@ -235,10 +235,10 @@ button.presentation-ii-link-button {
   bottom: 0px;
   left: 0px;
   width: 100%;
-  background: var(--colour_accent);
+  background: var(--colour_bg);
   padding: 1vh;
   position: absolute;
-  font-size: calc(var(--base-font) *2 );
+  font-size: calc(var(--base-font) * 2);
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
 }
