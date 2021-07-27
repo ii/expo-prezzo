@@ -42,6 +42,7 @@ spec:
             port: 8101
           initialDelaySeconds: 2
           periodSeconds: 10
+          failureThreshold: 10
         resources:
           requests:
             memory: "20Mi"
