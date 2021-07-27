@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: careers-expo-ii-nz
+  namespace: careers-expo-ii-nz
+  labels:
+    environment: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: careers-expo-ii-nz
+  template:
+    metadata:
+      labels:
+        app: careers-expo-ii-nz
+        environment: production
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - name: careers-expo-ii-nz
+        image: ${CI_REGISTRY_IMAGE}:${APP_VERSION}
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        env:
+          - name: TZ
+            value: "Pacific/Auckland"
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 2
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 2
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "20Mi"
+            cpu: "100m"
+          limits:
+            memory: "20Mi"
+            cpu: "100m"

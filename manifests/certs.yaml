@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: careers-expo-ii-nz-letsencrypt-prod
+  namespace: careers-expo-ii-nz
+spec:
+  secretName: careers-expo-ii-nz-letsencrypt-prod
+  issuerRef:
+    name: careers-expo-ii-nz-letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - "careers-expo.ii.nz"

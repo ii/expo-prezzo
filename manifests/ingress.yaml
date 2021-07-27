@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: careers-expo-ii-nz
+  namespace: careers-expo-ii-nz
+  labels:
+    environment: production
+  annotations:
+    cert-manager.io/cluster-issuer: careers-expo-ii-nz-letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+    - hosts:
+        - "careers-expo.ii.nz"
+      secretName: careers-expo-ii-nz-letsencrypt-prod
+  rules:
+    - host: "careers-expo.ii.nz"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: careers-expo-ii-nz
+                port:
+                  number: 8080
