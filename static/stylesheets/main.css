@@ -25,24 +25,31 @@
 
 .red {
   --colour_bg: var(--red);
+  --colour_body: white;
 }
 .orange {
   --colour_bg: var(--orange);
+  --colour_body: black;
 }
 .yellow {
   --colour_bg: var(--yellow);
+  --colour_body: black;
 }
 .green {
   --colour_bg: var(--green);
+  --colour_body: black;
 }
 .blue {
   --colour_bg: var(--blue);
+  --colour_body: white;
 }
 .indigo {
   --colour_bg: var(--indigo);
+  --colour_body: white;
 }
 .violet {
   --colour_bg: var(--violet);
+  --colour_body: black;
 }
 
 .red-gradient {
@@ -262,6 +269,7 @@ div.monitor-qrcode {
 
 div.monitor-qrcode p {
   font-size: 1.3rem;
+  color: var(--colour_body);
 }
 
 .stars {
