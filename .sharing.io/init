@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $(dirname $0)
+GIT_ROOT=$(git rev-parse --show-toplevel)
+cd $GIT_ROOT
+
+export TMATE_SOCKET="${TMATE_SOCKET:-/tmp/ii.default.target.iisocket}"
+
+npm i
+tmate -F -v -S $TMATE_SOCKET new-window -d -c "$PWD" -n expo-prezzo bash
+tmate -S $TMATE_SOCKET send-keys -t expo-prezzo "npm start" Enter
