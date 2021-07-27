@@ -28,18 +28,18 @@ spec:
           allowPrivilegeEscalation: false
         imagePullPolicy: IfNotPresent
         ports:
-          - containerPort: 8080
+          - containerPort: 8101
         env:
           - name: TZ
             value: "Pacific/Auckland"
         readinessProbe:
           tcpSocket:
-            port: 8080
+            port: 8101
           initialDelaySeconds: 2
           periodSeconds: 10
         livenessProbe:
           tcpSocket:
-            port: 8080
+            port: 8101
           initialDelaySeconds: 2
           periodSeconds: 10
         resources:
