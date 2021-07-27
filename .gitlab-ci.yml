@@ -46,7 +46,7 @@ stages:
   retry: 2
   only:
     refs:
-      - master
+      - $CI_DEFAULT_BRANCH
       - tags
     variables:
       - $KUBECONFIG_FROM_ENV
@@ -98,7 +98,7 @@ tag-container-image:
       done
   only:
     refs:
-      - master
+      - $CI_DEFAULT_BRANCH
       - tags
     variables:
       - $KUBECONFIG_FROM_ENV
@@ -132,6 +132,6 @@ deploy:
       done
   only:
     refs:
-      - master
+      - $CI_DEFAULT_BRANCH
     variables:
       - $KUBECONFIG_FROM_ENV
