@@ -1,0 +1,63 @@
+#+TITLE: Setup in Production
+
+** Kubernetes
+To deploy to a Kubernetes cluster, a publically accessible APIServer endpoint will need to be available.
+
+Create a namespace for your site:
+#+BEGIN_SRC shell :results silent
+kubectl create ns careers-expo-ii-nz
+#+END_SRC
+
+Apply the manifests which are not managed by the CI:
+#+BEGIN_SRC shell :results silent
+cd manifests
+kubectl -n careers-expo-ii-nz apply -f role.yaml -f rolebinding.yaml -f certs.yaml -f clusterissuer.yaml
+#+END_SRC
+
+Download the script =kubernetes_add_service_account_kubeconfig.sh= to get a kubeconfig for a new ServiceAccount:
+#+BEGIN_SRC shell :results silent
+TMPDIR=/tmp/hugo-k8s-or-gitlab-pages-template
+mkdir -p $TMPDIR
+cd $TMPDIR
+curl -O -L https://gist.github.com/poweroftrue/2aca2bd4f31d307e7dea1797fb089bf3/raw/267ab63183b9cbd376998d969b9a88b1e20731cc/kubernetes_add_service_account_kubeconfig.sh
+cat << EOF > $TMPDIR/permissions-template.yaml
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: my_account-clusterrolebinding
+subjects:
+  - kind: ServiceAccount
+    name: my_account
+    namespace: my_namespace
+roleRef:
+  kind: Role
+  name: cluster-admin
+  apiGroup: ""
+EOF
+
+echo $TMPDIR
+#+END_SRC
+
+Ensure that the current context for your local kubeconfig is set to the target deploy cluster. Create the ServiceAccount and get the kubeconfig:
+#+BEGIN_SRC shell :prologue "(\n" :epilogue ") 2>&1\n:"
+TMPDIR=/tmp/hugo-k8s-or-gitlab-pages-template
+cd $TMPDIR
+bash kubernetes_add_service_account_kubeconfig.sh careers-expo-ii-nz-ci examplesite-com
+#+END_SRC
+
+Get the base64 encoded kubeconfig:
+#+BEGIN_SRC shell
+cat /tmp/kube/k8s-careers-expo-ii-nz-ci-examplesite-com-conf | base64 | tr -d '\n'; echo
+#+END_SRC
+
+With a kubeconfig as base64 copyable, navigate to the GitLab project -> Settings -> CI/CD -> Variables -> Add variable.
+Add a new variables called =KUBECONFIG_FROM_ENV= to the CI.
+Paste the value into the Value box.
+*IMPORTANT*:
+- set Protected to =false= and Mask to =true=.
+- ensure that the kubeconfig has not been commited into this file
+
+Notes:
+- manifests have been tested against Kubernetes v1.20.0
+- current [[../manifests/deployment.yaml][deployment]] requires a non-private container registry
