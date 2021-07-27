@@ -1,0 +1,137 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  ARCHES: amd64
+  ARCH_DEFAULT: amd64
+  REGISTRIES: $CI_REGISTRY
+
+stages:
+  - build-container
+  - post-build
+  - deploy
+
+.kaniko-build-pre-script: &kaniko-build-pre-script |
+  set -x
+  mkdir -p /kaniko/.docker
+  cat << EOF > /kaniko/.docker/config.json
+  {
+    "auths": {
+      "$CI_REGISTRY": {
+        "username": "$CI_REGISTRY_USER",
+        "password": "$CI_REGISTRY_PASSWORD"
+      }
+    }
+  }
+  EOF
+
+.kaniko-build-taggable-name: &kaniko-build-taggable-name |
+  echo "Commit made on '${CI_COMMIT_TIMESTAMP}'"
+  export APP_VERSION=$(date --date="${CI_COMMIT_TIMESTAMP//[T+]/ }" '+%Y.%m.%d.%H%M')
+  export KANIKO_RELEASE_DESTINATIONS="--destination $CI_REGISTRY_IMAGE:latest-$ARCH --destination $CI_REGISTRY_IMAGE:$APP_VERSION-$ARCH"
+  export PROJECT_PATH=$(echo $CI_PROJECT_PATH | tr '[:upper:]' '[:lower:]')
+
+.kaniko-build: &kaniko-build |
+  /kaniko/executor \
+    --snapshotMode=redo \
+    --context $CI_PROJECT_DIR \
+    --dockerfile $CI_PROJECT_DIR/Dockerfile \
+    --build-arg ARCH=$ARCH \
+    $KANIKO_DESTINATIONS \
+    $KANIKO_RELEASE_DESTINATIONS
+
+.build-container: &build-container
+  stage: build-container
+  image:
+    name: gcr.io/kaniko-project/executor:v1.6.0-debug
+    entrypoint: [""]
+  retry: 2
+  only:
+    refs:
+      - master
+      - tags
+    variables:
+      - $KUBECONFIG_FROM_ENV
+  before_script:
+    - *kaniko-build-pre-script
+    - *kaniko-build-taggable-name
+  script:
+    - *kaniko-build
+
+build-container-amd64:
+  <<: *build-container
+  variables:
+    ARCH: "amd64"
+
+tag-container-image:
+  stage: post-build
+  image: docker:20.10.6
+  before_script:
+    - *kaniko-build-pre-script
+    - *kaniko-build-taggable-name
+  script:
+    - |
+      set -x
+      cp -rf /kaniko/.docker $HOME/.docker
+      if [[ -z "$CI_COMMIT_TAG" ]]; then
+        APP_BUILD_VERSION=
+      fi
+      for tag in $APP_VERSION latest; do
+        for reg in $REGISTRIES; do
+          export IMAGE_TAG_WITH_ARCH=""
+          for arch in $ARCHES; do
+            IMAGE="$reg/$PROJECT_PATH:$tag-$arch"
+            export IMAGE_TAG_WITH_ARCH="$IMAGE_TAG_WITH_ARCH $IMAGE"
+          done
+          docker manifest create $reg/$PROJECT_PATH:$tag $IMAGE_TAG_WITH_ARCH
+          for arch in $ARCHES; do
+            # TODO tidy up
+            EXTRA_ARGS=""
+            if [ "$arch" = "arm" ]; then
+              EXTRA_ARGS="--variant v7"
+            fi
+            if [ "$arch" = "arm64" ]; then
+              EXTRA_ARGS="--variant v8"
+            fi
+            docker manifest annotate $reg/$PROJECT_PATH:$tag $reg/$PROJECT_PATH:$tag-$arch --os linux --arch $arch $EXTRA_ARGS
+          done
+          docker manifest push $reg/$PROJECT_PATH:$tag
+        done
+      done
+  only:
+    refs:
+      - master
+      - tags
+    variables:
+      - $KUBECONFIG_FROM_ENV
+
+deploy:
+  stage: deploy
+  image:
+    name: alpine:3.12
+    entrypoint: [""]
+  variables:
+    KUBECTL_VERSION: v1.20.2
+    KUBECTL_HASH: 2583b1c9fbfc5443a722fb04cf0cc83df18e45880a2cf1f6b52d9f595c5beb88
+    MANIFEST_FOLDER: $CI_PROJECT_DIR/manifests
+  before_script:
+    - *kaniko-build-taggable-name
+    - apk add --no-cache curl gettext
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBECTL_VERSION/bin/linux/amd64/kubectl
+    - echo "$KUBECTL_HASH  kubectl" | sha256sum -c -
+    - chmod +x kubectl
+    - mv kubectl /usr/local/bin/kubectl
+    - mkdir -p $HOME/.kube
+    - echo ${KUBECONFIG_FROM_ENV} | base64 -d > $HOME/.kube/config
+    - cd $MANIFEST_FOLDER
+  script:
+    - |
+      for MANIFEST in $MANIFEST_FOLDER/*; do
+        if cat $MANIFEST | grep -q ci-sa:noapply=true; then
+          continue
+        fi
+        envsubst < $MANIFEST | kubectl apply -f -
+      done
+  only:
+    refs:
+      - master
+    variables:
+      - $KUBECONFIG_FROM_ENV
