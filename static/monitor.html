@@ -75,7 +75,10 @@
      window.location.reload();
    });
 
-   socket.on("new connection", monitor => console.table(monitor));
+   socket.on("new connection", monitor => {
+     sessionStorage.setItem("monitor", JSON.stringify(monitor));
+     console.table(monitor)
+   });
 
    socket.on("new presentation requested", monitor => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
