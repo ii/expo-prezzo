@@ -45,9 +45,6 @@ stages:
     entrypoint: [""]
   retry: 2
   only:
-    refs:
-      - $CI_DEFAULT_BRANCH
-      - tags
     variables:
       - $KUBECONFIG_FROM_ENV
   before_script:
@@ -97,9 +94,6 @@ tag-container-image:
         done
       done
   only:
-    refs:
-      - $CI_DEFAULT_BRANCH
-      - tags
     variables:
       - $KUBECONFIG_FROM_ENV
 
@@ -131,7 +125,5 @@ deploy:
         envsubst < $MANIFEST | kubectl apply -f -
       done
   only:
-    refs:
-      - $CI_DEFAULT_BRANCH
     variables:
       - $KUBECONFIG_FROM_ENV
