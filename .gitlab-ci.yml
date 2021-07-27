@@ -44,9 +44,6 @@ stages:
     name: gcr.io/kaniko-project/executor:v1.6.0-debug
     entrypoint: [""]
   retry: 2
-  only:
-    variables:
-      - $KUBECONFIG_FROM_ENV
   before_script:
     - *kaniko-build-pre-script
     - *kaniko-build-taggable-name
@@ -93,9 +90,6 @@ tag-container-image:
           docker manifest push $reg/$PROJECT_PATH:$tag
         done
       done
-  only:
-    variables:
-      - $KUBECONFIG_FROM_ENV
 
 deploy:
   stage: deploy
