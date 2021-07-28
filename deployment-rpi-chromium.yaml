@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chromium-rpi${NUM}
+  namespace: monitors-ii-nz
+  labels:
+    environment: production
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chromium-rpi${NUM}
+  template:
+    metadata:
+      labels:
+        app: chromium-rpi${NUM}
+        environment: production
+    spec:
+      automountServiceAccountToken: false
+      hostNetwork: true
+      containers:
+      - name: chromium
+        image: registry.gitlab.com/ii/nz/chromium
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          privileged: true
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: dev
+            mountPath: /dev
+          - name: unix-socket
+            mountPath: /tmp/.X11-unix
+        command:
+          - chromium
+          - --user-data-dir=/tmp/chromium
+          - --start-fullscreen
+        args:
+          - https://careers-expo.ii.nz/monitor.html
+        env:
+          - name: TZ
+            value: "Pacific/Auckland"
+          - name: DISPLAY
+            value: "unix:0"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - pi${NUM}.ii.nz
+      volumes:
+        - name: dev
+          hostPath:
+            path: /dev
+        - name: unix-socket
+          hostPath:
+            path: /tmp/.X11-unix
