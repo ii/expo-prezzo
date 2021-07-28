@@ -4,3 +4,13 @@
 #+begin_src javascript
 socket.handshake.headers
 #+end_src
+
+* Apply Chromium onto pis
+#+begin_src shell :results silent :dir ./..
+for NUM in {1..12}; do export NUM; envsubst < ./deployment-rpi-chromium.yaml | kubectl apply -f -; done
+#+end_src
+
+* Restart all Chromium Pods
+#+begin_src shell :results silent :dir ./..
+for NUM in {1..12}; do export NUM; kubectl -n monitors-ii-nz rollout restart deployment chromium-rpi$NUM; done
+#+end_src

@@ -20,27 +20,40 @@ spec:
     spec:
       automountServiceAccountToken: false
       hostNetwork: true
+      hostPID: true
       containers:
       - name: chromium
-        image: registry.gitlab.com/ii/nz/chromium
+        image: registry.gitlab.com/ii/nz/chromium:latest
         imagePullPolicy: IfNotPresent
         securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
+          runAsUser: 0
+          runAsGroup: 0
           privileged: true
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - name: dev
             mountPath: /dev
+          - name: sys
+            mountPath: /sys
           - name: unix-socket
             mountPath: /tmp/.X11-unix
+          - name: home-user
+            mountPath: /home/user
         command:
-          - chromium
-          - --user-data-dir=/tmp/chromium
-          - --start-fullscreen
-        args:
-          - https://careers-expo.ii.nz/monitor.html
+          - nsenter
+          - -t
+          - "1"
+          - -m
+          - -u
+          - -n
+          - -i
+          - su
+          - pi
+          - -c
+          - "mv $HOME/.config/chromium /tmp/config-chromium; mv $HOME/.cache/chromium /tmp/cache-chromium; chromium --start-fullscreen ${SITE}"
         env:
+          - name: SITE
+            value: https://careers-expo.ii.nz/monitor.html
           - name: TZ
             value: "Pacific/Auckland"
           - name: DISPLAY
@@ -58,6 +71,11 @@ spec:
         - name: dev
           hostPath:
             path: /dev
+        - name: sys
+          hostPath:
+            path: /sys
         - name: unix-socket
           hostPath:
             path: /tmp/.X11-unix
+        - name: home-user
+          emptyDir: {}
