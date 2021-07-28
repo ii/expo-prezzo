@@ -41,6 +41,8 @@ Basic info, need more people
 * Footnotes :noexport:
 ** LOCAL VARS
 #+REVEAL_ROOT: https://multiplex.ii.nz
+#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.ii.nz/socket.io/socket.io.js
 #+REVEAL_VERSION: 4
 #+NOREVEAL_DEFAULT_FRAG_STYLE: YY
 #+NOREVEAL_EXTRA_CSS: YY
