@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Linux Foundation Publich Health</title>
+<meta name="author" content="ii"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.ii.nz/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.ii.nz/dist/theme/simple.css" id="theme"/>
+<link rel="stylesheet" href="https://multiplex.ii.nz/plugin/highlight/zenburn.css"/>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="map70.jpg">
+<h1 class="title">Linux Foundation Publich Health</h1>
+</section>
+
+<section>
+<section id="slide-orgc3441cc" data-background="virus60.jpg">
+<h2 id="orgc3441cc">Public Health Solutions</h2>
+<p>
+Linux Foundation Public Health (LFPH) hosts open source projects for Public Health Authorities (PHAs) to use in their efforts to fight COVID-19 and future epidemics.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orge011cb4" data-background="virus60.jpg">
+<h2 id="orge011cb4">Open Source Software beating COVID</h2>
+
+<div id="orge5d6009" class="figure">
+<p><img src="./collaborating.png" alt="collaborating.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org67eea3c" data-background="virus60.jpg">
+<h2 id="org67eea3c">Exposure Notification</h2>
+
+<div id="orge9511fd" class="figure">
+<p><img src="./exposure_notification.png" alt="exposure_notification.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org25666e1" data-background="virus60.jpg">
+<h2 id="org25666e1">COVID Credentials</h2>
+
+<div id="orgf051e05" class="figure">
+<p><img src="./covid_credentials.png" alt="covid_credentials.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org7459c57" data-background="virus60.jpg">
+<h2 id="org7459c57">Members</h2>
+
+<div id="orgb46f5d0" class="figure">
+<p><img src="./members.png" alt="members.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org45c9e3b" data-background="virus60.jpg">
+<h2 id="org45c9e3b">Used by countries around the world</h2>
+
+<div id="org157e907" class="figure">
+<p><img src="./global_deployment.png" alt="global_deployment.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgec00587" data-background="virus60.jpg">
+<h2 id="orgec00587">Get involved</h2>
+<p>
+Vist us at www.lfph.io
+</p>
+
+<p>
+View our calendar for events
+www.lfph.io/calendar/
+</p>
+
+
+<div id="orgd7457f9" class="figure">
+<p><img src="./lf_public_health.png" alt="lf_public_health.png" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.ii.nz/dist/reveal.js"></script>
+<script src="https://multiplex.ii.nz/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.ii.nz/plugin/notes/notes.js"></script>
+<script src="https://multiplex.ii.nz/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'convex',
+transitionSpeed: '1',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.ii.nz' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://cdn.socket.io/socket.io-1.3.5.js', async: true },
+ { src: 'https://multiplex.ii.nz/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>

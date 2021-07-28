@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>The Could Computing People</title>
+<meta name="author" content="ii"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/dist/theme/black.css" id="theme"/>
+<link rel="stylesheet" href="./reveal.js/plugin/highlight/zenburn.css"/>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="clouds.jpg">
+<h1 class="title">The Could Computing People</h1>
+</section>
+
+<section>
+<section id="slide-orgcdef7e1" data-background="clouds.jpg">
+<h2 id="orgcdef7e1">Priyanka Sharma</h2>
+<p>
+ CNCF as General Manager
+“It’s likely that by 2025, two-thirds of enterprises will be prolific [OSS] software producers and over 90% of new apps will be cloud native”
+</p>
+
+
+
+<div id="orgb66942f" class="figure">
+<p><img src="./priyanka.png" alt="priyanka.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orga7e522a" data-background="clouds.jpg">
+<h2 id="orga7e522a">Duffie Cooley</h2>
+
+<div id="orgdd85f11" class="figure">
+<p><img src="./duffie.png" alt="duffie.png" />
+</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org9149406" data-background="clouds.jpg">
+<h2 id="org9149406">Aaron Crickenberger</h2>
+
+<div id="org19f6f27" class="figure">
+<p><img src="./aaron.png" alt="aaron.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org211e981" data-background="clouds.jpg">
+<h2 id="org211e981">Bart Farrel</h2>
+
+<div id="orgf92cf22" class="figure">
+<p><img src="./bart.png" alt="bart.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdea2d70" data-background="clouds.jpg">
+<h2 id="orgdea2d70">JJ Ashghar</h2>
+
+<div id="org564d645" class="figure">
+<p><img src="./jj.png" alt="jj.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org5f83bf8" data-background="clouds.jpg">
+<h2 id="org5f83bf8">Alison Dowdney</h2>
+
+<div id="orga3523ae" class="figure">
+<p><img src="./alison.png" alt="alison.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb96b637" data-background="clouds.jpg">
+<h2 id="orgb96b637">Get involved</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/markdown/markdown.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'convex',
+transitionSpeed: '1',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.ii.nz' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://cdn.socket.io/socket.io-1.3.5.js', async: true },
+ { src: './reveal.js/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>
