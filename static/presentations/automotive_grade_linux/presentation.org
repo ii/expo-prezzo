@@ -93,9 +93,9 @@ Weekly Developer Meeting held on Tuesdays
 #+REVEAL_TITLE_SLIDE_BACKGROUND: lights.jpg
 #+REVEAL_DEFAULT_SLIDE_BACKGROUND: lights2.jpg
 #+REVEAL_DEFAULT_FRAG_STYLE: grow
-#+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
+# #+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
 #+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
-#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
+#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined: '
 #+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
 #+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz
 #+OPTIONS: num:nil
