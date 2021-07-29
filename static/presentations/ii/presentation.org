@@ -1,17 +1,47 @@
 #+TITLE:  ii
 
 * Who is ii?
+  :PROPERTIES:
+    :reveal_background: ./ii.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 We are ii! We as in the folks idling around this booth and tinkering on these machines.
 * What do we do?
-The driving mission of ii is to help people work together better through open source
+  :PROPERTIES:
+    :reveal_background: ./work-together.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+Our driving mission is to help people work together better, through open source
 technology.
 * More specifically?
+  :PROPERTIES:
+    :reveal_background: ./server-people.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 our work is mostly in the domain of "infrastructure and operations": servers,
 clouds, people, and the spaces where all three meet.
 * Local and Global
+  :PROPERTIES:
+    :reveal_background: ./kubernetes.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 We are based in Tauranga Moana, working globally with groups like Kubernetes and
 the CNCF, and locally with groups like Basestation.
 * Say Hi!
+  :PROPERTIES:
+    :reveal_background: ./cloud-hearts.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 We love to share our excitement and experience, and empower more folks to change their world with open source technology. If you'd like to get involved, come chat with us!
 * Footnotes :noexport:
 ** LOCAL VARS
