@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Agstack</title>
+<meta name="author" content="Zach Mandeville"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/theme/black.css" id="theme"/>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/zenburn.css"/>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="cow.jpg">
+<h1 class="title">Agstack</h1>
+</section>
+
+<section>
+<section id="slide-orgab309b2" data-background="grass.jpg">
+<h2 id="orgab309b2">Open-Source Digital Infrastructure for the Agriculture Ecosystem</h2>
+
+<div id="orgde47a36" class="figure">
+<p><img src="./argstack_logo.png" alt="argstack_logo.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgcc70b80" data-background="grass.jpg">
+<h2 id="orgcc70b80">What it is</h2>
+<p>
+The AgStack Foundation seeks to improve global agriculture efficiency through free, resuable, and open infastructure.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org5d73dba" data-background="grass.jpg">
+<h2 id="org5d73dba">Transforming Agriculture</h2>
+<p>
+Global agriculture is a multi-trillion-dollar ecosystem that is massively inefficient and needs a transformation
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org9f3b590" data-background="grass.jpg">
+<h2 id="org9f3b590">Projects</h2>
+<p>
+AgStack aims to use open source to help with:
+</p>
+<ul>
+<li>crop nutrition/protection</li>
+<li>food waste</li>
+<li>equipment and irrigation management</li>
+<li>supply chains</li>
+<li>climate protection</li>
+<li>better harvests</li>
+<li>indoor agriculture</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org83805b8" data-background="grass.jpg">
+<h2 id="org83805b8">Members of AgStack</h2>
+
+<div id="orgdbeaa37" class="figure">
+<p><img src="./members.png" alt="members.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org5f69306" data-background="grass.jpg">
+<h2 id="org5f69306">How to get involved</h2>
+<p>
+Join us at www.agstack.org
+</p>
+
+
+<div id="org1055684" class="figure">
+<p><img src="./kiwi.jpg" alt="kiwi.jpg" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/notes/notes.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'none',
+transitionSpeed: '2',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>

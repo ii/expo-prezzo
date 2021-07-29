@@ -1,0 +1,71 @@
+#+TITLE: Agstack
+
+* Open-Source Digital Infrastructure for the Agriculture Ecosystem
+
+[[./argstack_logo.png]]
+
+* What it is
+The AgStack Foundation seeks to improve global agriculture efficiency through free, resuable, and open infastructure.
+*  Transforming Agriculture
+   :PROPERTIES:
+   :reveal_color: #FFFFFF
+   :END:
+Global agriculture is a multi-trillion-dollar ecosystem that is massively inefficient and needs a transformation
+* Projects
+AgStack aims to use open source to help with:
+- crop nutrition/protection
+- food waste
+- equipment and irrigation management
+- supply chains
+- climate protection
+- better harvests
+- indoor agriculture
+* Members of AgStack
+
+[[./members.png]]
+
+#+reveal_background: kiki.jpg
+* How to get involved
+ Join us at www.agstack.org
+
+ [[./kiwi.jpg]]
+
+* Footnotes :noexport:
+** LOCAL VARS
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
+#+REVEAL_VERSION: 4
+#+REVEAL_HLEVEL: 2
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_WIDTH: 1000
+#+REVEAL_HEIGHT: 600
+#+REVEAL_MAX_SCALE: 3.5
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_PLUGINS: (markdown notes highlight multiplex)
+#+REVEAL_SLIDE_NUMBER: ""
+#+REVEAL_SPEED: 2
+#+REVEAL_THEME: black
+#+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_TRANS: none
+#+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
+#+REVEAL_TITLE_SLIDE_BACKGROUND: cow.jpg
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND: grass.jpg
+#+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
+#+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
+#+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: mathjax:Y
+#+OPTIONS: reveal_single_file:nil
+#+OPTIONS: reveal_control:t
+#+OPTIONS: reveal-progress:t
+#+OPTIONS: reveal_history:nil
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:nil
+#+OPTIONS: reveal_keyboard:t
+#+OPTIONS: reveal_overview:t
+#+OPTIONS: author:nil
+#+OPTIONS: timestamp:nil
