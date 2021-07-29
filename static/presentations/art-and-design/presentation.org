@@ -27,7 +27,6 @@ translate its UI to new languages, and create guides and videos for incoming art
 The Creative Commons is a license for free and open source art. This is art
 intended for remixing, copying, and reimagining to help you create your own new, sharable art.
 * "When we share, everyone wins".
-* Conclusion
 * Footnotes :noexport:
 ** LOCAL VARS
 #+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
