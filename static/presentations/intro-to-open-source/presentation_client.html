@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>What is Open Source?</title>
+<meta name="author" content="Zach Mandeville"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css"/>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+
+<link rel="stylesheet" href="/stylesheets/infocards.css"/>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/zenburn.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">What is Open Source?</h1>
+</section>
+
+<section>
+<section id="slide-org0d58ec0">
+<h2 id="org0d58ec0">Open Source Technology</h2>
+<p>
+Open source refers to creative work&#x2013;often software&#x2013;that is free to use, copy,
+remix, and modify.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgab430c5">
+<h2 id="orgab430c5">Open Source Creation</h2>
+<p>
+It is also a method of collaboration, where creative work is done in the open,
+and everyone is invited to contribute and share.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgf85cf88">
+<h2 id="orgf85cf88">Free to use, remix, share, and evolve</h2>
+<p>
+With open source, not only do you have more tools at your disposal, but you can
+personalize and improve these tools, then share them with whoever you please!
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgfd13b48">
+<h2 id="orgfd13b48">We think this is incredibly cool.</h2>
+</section>
+</section>
+<section>
+<section id="slide-org44d4828">
+<h2 id="org44d4828">A career in free stuff?</h2>
+<p>
+When everyone can contribute, a project is able to improve in ways the original
+creators could only imagine.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgb840353">
+<h2 id="orgb840353">A career in free stuff?</h2>
+<p>
+This tends to create exciting, resilient, popular, and adaptable work&#x2013; work
+that businesses and other institutions want to fund.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgfe0e550">
+<h2 id="orgfe0e550">Is it only software?</h2>
+<p>
+The term Open Source originated with software, but it is not limited to it. You
+can find exmaples of open source in art, design, construction, cuisine,
+goverment and law, music, and more.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org9c9057a">
+<h2 id="org9c9057a">Is open source right for you?</h2>
+<p>
+Probably! No matter your aptitude or interests, there is likely an open source
+project that you will love,and that would love to have you!
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org242f033">
+<h2 id="org242f033">The End</h2>
+<p>
+Thanks! Come chat with us at the booth if you have any questions!
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/notes/notes.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'none',
+transitionSpeed: '1',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>

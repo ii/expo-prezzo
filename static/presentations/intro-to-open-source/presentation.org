@@ -1,0 +1,68 @@
+#+TITLE:  What is Open Source?
+
+* Open Source Technology
+Open source refers to creative work--often software--that is free to use, copy,
+remix, and modify.
+* Open Source Creation
+It is also a method of collaboration, where creative work is done in the open,
+and everyone is invited to contribute and share.
+* Free to use, remix, share, and evolve
+With open source, not only do you have more tools at your disposal, but you can
+personalize and improve these tools, then share them with whoever you please!
+* We think this is incredibly cool.
+* A career in free stuff?
+When everyone can contribute, a project is able to improve in ways the original
+creators could only imagine.
+* A career in free stuff?
+This tends to create exciting, resilient, popular, and adaptable work-- work
+that businesses and other institutions want to fund.
+* Is it only software?
+The term Open Source originated with software, but it is not limited to it. You
+can find exmaples of open source in art, design, construction, cuisine,
+goverment and law, music, and more.
+* Is open source right for you?
+Probably! No matter your aptitude or interests, there is likely an open source
+project that you will love,and that would love to have you!
+* The End
+Thanks! Come chat with us at the booth if you have any questions!
+* Footnotes :noexport:
+** LOCAL VARS
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
+#+REVEAL_VERSION: 4
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.googleapis.com">
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+#+REVEAL_EXTRA_CSS: https://unpkg.com/nes.css@2.3.0/css/nes.min.css
+#+REVEAL_EXTRA_CSS: https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap
+#+REVEAL_EXTRA_CSS: /stylesheets/infocards.css
+#+REVEAL_HLEVEL: 2
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_WIDTH: 1000
+#+REVEAL_HEIGHT: 600
+#+REVEAL_MAX_SCALE: 3.5
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_PLUGINS: (markdown notes highlight multiplex)
+#+REVEAL_SLIDE_NUMBER: ""
+#+REVEAL_SPEED: 1
+#+REVEAL_THEME: simple
+#+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_TRANS: none
+#+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
+#+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
+#+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
+#+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: mathjax:Y
+#+OPTIONS: reveal_single_file:nil
+#+OPTIONS: reveal_control:t
+#+OPTIONS: reveal-progress:t
+#+OPTIONS: reveal_history:nil
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:nil
+#+OPTIONS: reveal_keyboard:t
+#+OPTIONS: author:nil
+#+OPTIONS: timestamp:nil
