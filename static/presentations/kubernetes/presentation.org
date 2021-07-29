@@ -1,25 +1,66 @@
 #+TITLE:  Kubernetes
 
 * What is Kubernetes?
+  :PROPERTIES:
+    :reveal_background: ./kubernetes.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 A service for managing and operating cloud-based technology.
 It is also one of the most active, and well-funded, open source communities.
 * What is cloud technology?
+  :PROPERTIES:
+    :reveal_background: ./clouds.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 "Cloud" essentially means a bunch of computers working as one.
 * Why cloud technology?
+  :PROPERTIES:
+    :reveal_background: ./clouds.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 By having many machines working toward one thing, you can increase the
 collective power, availability, and resilience of that thing.
 * Where cloud technology?
+  :PROPERTIES:
+    :reveal_background: ./clouds2.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Clouds come in many sizes and shapes, from large corporate and government
 infrastructure to career expo booths. You are standing in front of a cloud right now.
 * Kubernetes
+  :PROPERTIES:
+    :reveal_background: ./kubernetes.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Kubernetes simplifies the creation and maintenance of your cloud.
 
 Because of this, it is an incredibly popular project, and Kubernetes skills are
 highly sought after.
 * People in the cloud
+  :PROPERTIES:
+    :reveal_background: ./cloud-people.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 The community around this project is large, influential, and quite welcoming!
-It is a great one to get started with working in open source.
 * ii ♡ Kubernetes
+  :PROPERTIES:
+    :reveal_background: ./heart.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Much of the work we do at ii revolves around kubernetes and its community. Come
 talk to us if you want to get involved!
 * Footnotes :noexport:
