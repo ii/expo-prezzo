@@ -20,9 +20,10 @@ AgStack aims to use open source to help with:
 - climate protection
 - better harvests
 - indoor agriculture
-* Members of AgStack
+* Members
 
 [[./members.png]]
+
 
 #+reveal_background: kiki.jpg
 * How to get involved

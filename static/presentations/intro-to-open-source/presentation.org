@@ -1,29 +1,78 @@
 #+TITLE:  What is Open Source?
 
 * Open Source Technology
+  :PROPERTIES:
+    :reveal_background: ./plant.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Open source refers to creative work--often software--that is free to use, copy,
-remix, and modify.
+and modify.
 * Open Source Creation
+  :PROPERTIES:
+    :reveal_background: ./community.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 It is also a method of collaboration, where creative work is done in the open,
 and everyone is invited to contribute and share.
 * Free to use, remix, share, and evolve
-With open source, not only do you have more tools at your disposal, but you can
-personalize and improve these tools, then share them with whoever you please!
+  :PROPERTIES:
+    :reveal_background: ./collaborate.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+With open source, you have more tools at your disposal, and you can personalize,
+improve, and share these tools as you please!
 * We think this is incredibly cool.
 * A career in free stuff?
+  :PROPERTIES:
+    :reveal_background: ./sun-and-stars.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 When everyone can contribute, a project is able to improve in ways the original
 creators could only imagine.
 * A career in free stuff?
+  :PROPERTIES:
+    :reveal_background: ./money.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 This tends to create exciting, resilient, popular, and adaptable work-- work
 that businesses and other institutions want to fund.
 * Is it only software?
+  :PROPERTIES:
+    :reveal_background: ./universe.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_opacity: 0.4
+    :reveal_background_position: top
+    :END:
 The term Open Source originated with software, but it is not limited to it. You
-can find exmaples of open source in art, design, construction, cuisine,
+can find examples of open source in art, design, construction, cuisine,
 goverment and law, music, and more.
 * Is open source right for you?
+  :PROPERTIES:
+    :reveal_background: ./heart.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Probably! No matter your aptitude or interests, there is likely an open source
 project that you will love,and that would love to have you!
 * The End
+  :PROPERTIES:
+    :reveal_background: ./plant.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Thanks! Come chat with us at the booth if you have any questions!
 * Footnotes :noexport:
 ** LOCAL VARS
