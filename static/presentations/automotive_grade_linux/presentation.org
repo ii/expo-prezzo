@@ -1,80 +1,41 @@
 #+TITLE: Automotive Grade Linux
-#+AUTHOR: ii
-#+PROPERTY: header-args:tmate+ :session kubekohn :socket /tmp/kubecon
-
-* doc notes                                                        :noexport:
-Creating the folder and slide template
-Wait of more .png's for AGL marketing
 
 * What is Automotive Grade Linux?
 
-Automotive Grade Linux is a collaborative open source project that is bringing together automakers, suppliers and technology companies to accelerate the development and adoption of a fully open software stack for the connected car.
-
-
-[[./agl_logo.png]]
-
-* With Linux at its core
-AGL is developing an open platform from the ground up that can serve as the de facto industry standard to enable rapid development of new features and technologies. Although initially focused on In-Vehicle-Infotainment (IVI), AGL is the only organization planning to address all software in the vehicle.
-
-[[./agl_logo2.png]]
-
-* The Automotive Grade Linux (AGL) initiative is
-
-#+ATTR_REVEAL: :frag (appear)
-- Driven by the Automotive Grade Linux Collaborative Project of the Linux Foundation
-- About improving open source components for automotive use cases
-- Follows an upstream-first policy in publishing the improvements
-- Using a common reference platform for test and integration purposes
-
-* Open Source
-Automotive Grade Linux is a collaborative open source project that is bringing together automakers, suppliers and technology companies to accelerate the development and adoption of a fully open software stack for the connected car.
-The AGL platform is available to all, and anyone can participate in its development.
-
+A collabration between automakers, suppliers, and tech companies to accelerate
+the development of a fully open software stack for tomorrow's car.
 
 * AGL include software for
-
-#+ATTR_REVEAL: :frag (appear)
 - Instrument cluster
 - Heads up display
 - Telematics
 - Advanced driver assistance systems (ADAS)
 - Autonomous driving
 
+[[./agl_logo.png]]
+
+* With Linux at its core
+AGL's goal is to be the industry standard for rapid development of new
+features and technologies.
+
 
 * Developed through a joint effort by dozens of member companies
-AGL provides 70% of the starting point for a production project and includes an operating system, middleware and application framework. Automakers and suppliers can customize the platform with features, services and branding to meet their unique product and customer needs.
-
-* Who are the industry contributers?
-
-
-[[./agl_platinum_members.png]]
-
-** Silver & Bronze members
-
+This is an open source project that involves over 150 companies, including 11
+car manufacturers. It expects 50% market share within 10 years.
 [[./agl_silver_members.png]]
-
-- 136 Bronze members
-#+ATTR_REVEAL: :frag (appear)
-- 150 member companies
-- 11 Car manufacturing companies
-- Expecting 50% market share within 10 years
-
 * Get in contact
 Automotive Grade Linux is hosted at the Linux Foundation.
 
 Learn more at automotivelinux.org.
-
-Weekly Developer Meeting held on Tuesdays
-13:00 UTC (6 am Pacific Standard Time and 10 pm JST)
 
   [[./agl_big_logo.png]]
 
 
 * Footnotes :noexport:
 ** LOCAL VARS
-#+REVEAL_ROOT: https://multiplex.ii.nz
-#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz/
-#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.ii.nz/socket.io/socket.io.js
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
 #+REVEAL_VERSION: 4
 #+NOREVEAL_DEFAULT_FRAG_STYLE: YY
 #+NOREVEAL_EXTRA_CSS: YY
@@ -90,16 +51,13 @@ Weekly Developer Meeting held on Tuesdays
 #+REVEAL_SPEED: 1
 #+REVEAL_THEME: black
 #+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
-#+REVEAL_TRANS: convex
-#+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
 #+REVEAL_TITLE_SLIDE_BACKGROUND: lights.jpg
 #+REVEAL_DEFAULT_SLIDE_BACKGROUND: lights2.jpg
-#+REVEAL_DEFAULT_FRAG_STYLE: grow
 #+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
 #+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
 #+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined: '
 #+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
-#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
 #+OPTIONS: num:nil
 #+OPTIONS: toc:nil
 #+OPTIONS: mathjax:Y
