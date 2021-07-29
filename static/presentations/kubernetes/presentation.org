@@ -1,0 +1,65 @@
+#+TITLE:  Kubernetes
+
+* What is Kubernetes?
+A service for managing and operating cloud-based technology.
+It is also one of the most active, and well-funded, open source communities.
+* What is cloud technology?
+"Cloud" essentially means a bunch of computers working as one.
+* Why cloud technology?
+By having many machines working toward one thing, you can increase the
+collective power, availability, and resilience of that thing.
+* Where cloud technology?
+Clou come in many sizes and shapes, from large corporate and government
+infrastructure to career expo booths. You are standing in front of a cloud right now.
+* Kubernetes
+Kubernetes simplifies the creation and maintenance of your cloud.
+
+Because of this, it is an incredibly popular project, and kubernetes skills are
+highly sought after.
+* People in the cloud
+The community around this project is large, influential, and quite welcoming!
+It is a great one to get started in working with open source.
+* ii ♡ Kubernetes
+Much of the work we do at ii revolves around kubernetes and its community. Come
+talk to us if you want to get involved!
+* Footnotes :noexport:
+** LOCAL VARS
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
+#+REVEAL_VERSION: 4
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.googleapis.com">
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+#+REVEAL_EXTRA_CSS: https://unpkg.com/nes.css@2.3.0/css/nes.min.css
+#+REVEAL_EXTRA_CSS: https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap
+#+REVEAL_EXTRA_CSS: /stylesheets/infocards.css
+#+REVEAL_HLEVEL: 2
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_WIDTH: 1000
+#+REVEAL_HEIGHT: 600
+#+REVEAL_MAX_SCALE: 3.5
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_PLUGINS: (markdown notes highlight multiplex)
+#+REVEAL_SLIDE_NUMBER: ""
+#+REVEAL_SPEED: 1
+#+REVEAL_THEME: simple
+#+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_TRANS: none
+#+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
+#+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
+#+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
+#+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: mathjax:Y
+#+OPTIONS: reveal_single_file:nil
+#+OPTIONS: reveal_control:t
+#+OPTIONS: reveal-progress:t
+#+OPTIONS: reveal_history:nil
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:nil
+#+OPTIONS: reveal_keyboard:t
+#+OPTIONS: author:nil
+#+OPTIONS: timestamp:nil

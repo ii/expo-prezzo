@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Kubernetes</title>
+<meta name="author" content="Zach Mandeville"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css"/>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+
+<link rel="stylesheet" href="/stylesheets/infocards.css"/>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/zenburn.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Kubernetes</h1>
+</section>
+
+<section>
+<section id="slide-org4f20089">
+<h2 id="org4f20089">What is Kubernetes?</h2>
+<p>
+A service for managing and operating cloud-based technology.
+It is also one of the most active, and well-funded, open source communities.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgd654561">
+<h2 id="orgd654561">What is cloud technology?</h2>
+<p>
+&ldquo;Cloud&rdquo; essentially means a bunch of computers working as one.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgf1e8489">
+<h2 id="orgf1e8489">Why cloud technology?</h2>
+<p>
+By having many machines working toward one thing, you can increase the
+collective power, availability, and resilience of that thing.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org1246fe6">
+<h2 id="org1246fe6">Where cloud technology?</h2>
+<p>
+Clou come in many sizes and shapes, from large corporate and government
+infrastructure to career expo booths. You are standing in front of a cloud right now.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org54ba293">
+<h2 id="org54ba293">Kubernetes</h2>
+<p>
+Kubernetes simplifies the creation and maintenance of your cloud.
+</p>
+
+<p>
+Because of this, it is an incredibly popular project, and kubernetes skills are
+highly sought after.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org7794faf">
+<h2 id="org7794faf">People in the cloud</h2>
+<p>
+The community around this project is large, influential, and quite welcoming!
+It is a great one to get started in working with open source.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org7b3e1a6">
+<h2 id="org7b3e1a6">ii ♡ Kubernetes</h2>
+<p>
+Much of the work we do at ii revolves around kubernetes and its community. Come
+talk to us if you want to get involved!
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/notes/notes.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'none',
+transitionSpeed: '1',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>
