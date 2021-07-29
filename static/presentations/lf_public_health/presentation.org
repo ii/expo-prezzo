@@ -1,26 +1,17 @@
-#+TITLE: Linux Foundation Publich Health
-#+AUTHOR: ii
-#+PROPERTY: header-args:tmate+ :session kubekohn :socket /tmp/kubecon
-
-* doc notes                                                        :noexport:
-Creating the folder and slide template
-Basic info, need more work
+#+TITLE: Linux Foundation Public Health
 
 * Public Health Solutions
 
-Linux Foundation Public Health (LFPH) hosts open source projects for Public Health Authorities (PHAs) to use in their efforts to fight COVID-19 and future epidemics.
-
-* Open Source Software beating COVID
-
-
-[[./collaborating.png]]
+Linux Foundation Public Health (LFPH) hosts open source projects to aid in the
+fight against COVID-19 and future epidemics.
 
 * Exposure Notification
+Contract tracing to help manage and reduce outbreaks
 
 [[./exposure_notification.png]]
 
 * COVID Credentials
-
+a method to track and verify vaccination
 [[./covid_credentials.png]]
 
 * Members
@@ -33,18 +24,15 @@ Linux Foundation Public Health (LFPH) hosts open source projects for Public Heal
 
 * Get involved
 
-Vist us at www.lfph.io
-
-View our calendar for events
-www.lfph.io/calendar/
+Vist them at www.lfph.io
 
 [[./lf_public_health.png]]
 
 * Footnotes :noexport:
 ** LOCAL VARS
-#+REVEAL_ROOT: https://multiplex.ii.nz
-#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz/
-#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.ii.nz/socket.io/socket.io.js
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
 #+REVEAL_VERSION: 4
 #+NOREVEAL_DEFAULT_FRAG_STYLE: YY
 #+NOREVEAL_EXTRA_CSS: YY
@@ -60,7 +48,7 @@ www.lfph.io/calendar/
 #+REVEAL_SPEED: 1
 #+REVEAL_THEME: simple
 #+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
-#+REVEAL_TRANS: convex
+#+REVEAL_TRANS: none
 #+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
 #+REVEAL_TITLE_SLIDE_BACKGROUND: map70.jpg
 #+REVEAL_DEFAULT_SLIDE_BACKGROUND: virus60.jpg
@@ -68,7 +56,7 @@ www.lfph.io/calendar/
 #+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
 #+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
 #+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
-#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
 #+OPTIONS: num:nil
 #+OPTIONS: toc:nil
 #+OPTIONS: mathjax:Y
