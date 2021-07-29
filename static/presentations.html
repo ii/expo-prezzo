@@ -80,14 +80,14 @@
      console.log({device});
      localStorage.setItem("device", device);
      socket.emit("sync requested", monitorName);
-     // deviceDebug.textContent = device;
-     // monitor.textContent = monitorName;
+     title.textContent = 'syncing with monitor';
    });
 
    socket.on("synced with monitor", ({token, secret, colour, presentations}) => {
      sessionStorage.setItem("monitor", JSON.stringify({token, secret, colour}));
      body.classList.add(`${colour}-gradient`);
      renderPresentationList(presentations);
+     title.textContent = "What interests you?"
    });
 
    socket.on('expired token', () => console.error("expired token"));
@@ -99,8 +99,6 @@
        document.querySelector("p").textContent = "Camera apps on most smartphones already support this.";
      } else {
        const deviceID = localStorage.getItem("device");
-       // deviceDebug.textContent = deviceID
-       // monitor.textContent = monitorName
        if (deviceID) {
          socket.auth = { deviceID };
        }
