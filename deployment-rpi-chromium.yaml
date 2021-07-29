@@ -50,10 +50,8 @@ spec:
           - su
           - pi
           - -c
-          - "mv $HOME/.config/chromium /tmp/config-chromium; mv $HOME/.cache/chromium /tmp/cache-chromium; chromium --start-fullscreen ${SITE}"
+          - "whoami ; cat /etc/passwd ; rm -rf /home/pi/.config/chromium; rm -rf /home/pi/.cache/chromium/; chromium --start-fullscreen https://careers-expo.ii.nz/monitor.html"
         env:
-          - name: SITE
-            value: https://careers-expo.ii.nz/monitor.html
           - name: TZ
             value: "Pacific/Auckland"
           - name: DISPLAY
