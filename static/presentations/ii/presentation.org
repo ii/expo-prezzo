@@ -1,0 +1,56 @@
+#+TITLE:  ii
+
+* Who is ii?
+We are ii! We as in the folks idling around this booth and tinkering on these machines.
+* What do we do?
+The driving mission of ii is to help people work together better through open source
+technology.
+* More specifically?
+our work is mostly in the domain of "infrastructure and operations": servers,
+clouds, people, and the spaces where all three meet.
+* Local and Global
+We are based in Tauranga Moana, working globally with groups like Kubernetes and
+the CNCF, and locally with groups like Basestation.
+* Say Hi!
+We love to share our excitement and experience, and empower more folks to change their world with open source technology. If you'd like to get involved, come chat with us!
+* Footnotes :noexport:
+** LOCAL VARS
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
+#+REVEAL_VERSION: 4
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.googleapis.com">
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+#+REVEAL_EXTRA_CSS: https://unpkg.com/nes.css@2.3.0/css/nes.min.css
+#+REVEAL_EXTRA_CSS: https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap
+#+REVEAL_EXTRA_CSS: /stylesheets/infocards.css
+#+REVEAL_HLEVEL: 2
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_WIDTH: 1000
+#+REVEAL_HEIGHT: 600
+#+REVEAL_MAX_SCALE: 3.5
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_PLUGINS: (markdown notes highlight multiplex)
+#+REVEAL_SLIDE_NUMBER: ""
+#+REVEAL_SPEED: 1
+#+REVEAL_THEME: simple
+#+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_TRANS: none
+#+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
+#+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
+#+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
+#+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: mathjax:Y
+#+OPTIONS: reveal_single_file:nil
+#+OPTIONS: reveal_control:t
+#+OPTIONS: reveal-progress:t
+#+OPTIONS: reveal_history:nil
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:nil
+#+OPTIONS: reveal_keyboard:t
+#+OPTIONS: author:nil
+#+OPTIONS: timestamp:nil
