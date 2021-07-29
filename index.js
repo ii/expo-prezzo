@@ -124,7 +124,7 @@ function getPresentations() {
     const presentationJSON = JSON.parse(rawData)
     presentationJSON.folderName = prezzie
     return presentationJSON
-  })
+  }).sort((a,b) => a.order - b.order);
 }
 
 app.get('/admin.html', basicAuth({

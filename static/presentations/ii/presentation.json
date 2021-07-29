@@ -2,5 +2,5 @@
     "name": "ii",
     "description": "Learn about who we are and what we do!",
     "link": "Goes into the controller footer to learn more",
-    "order": "where on infocard list should it appear? (presentations.html)"
+    "order": 2
 }

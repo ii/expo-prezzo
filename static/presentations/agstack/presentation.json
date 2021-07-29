@@ -1,4 +1,6 @@
 {
     "name": "Argstack",
-    "description": "Transform the global agricultural industry"
+    "description": "Transform the global agricultural industry",
+    "link": "Goes into the controller footer to learn more",
+    "order": 30
 }
