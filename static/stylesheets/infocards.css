@@ -1,0 +1,68 @@
+body {
+    background: chartreuse;
+    font-size: 12px;
+}
+
+
+.reveal {
+    font-family: monospace;
+}
+
+.reveal h1 ,
+.reveal h2 ,
+.reveal h3 ,
+.reveal h4 ,
+.reveal h5 ,
+.reveal h6 {
+  font-family: "Press Start 2p", monospace;
+}
+
+.reveal h1 {
+    font-size: 3rem;
+}
+
+.reveal h2 {
+    font-size: 2rem;
+}
+
+.reveal h3 {
+    font-size: 1.5rem;
+}
+
+.reveal h4 {
+    font-size: 1rem;
+}
+
+.reveal-viewport {
+  background: linear-gradient(100deg, var(--red), var(--neutral));
+  animation: bgColor 90s infinite alternate;
+  -webkit-animation: bgColor 90s infinite alternate;
+  -moz-animation: bgColor 90s infinite alternate;
+  -o-animation: bgColor 90s infinite alternate;
+}
+@keyframes bgColor {
+  12.5% {
+    background: linear-gradient(100deg, var(--red), var(--neutral));
+  }
+  25% {
+    background: linear-gradient(150deg, var(--orange), var(--neutral));
+  }
+  37.5% {
+    background: linear-gradient(200deg, var(--yellow), var(--neutral));
+  }
+  50% {
+    background: linear-gradient(250deg, var(--green), var(--neutral));
+  }
+  62.5% {
+    background: linear-gradient(300deg, var(--blue), var(--neutral));
+  }
+  75% {
+    background: linear-gradient(350deg, var(--indigo), var(--neutral));
+  }
+  87.5% {
+    background: linear-gradient(400deg, var(--violet), var(--neutral));
+  }
+  100% {
+    background: linear-gradient(450deg, var(--violet), var(--neutral));
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Presentation Template</title>
+<meta name="author" content="Zach Mandeville"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css"/>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+
+<link rel="stylesheet" href="/stylesheets/infocards.css"/>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/zenburn.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Presentation Template</h1>
+</section>
+
+<section>
+<section id="slide-org400ba6f">
+<h2 id="org400ba6f">Introduction</h2>
+<p>
+cos he is!
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgc165457">
+<h2 id="orgc165457">Point One</h2>
+</section>
+</section>
+<section>
+<section id="slide-orgf5c3fc3">
+<h2 id="orgf5c3fc3">Point Two</h2>
+</section>
+</section>
+<section>
+<section id="slide-org4c39038">
+<h2 id="org4c39038">Point Three</h2>
+</section>
+</section>
+<section>
+<section id="slide-orgaf75053">
+<h2 id="orgaf75053">Conclusion</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/notes/notes.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'none',
+transitionSpeed: '1',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: '', secret: window.secret, undefined:'', // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/multiplex/master.js', async: true }]
+
+});
+</script>
+</body>
+</html>

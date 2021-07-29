@@ -1,27 +1,21 @@
+#+TITLE:  Presentation Template
 
-#+TITLE: Caleb and Zach ARe Cool
-#+AUTHOR: ii
-#+PROPERTY: header-args:tmate+ :session kubekohn :socket /tmp/kubecon
-
-* doc notes                                                        :noexport:
-Creating the folder and slide template
-Basic info, need more work
-
-* Caleb is cool
-cos he is!
-* Zach is cool
-Heck yeah he is!
-* Caleb and Zach are cool
-that's all there is to say!
+* Introduction
+* Point One
+* Point Two
+* Point Three
+* Conclusion
 * Footnotes :noexport:
 ** LOCAL VARS
-#+REVEAL_ROOT: https://multiplex.ii.nz
-#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz/
-#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.ii.nz/socket.io/socket.io.js
+#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
 #+REVEAL_VERSION: 4
-#+NOREVEAL_DEFAULT_FRAG_STYLE: YY
-#+NOREVEAL_EXTRA_CSS: YY
-#+NOREVEAL_EXTRA_JS: YY
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.googleapis.com">
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+#+REVEAL_EXTRA_CSS: https://unpkg.com/nes.css@2.3.0/css/nes.min.css
+#+REVEAL_EXTRA_CSS: https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap
+#+REVEAL_EXTRA_CSS: /stylesheets/infocards.css
 #+REVEAL_HLEVEL: 2
 #+REVEAL_MARGIN: 0.1
 #+REVEAL_WIDTH: 1000
@@ -33,15 +27,13 @@ that's all there is to say!
 #+REVEAL_SPEED: 1
 #+REVEAL_THEME: simple
 #+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
-#+REVEAL_TRANS: convex
+#+REVEAL_TRANS: none
 #+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
-#+REVEAL_TITLE_SLIDE_BACKGROUND: map70.jpg
-#+REVEAL_DEFAULT_SLIDE_BACKGROUND: virus60.jpg
 #+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
 #+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
 #+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
 #+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
-#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz
+#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
 #+OPTIONS: num:nil
 #+OPTIONS: toc:nil
 #+OPTIONS: mathjax:Y
@@ -52,6 +44,5 @@ that's all there is to say!
 #+OPTIONS: reveal_center:t
 #+OPTIONS: reveal_rolling_links:nil
 #+OPTIONS: reveal_keyboard:t
-#+OPTIONS: reveal_overview:t
 #+OPTIONS: author:nil
 #+OPTIONS: timestamp:nil
