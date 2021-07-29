@@ -1,32 +1,78 @@
 #+TITLE:  Art and Design
 
 * Open source for art
-There is a bevy of incredible free and open source tools for artists, and even
-open source art.
-* A tour
+There is a bevy of incredible, free, and open source tools for artists.
+* Let's take a tour!
 * Krita: for Cartoonists and Painters
-image goes here
+  :PROPERTIES:
+    :reveal_background: ./krita-icon.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+  https://krita.org
 * Krita
-Similar to photoshop, with the same set of core features, but free and hackable,
-with awesome features not found even in Photoshop.
+  :PROPERTIES:
+    :reveal_background: ./krita-icon.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+Similar to photoshop, but designed intentionally for cartoonists and digital artists.
+Has awesome features not even found in photoshop.
 * Inkscape: for illustrators and graphic design
-image goes here
+[[./Inkscape_logo_2.svg]]
+https://inkscape.org/
 * Inkscape
-An incredible tool for vector-based images. A free, comparably featured replacement for Adobe Illustrator.
+An incredible tool for vector-based images, like SVG's. A comparably featured replacement for Adobe Illustrator.
+[[./Inkscape_logo_2.svg]]
 * Blender: for SFX and Game Design
+  :PROPERTIES:
+    :reveal_background: ./blender-logo.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+  https://www.blender.org/
 * Blender
+  :PROPERTIES:
+    :reveal_background: ./blender-logo.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 A 3D modelling tool with industry-level capabilities and a giant community.
 Can even be used for video-editing.
 * Godot Engine: for Game Creators
+  :PROPERTIES:
+    :reveal_background: ./Godot_icon.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+  https://godotengine.org/
 * Godot Engine
-A sharp and powerful alternative to Unity or Unreal. Free to use and without any licensing restrctions
+  :PROPERTIES:
+    :reveal_background: ./Godot_icon.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+A sharp and powerful alternative to Unity or Unreal. Free to use and with no licensing restrictions
 * Artistic Communities
 Each of these tools are supported by strong, active communities that work together to extend the software,
 translate its UI to new languages, and create guides and videos for incoming artists.
 * Creative Commons
+  :PROPERTIES:
+    :reveal_background: ./creative-commons.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 The Creative Commons is a license for free and open source art. This is art
-intended for remixing, copying, and reimagining to help you create your own new, sharable art.
+intended for remixing, copying, and reimagining to help you create pieces of your own to share.
 * "When we share, everyone wins".
+  https://creativecommons.org
 * Footnotes :noexport:
 ** LOCAL VARS
 #+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
