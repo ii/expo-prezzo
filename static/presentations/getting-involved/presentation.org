@@ -1,26 +1,66 @@
 #+TITLE:  Getting Involved
 
 * Find your Community
+  :PROPERTIES:
+    :reveal_background: ./collaborate.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 No matter which open source community calls to you, we've found the following
-steps can help you become an active member.
+steps can help you get involved.
 * Join their chat and say hi
-Most communities have a common chat channel: an email list, discord, slack, etc.
+  :PROPERTIES:
+    :reveal_background: ./chat.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+Most communities have some common place to talk: an email list, discord, slack, etc.
 Join and say hi!
 * Look for "Good First Issues"
-Thesee are simple improvements the community wants, but hasn't the time to accomplish.
-They are often explicitly labelled, and a great first step.
+  :PROPERTIES:
+    :reveal_background: ./issue.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+These are easy improvements the community wants, but hasn't the time to accomplish.
+They are often explicitly labelled, and a great first attempt.
 * Look for ways to create or improve docs
+  :PROPERTIES:
+    :reveal_background: ./docs.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 This is always appreciated and you can never have enough documentation.
-* Follow their contributing guide
+* Follow their contributing guide and Code of Conduct
+  :PROPERTIES:
+    :reveal_background: ./work-together.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 These guides explain how the community wishes to work together.
 Respecting them shows respect to the larger community.
 * Share and ask questions!
-The best community is an active, chatty one. Being yourself, where you're at, is
+  :PROPERTIES:
+    :reveal_background: ./heart-chat.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
+The best community is an active, diverse one. Being yourself, exactly where you're at, is
 the best contribution.
 * Join a local meetup
+  :PROPERTIES:
+    :reveal_background: ./collaborate.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 ii often hosts hangouts for open source enthusiasts.  Come and say hi!
-* End
-❤
 * Footnotes :noexport:
 ** LOCAL VARS
 #+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
