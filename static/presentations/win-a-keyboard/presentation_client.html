@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Win an ii Keyboard</title>
+<meta name="author" content="Zach Mandeville"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css"/>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+
+<link rel="stylesheet" href="/stylesheets/infocards.css"/>
+<link rel="stylesheet" href="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/zenburn.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">Win an ii Keyboard</h1>
+</section>
+
+<section>
+<section id="slide-org21b8026">
+<h2 id="org21b8026">The Keyboard</h2>
+<p>
+image goes here
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org405f3fc">
+<h2 id="org405f3fc">Not just a keyboard</h2>
+<p>
+It&rsquo;s secretly a computer (a raspberry pi), inside an awesome keyboard case.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org4719e07">
+<h2 id="org4719e07">A quietly powerful keyboard.</h2>
+<p>
+We are using raspberry pi&rsquo;s to run nearly everything in this booth.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org1da34da">
+<h2 id="org1da34da">We want to give one to you!</h2>
+</section>
+</section>
+<section>
+<section id="slide-org6466739">
+<h2 id="org6466739">How to get a keyboard</h2>
+<p>
+Contribute to the kubernetes project! As soon as you become a contributor,
+we&rsquo;ll give you an ii keyboard and mouse.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org0006cb7">
+<h2 id="org0006cb7">How to contribute</h2>
+<p>
+Practically, this involves submitting a pull request to a kubernetes repo and
+having it merged, then sharing with us the proof of this merge.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orga218ac8">
+<h2 id="orga218ac8">What to contribute</h2>
+<p>
+There are multiple ways to contribute. Examples include:
+</p>
+<ul>
+<li>improving documentation</li>
+<li>adding a test</li>
+<li>writing a guide</li>
+<li>fixing a bug</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org5166b10">
+<h2 id="org5166b10">Easier than it sounds!</h2>
+<p>
+The Kubernetes community encourages contributions from anyone, regardless of
+technical skill level, with ample resources to better understand the project.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org6a26dd0">
+<h2 id="org6a26dd0">We are here to help</h2>
+<p>
+If you are interested in the ii keyboard, and don&rsquo;t know where to start, come
+talk to us! We are happy to help!
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/dist/reveal.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/notes/notes.js"></script>
+<script src="https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'none',
+transitionSpeed: '1',
+autoSlide:30000, loop:true,
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.cool-happy-fun-instance.pair.sharing.io/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>
