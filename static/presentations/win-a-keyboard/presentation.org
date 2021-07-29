@@ -1,28 +1,76 @@
 #+TITLE: Win an ii Keyboard
 
 * The Keyboard
-image goes here
+[[./keyboard.png]]
 * Not just a keyboard
+  :PROPERTIES:
+    :reveal_background: ./pi.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 It's secretly a computer (a raspberry pi), inside an awesome keyboard case.
 * A quietly powerful keyboard.
+  :PROPERTIES:
+    :reveal_background: ./pi.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 We are using raspberry pi's to run nearly everything in this booth.
 * We want to give one to you!
+  :PROPERTIES:
+    :reveal_background: ./star-hand.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 * How to get a keyboard
+  :PROPERTIES:
+    :reveal_background: ./kubernetes.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Contribute to the kubernetes project! As soon as you become a contributor,
 we'll give you an ii keyboard and mouse.
 * How to contribute
+  :PROPERTIES:
+    :reveal_background: ./work-together.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 Practically, this involves submitting a pull request to a kubernetes repo and
 having it merged, then sharing with us the proof of this merge.
 * What to contribute
+  :PROPERTIES:
+    :reveal_background: ./terminal.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 There are multiple ways to contribute. Examples include:
 - improving documentation
 - adding a test
 - writing a guide
 - fixing a bug
 * Easier than it sounds!
+  :PROPERTIES:
+    :reveal_background: ./cloud-hearts.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 The Kubernetes community encourages contributions from anyone, regardless of
 technical skill level, with ample resources to better understand the project.
 * We are here to help
+  :PROPERTIES:
+    :reveal_background: ./ii.svg
+    :reveal_background_trans: slide
+    :reveal_background_size: 90vh
+    :reveal_background_position: top
+    :END:
 If you are interested in the ii keyboard, and don't know where to start, come
 talk to us! We are happy to help!
 * Footnotes :noexport:
