@@ -169,6 +169,10 @@ a.presentation-card:hover {
   filter: hue-rotate(180deg);
 }
 
+a.presentation-card:focus {
+  background-color: var(--colour_accent);
+}
+
 a.presentation-card b {
   font-size: 1.33rem;
 }
