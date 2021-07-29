@@ -102,12 +102,19 @@ main {
 }
 
 div.nes-container.scan-tag {
-  padding: var(--inner-space);
+  padding: var(--outer-space);
   margin-top: var(--outer-space);
+  min-height: calc(410px + (var(--outer-space) * 2));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 
 .nes-container.with-title > .title {
   background-color: var(--colour_bg);
+  max-width: 410px;
+
 }
 
 div#monitor-box {
@@ -292,3 +299,5 @@ div.monitor-qrcode p {
   background-repeat: repeat;
   background-size: 200px 200px;
 }
+
+.hidden{display: none;}

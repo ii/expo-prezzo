@@ -25,11 +25,8 @@
     <main>
       <h1>Careers in open source!</h1>
       <div class='nes-container is-rounded with-title is-centered scan-tag'>
-        <p class='title'>Scan to interactively find out more</p>
+          <p class='title' id='content'>scan to learn more about working in open source</p>
         <canvas></canvas>
-      </div>
-      <div class='content'>
-        <p>check out ii.nz/careers for open source careers in <b>Cloud</b>, <b>Agstack (agriculture)</b>, <b>Automotive Grade Linux</b></p>
       </div>
     <div id='monitor-box' class='nes-container with-title'>
       <p class='title'>Screen</p>
@@ -77,7 +74,10 @@
 
    socket.on("new connection", monitor => {
      sessionStorage.setItem("monitor", JSON.stringify(monitor));
-     console.table(monitor)
+     const scanTag = document.querySelector(".scan-tag canvas")
+     const content = document.querySelector("#content")
+     scanTag.classList.add("hidden")
+     content.textContent = "...awaiting selection..."
    });
 
    socket.on("new presentation requested", monitor => {
