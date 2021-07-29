@@ -141,50 +141,6 @@ div#monitor-box.nes-container.with-title > .title {
   animation: PleasantScroll 30s ease infinite;
 }
 
-@-webkit-keyframes PleasantScroll {
-  0% {
-    background-position: 0% 5%;
-  }
-  50% {
-    background-position: 100% 96%;
-  }
-  100% {
-    background-position: 0% 5%;
-  }
-}
-@-moz-keyframes PleasantScroll {
-  0% {
-    background-position: 0% 5%;
-  }
-  50% {
-    background-position: 100% 96%;
-  }
-  100% {
-    background-position: 0% 5%;
-  }
-}
-@-o-keyframes PleasantScroll {
-  0% {
-    background-position: 0% 5%;
-  }
-  50% {
-    background-position: 100% 96%;
-  }
-  100% {
-    background-position: 0% 5%;
-  }
-}
-@keyframes PleasantScroll {
-  0% {
-    background-position: 0% 5%;
-  }
-  50% {
-    background-position: 100% 96%;
-  }
-  100% {
-    background-position: 0% 5%;
-  }
-}
 
 body.presentation-page {
   --base-font: 14px;
@@ -301,3 +257,64 @@ div.monitor-qrcode p {
 }
 
 .hidden{display: none;}
+
+.fadein {animation: FadeIn ease-in 1s;}
+
+@-webkit-keyframes PleasantScroll {
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
+}
+@-moz-keyframes PleasantScroll {
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
+}
+@-o-keyframes PleasantScroll {
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
+}
+@keyframes PleasantScroll {
+  0% {
+    background-position: 0% 5%;
+  }
+  50% {
+    background-position: 100% 96%;
+  }
+  100% {
+    background-position: 0% 5%;
+  }
+}
+
+@keyframes FadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@-moz-keyframes FadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@-webkit-keyframes FadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
