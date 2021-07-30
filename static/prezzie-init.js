@@ -21,7 +21,7 @@ function addQRCodeToDOM(monitorName) {
   prezzieInfoDiv.classList.add("monitor-qrcode");
   prezzieInfoDiv.classList.add(colour);
   let prezzieInfoText = document.createElement("p");
-  prezzieInfoText.textContent = `Scan for careers. Find out more at ii.nz! (${monitor.monitorName})`;
+  prezzieInfoText.textContent = `Scan to take control`;
   let qrcode = document.createElement("canvas");
   qrcode.id = "qrcode-canvas";
   QRCode.toCanvas(qrcode, qrcodeURL, { width: 135, height: 135 }, (error) => {
