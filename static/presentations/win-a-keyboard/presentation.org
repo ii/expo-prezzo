@@ -75,9 +75,9 @@ If you are interested in the ii keyboard, and don't know where to start, come
 talk to us! We are happy to help!
 * Footnotes :noexport:
 ** LOCAL VARS
-#+REVEAL_ROOT: https://multiplex.cool-happy-fun-instance.pair.sharing.io
-#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/
-#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io/socket.io/socket.io.js
+#+REVEAL_ROOT: https://multiplex.ii.nz
+#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.ii.nz/socket.io/socket.io.js
 #+REVEAL_VERSION: 4
 #+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.googleapis.com">
 #+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,7 +101,7 @@ talk to us! We are happy to help!
 #+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
 #+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
 #+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
-#+REVEAL_MULTIPLEX_URL: https://multiplex.cool-happy-fun-instance.pair.sharing.io
+#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz
 #+OPTIONS: num:nil
 #+OPTIONS: toc:nil
 #+OPTIONS: mathjax:Y
