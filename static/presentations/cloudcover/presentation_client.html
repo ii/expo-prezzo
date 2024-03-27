@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Filling the Gaps in Kubernetes Test Coverage</title>
+<meta name="author" content="Hippie Hacker"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://multiplex.ii.nz/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://multiplex.ii.nz/dist/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="https://multiplex.ii.nz/plugin/highlight/zenburn.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+
+
+</section>
+<aside class="notes">
+<p>
+Are the Kubernetes behaviors your applications actually require well tested and guaranteed to be available on all cloud providers?
+</p>
+
+<p>
+In this session, you will learn how to ensure your Kubernetes API surface area usage is exercised by tests all Kubernetes Certified Service Providers must pass.
+</p>
+
+<p>
+We will cover:
+</p>
+<ul>
+<li>the e2e test suite</li>
+<li>automation that runs the suite before code is merged into Kubernetes.</li>
+<li>the API surface area covered by these tests</li>
+<li>the API surface area required by several popular applications.</li>
+<li>Identifying the untested API surface area your applications require</li>
+<li>Contributing tests that increase API surface coverage</li>
+<li>Promoting tests to Conformance</li>
+
+</ul>
+
+</aside>
+<section>
+<section id="slide-org73d6258" data-background="img/as17-148-22727.jpg" data-background-size="100p">
+<h2 id="org73d6258">You are here</h2>
+<aside class="notes">
+<p>
+I&rsquo;m so glad you are here!
+We are all here, together.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf321dd5" data-background="img/as17-148-22727.jpg" data-background-size="100p">
+<h2 id="orgf321dd5">Why are we here?</h2>
+<aside class="notes">
+<p>
+I&rsquo;m Hippie Hacker, and together
+and I&rsquo;d like all of us win, not just some of us.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgce40dad" data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<h2 id="orgce40dad">Production Workloads Worldwide</h2>
+<ul>
+<li>Ensuring &ldquo;Generally Available&rdquo; is just that</li>
+<li>Conformance Testing required</li>
+
+</ul>
+<aside class="notes">
+<p>
+We want our workloads to run globally
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org3f46b06" data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<h2 id="org3f46b06">Building Sustainable Ecosystems</h2>
+<ul>
+<li>vendor-neutral home for us all</li>
+
+</ul>
+<aside class="notes">
+<p>
+But we&rsquo;ll need sustainable ecosystems of inovations across the globe to do so
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgfa9bfe9" data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<h2 id="orgfa9bfe9">Fostering Communites</h2>
+<ul>
+<li>All Nations / All Neighborhoods</li>
+<li>Our Customs / Our Protocols</li>
+<li>Our Land / Our Clouds</li>
+
+</ul>
+<aside class="notes">
+<p>
+This means all communities in all nations.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org731f6f6" data-background="img/certified-kubernetes-1.17-color.png" data-background-size="250px">
+<h2 id="org731f6f6">.</h2>
+<aside class="notes">
+<p>
+We have a standard defined by tests that must pass on every Certified Cloud Provider
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org3cf2473" data-background="img/apisnoop-icon-color.png" data-background-size="350px">
+<h2 id="org3cf2473">APISNOOP.CNCF.IO</h2>
+<aside class="notes">
+<p>
+APISnoop is tooling to allow us to understand exactly what it is we are testing.
+Understanding the coverage directly.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf30aaa9" data-background="img/tiros_first_172.jpg" data-background-size="600px">
+<h2 id="orgf30aaa9">1960</h2>
+<aside class="notes">
+<p>
+The first public pictures of clouds
+</p>
+
+</aside>
+</section>
+<section data-background="img/tiros_first_172.jpg" data-background-size="600px">
+</section>
+<section data-background="img/tiros_first_172.jpg" data-background-size="600px">
+<p>
+First TV Broadcast from Space
+</p>
+</section>
+<section data-background="img/tiros_first_172.jpg" data-background-size="600px">
+<p>
+TIROS-1
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgae85c38" data-background="img/as17-148-22727.jpg" data-background-size="600p">
+<h2 id="orgae85c38">1972</h2>
+<aside class="notes">
+<p>
+The best known selfie
+</p>
+
+</aside>
+</section>
+<section data-background="img/as17-148-22727.jpg" data-background-size="600p">
+</section>
+<section data-background="img/as17-148-22727.jpg" data-background-size="600p">
+<p>
+Blue Marble
+</p>
+</section>
+<section data-background="img/as17-148-22727.jpg" data-background-size="600p">
+<p>
+Apollo 17
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org511940d" data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+<h2 id="org511940d">1990</h2>
+<aside class="notes">
+<p>
+30 degrees above the ecliptic
+</p>
+
+</aside>
+
+</section>
+<section data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+</section>
+<section data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+<p>
+Pale Blue Dot
+</p>
+</section>
+<section data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+<p>
+Voyager 1
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org8a25cc2" data-background="img/globe_east_2048.jpg" data-background-size="600px">
+<h2 id="org8a25cc2">2001</h2>
+<aside class="notes">
+<p>
+We start getting more sattelites
+</p>
+
+</aside>
+</section>
+<section id="slide-orgba1c4e7" data-background="img/globe_west_2048.jpg" data-background-size="600px">
+<h3 id="orgba1c4e7">Many Satellites</h3>
+<aside class="notes">
+<p>
+And more
+</p>
+
+</aside>
+</section>
+<section id="slide-org4463310" data-background="img/marble_2002_australia_2048.jpg" data-background-size="600px">
+<h3 id="org4463310">Combined Images</h3>
+<aside class="notes">
+<p>
+And many more
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orge173eff" data-background="img/land_ocean_ice_cloud_2048.jpg" data-background-size="990px">
+<h2 id="orge173eff">2002</h2>
+<aside class="notes">
+<p>
+We start getting a clear picture of cloud coverage
+</p>
+
+</aside>
+</section>
+<section id="slide-org454ccbd" data-background="img/land_ocean_ice_2048.jpg" data-background-size="990px">
+<h3 id="org454ccbd">- Clouds</h3>
+<aside class="notes">
+<p>
+And what the clouds are there for
+</p>
+
+</aside>
+</section>
+<section id="slide-orgde6f415" data-background="img/land_shallow_topo_2048.jpg" data-background-size="990px">
+<h3 id="orgde6f415">- Ice</h3>
+<aside class="notes">
+<p>
+which eventually leads us to
+</p>
+
+</aside>
+</section>
+<section id="slide-org44fa84b" data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<h3 id="org44fa84b">+ People</h3>
+<aside class="notes">
+<p>
+The people
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org4cb0a4d" data-background="img/tiros_first_172.jpg" data-background-size="600px">
+<h2 id="org4cb0a4d">1.10</h2>
+<aside class="notes">
+<p>
+Thanks Ken!
+</p>
+
+</aside>
+</section>
+<section data-background="img/tiros_first_172.jpg" data-background-size="600px">
+<p>
+First software written parsing e2e.log files
+</p>
+</section>
+<section data-background="img/tiros_first_172.jpg" data-background-size="600px">
+<p>
+Ken Omichi
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org68176b5" data-background="img/as17-148-22727.jpg" data-background-size="600px">
+<h2 id="org68176b5">1.11</h2>
+<aside class="notes">
+<p>
+Thanks Rohan!
+</p>
+
+</aside>
+</section>
+<section data-background="img/as17-148-22727.jpg" data-background-size="600px">
+<p>
+First parsing of audit.logs
+Static Website
+</p>
+</section>
+<section data-background="img/as17-148-22727.jpg" data-background-size="600px">
+<p>
+Rohan Fletcher 
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org4d15ceb" data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+<h2 id="org4d15ceb">1.12</h2>
+<aside class="notes">
+<p>
+Thanks Zhonghu!
+</p>
+
+</aside>
+</section>
+<section data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+<p>
+First glimpse of actual test coverage
+</p>
+</section>
+<section data-background="img/PaleBlueDot.jpg" data-background-size="400px">
+<p>
+User-Agent support added to:
+</p>
+<ul>
+<li>apiserver/auditlogs</li>
+<li><p>
+e2e.framework
+</p>
+</section>
+<section data-background="img/PaleBlueDot.jpg" data-background-size="400px"></li>
+
+</ul>
+<p>
+Zhonghu Xu
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org8350ae9" data-background="img/marble_2002_australia_2048.jpg" data-background-size="600px">
+<h2 id="org8350ae9">1.13</h2>
+<aside class="notes">
+<p>
+Thanks Zhonghu!
+</p>
+
+</aside>
+</section>
+<section data-background="img/marble_2002_australia_2048.jpg" data-background-size="600px">
+<p>
+First glimpse of change of coverage over time
+</p>
+</section>
+<section data-background="img/marble_2002_australia_2048.jpg" data-background-size="600px">
+<p>
+apisnoop.cncf.ci setup to process CI audit-logs
+</p>
+</section>
+<section data-background="img/marble_2002_australia_2048.jpg" data-background-size="600px">
+<p>
+Devan Carpenter
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org4f8a3b2" data-background="img/land_ocean_ice_cloud_2048.jpg" data-background-size="990px">
+<h2 id="org4f8a3b2">1.14</h2>
+<aside class="notes">
+<p>
+Thanks Zach!
+This allowed us to start asking questions about our coverage
+</p>
+
+</aside>
+</section>
+<section data-background="img/land_ocean_ice_cloud_2048.jpg" data-background-size="990px">
+<p>
+Dynamic queries to comprehend the full API surface/coverage area
+</p>
+</section>
+<section data-background="img/land_ocean_ice_cloud_2048.jpg" data-background-size="990px">
+<p>
+JSON -&gt; SQL
+</p>
+</section>
+<section data-background="img/land_ocean_ice_cloud_2048.jpg" data-background-size="990px">
+<p>
+Zach Mandeville
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org5b7db13" data-background="img/land_shallow_topo_2048.jpg" data-background-size="990px">
+<h2 id="org5b7db13">1.15</h2>
+<aside class="notes">
+<p>
+Thanks Aaron!
+Now we had a &rsquo;you have to be this high to ride&rsquo;
+</p>
+
+</aside>
+</section>
+<section data-background="img/land_shallow_topo_2048.jpg" data-background-size="990px">
+<p>
+Policy requiring Conformance Test for GA features
+</p>
+</section>
+<section data-background="img/land_shallow_topo_2048.jpg" data-background-size="990px">
+<p>
+Posting apisnoop links to PRs
+</p>
+</section>
+<section data-background="img/land_shallow_topo_2048.jpg" data-background-size="990px">
+<p>
+Spiffxp. Thanks for making us be honest about testing.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org2a86499" data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<h2 id="org2a86499">1.16</h2>
+<aside class="notes">
+<p>
+Thanks Jordan!
+Ensuring we see every event generated by any application.
+</p>
+
+</aside>
+</section>
+<section data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<p>
+Defining new metrics of API surface area and coverage
+</p>
+</section>
+<section data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<p>
+Jordan Liggitt
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org39850b0" data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<h2 id="org39850b0">1.17</h2>
+<aside class="notes">
+<p>
+This is where you come in!
+What parts of Kubernetes do your applications depend on?
+</p>
+
+</aside>
+</section>
+<section data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<p>
+We need to test the infrastructure we all depend on.
+</p>
+</section>
+<section data-background="img/land_ocean_ice_lights_2048.jpg" data-background-size="990px">
+<p>
+This is where you com in!
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgb9b9a02">
+<h2 id="orgb9b9a02">K8s Conformance / APISnoop</h2>
+<aside class="notes">
+<p>
+This is where to find us.
+</p>
+
+</aside>
+<ul>
+<li><a href="https://github.com/cncf/k8s-conformance">https://github.com/cncf/k8s-conformance</a></li>
+<li><a href="https://apisnoop.cncf.io">https://apisnoop.cncf.io</a></li>
+<li><a href="https://github.com/cncf/apisnoop">https://github.com/cncf/apisnoop</a></li>
+
+</ul>
+<p>
+Slack #k8s-conformance
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgb30f003" data-background="img/alps_comparison.jpg" data-background-size="600px">
+<h2 id="orgb30f003">2004</h2>
+</div>
+</div>
+<script src="https://multiplex.ii.nz/dist/reveal.js"></script>
+<script src="https://multiplex.ii.nz/plugin/markdown/markdown.js"></script>
+<script src="https://multiplex.ii.nz/plugin/notes/notes.js"></script>
+<script src="https://multiplex.ii.nz/plugin/highlight/highlight.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+margin: 0.10,
+minScale: 0.20,
+maxScale: 3.50,
+
+transition: 'cube',
+transitionSpeed: '1',
+multiplex: {
+    secret: null, // null if client
+    id: '', id: window.socketID, undefined: '', // id, obtained from socket.io server
+    url: 'https://multiplex.ii.nz/' // Location of socket.io server
+},
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealHighlight,  ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://multiplex.ii.nz/socket.io/socket.io.js', async: true },
+ { src: 'https://multiplex.ii.nz/plugin/multiplex/client.js', async: true }]
+
+});
+</script>
+</body>
+</html>
