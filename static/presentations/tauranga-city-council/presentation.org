@@ -1,0 +1,204 @@
+# Local IspellDict: en
+#+Title: Infrastructure for Innovation
+#+SubTitle: ii.nz
+#+Author: Hippie Hacker
+#+DESCRIPTION: Presentation for Tauranga City Council
+#+REVEAL_TALK_URL: https://ii.nz
+#+KEYWORDS: ii, presentation, HTML, slide show
+
+* Haere Mai Stewards
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="4000" class="align-left"
+  :END:
+#+ATTR_REVEAL: :frag roll-in
+- of the land :: Tangata Whenua
+#+ATTR_REVEAL: :frag roll-in
+- of the plan :: City Council
+#+ATTR_REVEAL: :frag roll-in
+- of the cloud :: iiiii
+#+begin_notes
+Thank you to our stewards:
+
+- te Rangi Marae :: of the land
+- Our Council :: of the plan
+- The team at ii :: of the cloud
+#+end_notes
+* Now for the Future
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="5000" class="align-left"
+  :END:
+#+ATTR_REVEAL: :frag roll-in
+- upgraded digital :: systems, security, performance
+#+ATTR_REVEAL: :frag roll-in
+- local talent :: less money leaving Tauranga
+#+ATTR_REVEAL: :frag roll-in
+- international ecosystem :: free software blueprints
+#+begin_notes
+New Zealand is well positions to leverage publically available open solutions by employing local talent that can modify them to meet our needs.
+#+end_notes
+* Firm Foundations
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="4000" class="align-left"
+  :END:
+  Many years later, a Global Advisor:
+#+ATTR_REVEAL: :frag roll-in
+- [[https://cncf.io][Cloud Native Compute Foundation]] :: [[https://catalystcloud.nz][Catalyst]] provides Certified Kubernetes
+#+ATTR_REVEAL: :frag roll-in
+- [[https://lfph.io][LF Public Health]] :: NZ COVID App uses [[https://en.wikipedia.org/wiki/Exposure_Notification][GAEN]]
+#+ATTR_REVEAL: :frag roll-in
+- [[https://fsf.org][Free Software Foundation]] :: Public Money? Public Code!
+#+begin_notes
+Everyone in this room has used software from the these Foundations.
+
+My mentor Dan Kohn, created the Open Heath Foundation to help public health authorities use open source software to fight COVID-19. He helped coordinate Google and Apple to create the exposure framework used by most of the world. I'm proud to say that code is used within New Zealand's COVID tracing app, which is also open source.
+
+Earlier this year, they worked with the US Government to help create an Open Programmable and Secure 5G End to End stack.
+
+There is too much loss of productivity and innovation due to the absence of re-usable tools and data.
+
+I think New Zealand is well placed to go further, together by curating local talent connected to the global ecosystem of innovation.
+
+It's the reason I've spent the last 10 years of my life in New Zealand.
+#+end_notes
+* Cloud Native Compute Foundation
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="4000" class="align-left"
+  :END:
+#+html: <img class="r-stretch" src="images/cncf-members.png">
+* NZ CNCF Certified Cloud
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="9000" class="align-left"
+  :END:
+Catalyst Cloud announces CNCF certified Kubernetes platform
+#+html: <img class="r-stretch" src="images/certified-kubernetes.png">
+* Public Health - GAEN+Bluetooth
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="4000" class="align-left"
+  :END:
+#+html: <img class="r-stretch" src="images/lfph-gaen.png">
+* NZ COVID Contract Tracing
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="9000" class="align-left"
+  :END:
+[[file:images/covid-app.png]]
+
+* Public Money? Public Code!
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="5000" class="align-left"
+  :END:
+- [[https://download.fsfe.org/campaigns/pmpc/PMPC-Modernising-with-Free-Software.pdf][Modernising Public Infrastructure with Free Software]]
+#+ATTR_REVEAL: :frag roll-in
+- No artificial limits :: Meet our own needs
+#+ATTR_REVEAL: :frag roll-in
+- Invest in local talent :: Less out-of-town contractors
+* The FSFE EU Video
+  :PROPERTIES:
+  :reveal_extra_attr: class="hide-headers" data-autoslide="220000"
+  :no_reveal_extra_attr: class="hide-headers" data-background-video="videos/Public Money Public Code!.mp4" data-background-video-loop
+  :no_reveal_extra_attr: class="hide-headers" data-background-video="videos/Public Money Public Code!.mp4" data-background-video-loop data-background-video-muted
+  :END:
+  #+html: <video controls=true data-autoplay=true src="videos/Public Money Public Code!.mp4" />
+#+begin_notes
+Modernising Public Infrastructurewith Free Software
+#+end_notes
+* Street Repairs in Tauranga
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="10000"
+  :END:
+#+html: <iframe height=400 width=800 data-src="https://ii.nz/fixmystreet"></iframe>
+* Investing in our Future
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="3000" class="align-left"
+  :END:
+Our youth are the future, and will be working for council within ten years.
+#+ATTR_REVEAL: :frag roll-in
+- Tauranga Teens :: speaking overseas on cloud infrastructure
+#+ATTR_REVEAL: :frag roll-in
+- Cloud Native :: from an early age
+#+ATTR_REVEAL: :frag roll-in
+- Beyond Us Impact :: servant leaders of tomorrow
+#+begin_notes
+I'm most proud of my success mentoring and teaching local youth to be leaders and engage directly with the IT communities in which we serve.
+
+Many of them traveling or speaking internationally on advanced research topics as teenagers.
+
+
+Our youth today are inherently 'cloud native' from an early age, and the desire for 'beyond us' impact and engament might surprise us if we give them a chance.
+
+If we are going to have council employees in the next ten years that can onboard our community to these resources, we need to start now.
+
+If our students can be on-ramped to active participation in the open source culture of inclusion, transparency, and governance, they will be well prepared to lead these types of initiatives locally.
+#+end_notes
+* CNCF Support for Tauranga
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="3000" class="align-left"
+  :END:
+The CNCF has offered to help onramp NZ students:
+#+ATTR_REVEAL: :frag roll-in
+- Curriculm and Training :: to get our youth solving local problems
+#+ATTR_REVEAL: :frag roll-in
+- Certifications :: to showcase their knowledge
+#+ATTR_REVEAL: :frag roll-in
+- Conference Passes :: KubeCon and many others
+#+ATTR_REVEAL: :frag roll-in
+- Paid Internship Programs :: (Google Summer of code and others)
+* Now for the Future
+  :PROPERTIES:
+  :reveal_extra_attr: data-autoslide="3000" class="align-left"
+  :END:
+  The call to action is simple here:
+#+ATTR_REVEAL: :frag roll-in
+What Software does Council currently use?
+#+ATTR_REVEAL: :frag roll-in
+Can Open Source be an explicit part of the conversation?
+#+ATTR_REVEAL: :frag roll-in
+Can I be invited to those conversations?
+#+begin_notes
+I know we are all honored to have input into this ten year community collaboration plan.
+
+I'd like to point to some positive change
+
+Some of us will be experts in finance, others in physical infrastructure, mine is in the could.
+#+end_notes
+* Footnotes :noexport:
+** LOCAL VARS
+#+REVEAL_ROOT: https://multiplex.ii.nz
+#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz/
+#+REVEAL_MULTIPLEX_SOCKETIO_URL: https://multiplex.ii.nz/socket.io/socket.io.js
+#+REVEAL_VERSION: 4
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.googleapis.com">
+#+REVEAL_HEAD_PREAMBLE: <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+#+REVEAL_EXTRA_CSS: https://unpkg.com/nes.css@2.3.0/css/nes.min.css
+#+REVEAL_EXTRA_CSS: https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap
+#+REVEAL_EXTRA_CSS: /stylesheets/infocards.css
+#+REVEAL_HLEVEL: 2
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_WIDTH: 1000
+#+REVEAL_HEIGHT: 600
+#+REVEAL_MAX_SCALE: 3.5
+#+REVEAL_MIN_SCALE: 0.2
+#+REVEAL_PLUGINS: (markdown notes highlight multiplex)
+#+REVEAL_SLIDE_NUMBER: ""
+#+REVEAL_SPEED: 1
+#+REVEAL_THEME: simple
+#+REVEAL_THEME_OPTIONS: beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_TRANS: none
+#+REVEAL_TRANS_OPTIONS: none|cube|fade|concave|convex|page|slide|zoom
+#+REVEAL_EXTRA_OPTIONS: autoSlide:30000, loop:true
+#+REVEAL_PREAMBLE: <script src="/socket.io/socket.io.js"></script><script src="/qrcode.min.js"></script><script src="/prezzie-init.js"></script>
+#+REVEAL_MULTIPLEX_SECRET: ', secret: window.secret, undefined:'
+#+REVEAL_MULTIPLEX_ID: ', id: window.socketID, undefined: '
+#+REVEAL_MULTIPLEX_URL: https://multiplex.ii.nz
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: mathjax:Y
+#+OPTIONS: reveal_single_file:nil
+#+OPTIONS: reveal_control:t
+#+OPTIONS: reveal-progress:t
+#+OPTIONS: reveal_history:nil
+#+OPTIONS: reveal_center:t
+#+OPTIONS: reveal_rolling_links:nil
+#+OPTIONS: reveal_keyboard:t
+#+OPTIONS: author:nil
+#+OPTIONS: timestamp:nil
+
